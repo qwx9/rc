@@ -10,13 +10,15 @@ if(! sshfs tcp!$1!8022){
 }
 cd
 # sd card mtimes are full of lies
-for(i in m*){
-	if(! test -d /n/ssh/m)
-		ssh tcp!bv91!8022 ln -s storage/external-1/m m || exit
-	if(! test -d /n/ssh/m/$i)
-		clone -T $i /n/ssh/m/
-	if not
-		syncab -m $i /n/ssh/m/$i | tee -a /tmp/sync.$pid
+if(~ $1 ule){
+	for(i in m*){
+		if(! test -d /n/ssh/m)
+			ssh tcp!bv91!8022 ln -s storage/external-1/m m || exit
+		if(! test -d /n/ssh/m/$i)
+			clone -T $i /n/ssh/m/
+		if not
+			syncab -m $i /n/ssh/m/$i | tee -a /tmp/sync.$pid
+	}
 }
 syncab $home/lib/i /n/ssh/Pictures | tee -a /tmp/sync.$pid
 echo proceed?
