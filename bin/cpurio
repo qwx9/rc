@@ -10,7 +10,7 @@ bind -a '#A' /dev
 bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
-test -f $home/p/rc/bindbins && . $home/p/rc/bindbins
+test -f $home/p/rc/bin/bindbins && . $home/p/rc/bin/bindbins
 test -f $home/lib/ass){
 	auth/factotum
 	setec
