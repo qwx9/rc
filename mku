@@ -81,6 +81,7 @@ doom-naivescaleup\
 doom-nodclick\
 doom-skywallhit\
 doom-spy\
+doom-udpip\
 file-mod\
 file-opus\
 ircrc-jpmfix\
@@ -119,12 +120,8 @@ case *
 	ko=386
 	k=(pc)
 }
-ape/patch -s -fp1 < $h/lib/extra/ftrvxmtrx/riow/9front.diff
-ape/patch -s -fp1 < $h/lib/extra/ftrvxmtrx/patches/rio-themes.patch
-ape/patch -s -fp1 < $h/lib/extra/ftrvxmtrx/patches/rio-select.patch
-for(i in $f)
-	ape/patch -s --no-backup-if-mismatch -p1 < $h/p/patch/$i
-ape/patch -s -fp1 < $h/p/patch/doom-udpip # FIXME
+for(i in $h/lib/extra/ftrvxmtrx/riow/9front.diff $h/lib/extra/ftrvxmtrx/patches/rio-select.patch $h/p/patch/$f)
+	ape/patch -s --no-backup-if-mismatch -p1 < $i
 cp -x $h/p/dot/vgadb /lib/vgadb
 rm -f (/lib/vgadb /rc/bin/ircrc /sys/man/4/nusb)^.orig
 
