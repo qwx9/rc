@@ -1,0 +1,13 @@
+#!/bin/rc -xe
+t=/tmp/dmlotr.$pid
+f='http://www.shamusyoung.com/twentysidedtale/?p=612'
+while(){
+	hget $f | sed 's/[<>]/\n/g' >$t
+	for(i in `{sed -n 's/.*img src=''(http.*\/images\/[^'']+)''.*/\1/p' $t})
+		dw $i
+	f=`{sed -n 's/.*a href="(http[^\?]+\?p=[^"]+)".*/\1/p' $t | sed -n '5{p;q;}'}
+	if(~ $#f 0){
+		rm $t
+		exit
+	}
+}

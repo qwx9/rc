@@ -1,0 +1,14 @@
+#!/bin/rc
+flag e +
+
+for(i in $*){
+	x=`{echo $i | sed -n 's/.*\/([^\/]+)$/\1/p'}
+	mkdir -p $x && cd $x
+	hget $i |\
+		sed -n '/\.mp3/s/^.*<a href="(.*)".*/\1/p' |\
+		uniq |\
+		xargs -n 1 hget |\
+		sed -n '/^<audio/s/<audio id=".*" src="(.*\.mp3)".*/\1/p' |\
+		xargs dw
+		cd ..
+}

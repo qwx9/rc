@@ -1,0 +1,12 @@
+#!/bin/rc
+flag e +
+
+for(i in $*){
+	x=`{echo $i | sed -n 's/.*\/([^\/]+)$/\1/p'}
+	mkdir -p $x && cd $x
+	hget $i |\
+		sed -n '/\.mid/s/^.*<a href="(.*)".*/\1/p' |\
+		uniq |\
+		xargs dw
+	cd ..
+}

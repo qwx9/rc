@@ -1,0 +1,24 @@
+#!/bin/rc
+# finds out which is the last comic, then downloads missing ones from cwd, exiting
+# upon the first collision
+# it's filthy.
+
+flag e +
+
+#x=(/comics/oots0002.html)
+x=(`{hget http://www.giantitp.com \
+| sed -n 's/<B>Order of the Stick <\/B><A href="([^"]+)".*/\1/p'})
+n=`{echo $x | sed 's/.*(oots[0-9]+\.)html/\1/'}
+while(! ~ $n '#' && ! test -e $n^*){
+	x=(`{hget http://www.giantitp.com/$x(1) \
+	| sed -n '
+		/IMG src="\/comics/{
+			s/.*src="([^"]+)".*/\1/p
+			q
+		}
+		s/.*<A href="([^"]+)"><IMG src="\/Images\/redesign\/ComicNav_Back.gif".*/\1/p'
+	})
+	n=$n^`{echo $x(2) | sed 's/.*\.([^\/\.]+)$/\1/'}
+	hget http://www.giantitp.com/$x(2) >$n
+	n=`{echo $x(1) | sed 's/.*(oots[0-9]+\.)html/\1/'}
+}
