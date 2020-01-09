@@ -1,0 +1,19 @@
+#!/bin/rc -e
+rfork n
+auth/factotum
+echo 'key proto=dp9ik user=glenda dom=grid !password=9gridchan' >/mnt/factotum/ctl
+srvtls tcp!registry.9gridchan.org!16675 gridreg /n/gridreg
+sed -n '/gridregistry/d;/tlssrv/{s/^/srvtls -c /;s/(is |mountpoint|service.*$)//g;s/pubregistry/gridpubreg/g;p;}' /n/gridreg/index | rc
+rm /srv/grid*
+#echo 'none
+#none' | `{sed -n 's/^([^ ]+).* is gridftp.*/ftpfs -\/ \1/p' /n/gridreg/index}
+#bind -c /n/ftp/incoming /n/gridftp
+#rio -k 'window -r 813 1702 1001 1878 page -i; window -r 330 1122 1002 1880 mothra; window -r 4 1123 1001 1583 -scroll chat -n qwx; window -scroll grep -b qwx /n/chat/chat' || status=''
+rio -k 'window -scroll chat -n qwx; window -scroll grep -b qwx /n/chat/chat' || status=''
+unmount /mnt/plumb
+#unmount /n/gridftp
+#unmount /n/ftp
+for(i in /n/grid*)
+	unmount $i
+unmount /mnt/wiki
+unmount /n/chat

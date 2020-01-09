@@ -1,0 +1,16 @@
+#!/bin/rc -ex
+9fs 9fat
+if(test -f /n/9fat/9pc64 || test -f /n/9fat/9pc){
+	rm /n/9fat/9bootfat
+	cp /386/9bootfat /n/9fat/
+	chmod +al /n/9fat/9bootfat
+}
+if(test -f /n/9fat/9pc64)
+	cp /amd64/9pc64 /n/9fat/
+if(test -f /n/9fat/9pc)
+	cp /386/9pc /n/9fat/
+if(test -f /n/9fat/9zynq)
+	cp /arm/9zynq /n/9fat/
+rm /srv/dos
+unmount /n/9fat
+unmount /n/9

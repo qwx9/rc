@@ -1,0 +1,160 @@
+#!/bin/rc -xe
+# gottagofast update script
+# FIXME: this script is FUCKING RETARDED
+# FIXME: idea: don't rfork n, allow fixing whatever and continuing build; better
+# error detection and recovery
+rfork en
+h=$home
+
+fn mkp{
+	cd $h/p
+	mk nuke
+	mk install && mk nuke || exit NOPE
+	cp opl2/man/1/opl2 pplay/man/1/pplay u6/man/1/u6mopl wl3d/man/1/wl3d /sys/man/1/
+	cp wl3d/man/6/wl3d /sys/man/6/
+	cd $h/p/qk2
+	for(i in mkfile.*){
+		bind $i mkfile
+		mk install && mk nuke || exit NOPE
+		unmount mkfile
+	}
+	if(test -d $h/lib/extra/spew/aplay){
+		cd $h/lib/extra/spew/aplay
+		mk install && mk clean
+	}
+}
+
+if(! test -e $h/p){
+	h=/usr/qwx
+	if(! test -e $h/p)
+		exit 'no p to hand'
+}
+
+{
+cd /
+bind -ac /dist/plan9front /
+hg revert --no-backup \
+	/lib/vgadb\
+	/rc/bin/^(9fs ircrc play)\
+	/sys/man/4/nusb\
+	/sys/src/9/pc64/mkfile\
+
+sysupdate
+. /sys/lib/rootstub
+ramfs -um /n/mk
+@{cd /sys/src; tar c *} | @{cd /n/mk; tar x}
+bind /n/mk /sys/src
+
+#fplot-col\
+#life-col.patch\	FIXME: goddamnit burnzez
+colf=(\
+acme-col\
+kbmap-col\
+kbdfs-fshalt\
+libdraw-menucol\
+colors-col\
+faces-col\
+rio-col\
+samterm-col\
+spred-col\
+stats-col\
+statusmsg-col\
+statusbar-col\
+sudoku-col\
+mothra-slmod\
+vt-col\
+)
+
+f=(\
+9fs-9paste\
+9nusbrc-nesusbjoy\
+doom-autorun\
+doom-chat\
+doom-limits\
+doom-mouseglitches\
+doom-mousegrab\
+doom-naivescaleup\
+doom-nodclick\
+doom-skywallhit\
+doom-spy\
+file-mod\
+ircrc-jpmfix\
+ircrc-print-log\
+man-joy\
+page-invert\
+page-tempfix\
+paint-colpick\
+paint-reverse\
+play-dmid-mod\
+png-maxmem\
+rio-exit\
+samterm-cmdrect\
+troff-nchars\
+)
+
+ko=(amd64 386)
+k=(pc64 pc)
+switch($sysname){
+case u11 u16 u24 u25 u27 u32
+	f=($f $colf)
+	ko=(amd64 386 arm)
+	k=(zynq pc pc64)
+case u14 u19 u20 u23 u28
+	f=($f $colf)
+case u2 u13 u21
+	f=($f $colf)
+	ko=386
+	k=(pc)
+case *
+	ko=386
+	k=(pc)
+}
+for(i in $f)
+	ape/patch -s --no-backup-if-mismatch -p1 < $h/p/patch/$i
+ape/patch -s -fp1 < $h/p/patch/doom-udpip # FIXME
+cp $h/p/dot/vgadb /lib/vgadb
+rm -f (/lib/vgadb /rc/bin/ircrc /sys/man/4/nusb)^.orig
+
+cd /sys/src
+{
+	mk clean
+	for(i in $ko)
+		objtype=$i mk nuke
+	mk install || exit 'NOPE'
+	for(i in $ko)
+		if(! ~ $i $objtype)
+			objtype=$i mk install || exit 'NOPE'
+	mk clean
+	for(i in $ko)
+		objtype=$i mkp
+} | pump || exit 'NOPE'
+cd /sys/man
+mk
+
+for(i in $k){
+	cd /sys/src/9/^$i
+	mk clean && mk install && mk clean
+}
+9fs 9fat
+if(~ $objtype amd64 386){
+	rm /n/9fat/9bootfat
+	cp /386/9bootfat /n/9fat/
+	chmod +al /n/9fat/9bootfat
+}
+for(i in $k)
+	switch($i){
+	case pc
+		if(! ~ $sysname u28 && ! ~ $sysname u16)
+			cp /386/9pc /n/9fat/
+	case pc64
+		if(! ~ $sysname u16)
+			cp /amd64/9pc64 /n/9fat/
+	case zynq
+		cp /arm/9zynq /n/9fat/
+	}
+unmount /n/9fat
+unmount /n/9
+rm /srv/dos
+} >>/tmp/mku.$pid
+#echo sync >>/srv/hjfs.cmd
+rm /tmp/mku.$pid

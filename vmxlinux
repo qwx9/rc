@@ -1,0 +1,48 @@
+#!/bin/rc
+rfork n
+
+fn clean{
+	for(i in '#X'/*/ctl)
+		echo quit > $i
+}
+
+fn sigexit{
+	clean
+}
+
+fn sigint{
+	clean
+}
+
+n=ether0
+M=1G
+k=/tmp/vmx/vmlinuz-5.3.0-19-generic
+m=/tmp/vmx/initrd.img-5.3.0-19-generic
+d=/dev/sdU7af84/data
+v=vesa:1280x1024
+c=('root=/dev/vda1')
+while(~ $1 -?){
+	switch($1){
+	case -d; d=$2; shift;
+	case -e; d=($d -d $2); shift;
+	case -k; k=$2; shift;
+	case -l; psd listen || aux/listen;
+	case -M; M=$2; shift;
+	case -m; m=$2; shift;
+	case -n; n=$2; shift;
+	case --; break;
+	case *
+		echo usage: $0 [opts] [--] [more opts]
+		exit usage
+	}
+	shift
+}
+echo scroll >/dev/wctl
+vmx \
+	-d $d \
+	-M $M \
+	-m $m \
+	-n $n \
+	-v vesa:1280x1024 \
+	$k \
+	$c $*

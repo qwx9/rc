@@ -1,0 +1,18 @@
+#!/bin/rc
+r=()
+switch($vgasize){
+case 3840x2160x*
+	r=(0 564 3840 1882)
+case 1920x1200x*
+	r=(0 0 1920 1018)
+case 1920x1080x*
+	r=(0 0 1920 898)
+case 1600x1200x*
+	r=(0 0 1920 928)
+case 1400x1050x*
+	r=(0 0 1400 906)
+case 1366x768x*
+	r=(0 0 1366 625)
+}
+if(! ~ $#r 0)
+	window -m -r $r sam -a $* $home/p/not/todo.proj

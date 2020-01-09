@@ -1,0 +1,6 @@
+#!/bin/rc -e
+ip/ipconfig unbind || status=''
+if(! test -d /net/ether1)
+	bind -a '#l1' /net
+aux/wpa -s $1 /net/ether1
+ip/ipconfig ether /net/ether1
