@@ -1,0 +1,31 @@
+#!/bin/awk -f
+
+BEGIN {
+phrases=", goddamn it,\
+, what the hell,\
+, goddamn fuckshit,\
+, son of a fuck,\
+, Christ almighty,\
+, oh God,\
+, or whatever the fuck,\
+, fucking assballs, \
+! What the shit is this unholy fuckness?! Oh,\
+, what a great thing, huh,\
+, Jesus fucking Christ on a fucking pogo stick,\
+, you stupid fuck,\
+, fucking Christ,"
+
+len=split (phrases, phrase, /\n/)
+srand()
+}
+
+
+{ 
+  split ( $0, parts, /,/)
+  for (i=1; i<length(parts); i++) {
+    printf "%s", parts[i]
+    ind = 1+int(rand * 1000)%len;
+    printf "%s", phrase[ind]
+  }
+print parts[i]
+}
