@@ -1,0 +1,51 @@
+#!/bin/rc -e
+# FIXME: includes garbage past the end
+fn cleanup{
+	if(! ~ $#tf 0)
+		rm -f $tf
+	tf=()
+}
+fn sigint{
+	cleanup
+	exit
+}
+fn sigexit{
+	cleanup
+}
+
+if(! ~ $#* 2){
+	echo usage: $0 pal image
+	exit usage
+}
+tf=/tmp/tospr.$pid
+iconv -uc r8g8b8 $2 > $tf
+r=`{awk '{ print $4-$2, $5-$3; exit }' $tf}
+awk '
+NR == 1{
+	npal = $2
+}
+FNR == NR && NR != 1{
+	pal[$1] = NR-2
+}
+FNR == 1 && NR != 1{
+	print "sprite", '^$r(1)^,^$r(2)^',"'^$1^'"
+}
+FNR != NR{
+	if($1 in pal)
+		printf "%d ", pal[$1]
+	else{
+		print "value " $1 " not in palette!"
+		exit
+	}
+	if(++px == '^$r(1)^'){
+		printf "\n"
+		px = 0
+	}
+}
+' $1 <{dd -bs 5x12 -skip 1 <$tf >[2]/dev/null \
+	| xd -1x \
+	| ssam '
+,s/^....... +//g
+s/\n/ /g
+s/(..) (..) (..) /0x\3\2\1\n/g
+'}

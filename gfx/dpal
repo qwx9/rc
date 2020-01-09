@@ -1,0 +1,16 @@
+#!/bin/rc
+# convert selected playpal palette to spred(1) format
+# FIXME: includes garbage past the end
+pn=0
+while(~ $1 -n){
+	pn=$2
+	shift 2
+}
+echo pal 256
+dd -bs 768 -skip $pn -count 1 <$1 >[2]/dev/null \
+	| xd -1x \
+	| ssam '
+,s/^....... +//g
+s/\n/ /g
+s/(..) (..) (..) /0x\1\2\3\n/g
+'
