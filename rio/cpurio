@@ -1,0 +1,37 @@
+#!/bin/rc
+if(! ~ $sysname u16 && ~ `{ns | grep '#v'} ''){
+	screenrc
+	echo softscreen off >'#v/vgactl'
+	echo hwaccel on >'#v/vgactl'
+}
+rfork efns	# weeeee
+font=/lib/font/bit/vga/unicode.font
+bind -a '#A' /dev
+bind -c $home/tmp /tmp
+bind -a $home/bin/rc /bin
+bind -a $home/bin/$cputype /bin
+if(test -d $home/p/rc)
+	bind -a $home/p/rc /bin
+if(test -f $home/p/dot/fn)
+	. $home/p/dot/fn
+if(! ~ $sysname u16 && test -f /tmp/sk){
+	auth/factotum
+	auth/aescbc -d </tmp/sk | read -m >/mnt/factotum/ctl
+}
+webcookies
+webfs
+plumber
+switch($sysname){
+case u28
+	echo pin 22 >'#A'/audioctl
+	echo inpin 23 >'#A'/audioctl
+case u11
+	echo pin 27 >'#A/audioctl'
+	echo inpin 25 >'#A'/audioctl
+}
+if(! ~ $sysname u16)
+	echo master 40 >'#A/volume'
+echo accelerated 3 >'#m'/mousectl
+prompt=('; ' '	')
+rio -i riostart
+# might be nice to do dontkill '^(rio|rc)$'

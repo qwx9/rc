@@ -1,0 +1,6 @@
+#!/bin/rc -e
+truetypefs
+font=/n/ttf/unifont.ttf.16/font
+plumber
+rio
+unmount /mnt/plumb
