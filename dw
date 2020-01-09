@@ -1,0 +1,11 @@
+#!/bin/rc
+if(~ $1 -o){
+	of=1
+	shift
+}
+for(i in $*){
+	f=`{echo $i | sed -n 's,.*/([^/]+)$,\1,p'}
+	if(! ~ $#of 0 || ! test -e $f)
+		echo $f'
+'$i
+} | xargs -n 2 -p 10 hget -o
