@@ -1,0 +1,13 @@
+#!/bin/rc
+window -r 952 0 1920 608 'cd lib/dm/plt; doom -z plt -noztele -playdemo dime >/dev/null >[2=1]'
+window -r 156 -1 964 607 'quake2 +set game q2dq2 >/dev/null >[2=1]'
+window -r 2 474 810 1082 'qk1 -m 24 >/dev/null >[2=1]'
+window -r 806 597 1454 1005 'wl3d -s'
+window -r 1450 596 1921 1081 'p $home/p/rc/qdemo; read -c 1'
+window -r 0 0 160 478 'stats -lmsc'
+window -scroll -r 806 1026 1194 1080 'play mv/gojira.torii.mp3 m/gojira.*'
+
+# todo: do these automatically:
+# q2dq2: map run/base1.dm2
+# qk1: playdemo start
+# wl3d: either find good demos, or just play a game while the rest is going
