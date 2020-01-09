@@ -1,0 +1,6 @@
+#!/bin/rc
+ps -n | awk '
+/ play$/ { g[++i] = $3 }
+{ for(n=1; n<=i; n++) if(g[n] == $3) p[n] = $2 }
+END { for(n=1; n<=i; n++) print p[n] }
+'

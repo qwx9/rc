@@ -1,0 +1,18 @@
+# skip to next track
+fn fw{ for(i in `{fpl}) echo 'echo kill >/proc/'^$i^/note }
+# pause playback
+fn sto{ for(i in `{fpl}) echo 'echo stop >/proc/'^$i^/ctl }
+# resume playback
+fn sta{ for(i in `{fpl}) echo 'echo start >/proc/'^$i^/ctl }
+
+# shortcuts for first play(1) process
+fn Fw{ fw | sed 1q | rc }
+fn Sta{ sta | sed 1q | rc }
+fn Sto{ sto | sed 1q | rc }
+
+# recursively list all files in arguments and play shuffled list forever
+fn shp{ *=`"{lr -Q $*}; while(! ~ $#* 0) play `'
+' {echo -n $* | shl} }
+
+# shuffle play pre-arranged list of files forever
+fn shpp{ status='' while(~ $status '') play `{shl <$1} }
