@@ -1,0 +1,14 @@
+#!/bin/rc
+# SBLC_PWM_CTL2: bytes 15:0, range 0 (off) to v>>16 (full)
+
+if(! ~ $#* 1){
+	echo usage: $0 factor
+	exit 'usage'
+}
+v=`{seg -Lr igfxmmio 0x400000 0xc8254}
+if(~ $#v 0)
+	exit 'no such named segment'
+v=`{echo 'v='$v'; v & ~0xffff | ((v>>16) / '$1')' | pc -n}
+if(! ~ $#v 1)
+	exit 'invalid factor'
+seg -Lw igfxmmio 0x400000 0xc8254 $v
