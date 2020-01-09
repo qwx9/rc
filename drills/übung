@@ -1,0 +1,53 @@
+#!/bin/rc
+
+# FIXME: alternatives/synonyms: don't fail because of those
+# FIXME: examples, phrases
+# FIXME: verb conjugation
+# FIXME: meaning alternatives
+# FIXME: noun genders, plural, derivatives/compounds
+# FIXME: shuffle list every time it's parsed completely
+# FIXME: randomly ask english or german
+
+en=0
+files=$home/p/not/ger/^(adj adv cnj exp itj nou prn prp vrb)
+score=0
+total=0
+
+fn sigint{
+	echo; echo deine Endsumme: $score/$total Punkte, pfff.
+	e
+	exit ''
+}
+
+fn chk{
+	a=$2
+	b=$1
+	if(~ $en 1){
+		a=$1
+		b=$2
+	}
+	echo -n was ist $a?'		'
+	if(! ~ `{read -n 1} $b)
+		echo NEIN! es ist $b!
+	if not
+		score=`{echo $score | awk '{print $1+1}'}
+	total=`{echo $total | awk '{print $1+1}'}
+}
+
+while(~ $1 -*){
+	switch($1){
+	case -e
+		en=1
+	}
+	shift
+}
+
+ifs='
+' l=(`{cat $files \
+	| sed '/^	/d;/^$/d;s/		*/	/g' \
+	| awk -F '	' 'BEGIN{srand()}{printf "%06d  %s\n", rand()*1000000, $0;}' \
+	| sort -n \
+	| sed 's/^[0-9]*  //'})
+while()
+	for(i in $l)
+		chk `{echo $i | awk -F '	' '{printf "%s\n%s", $1, $2}'}
