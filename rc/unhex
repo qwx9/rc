@@ -1,0 +1,17 @@
+#!/bin/awk -f
+# dd ... | xd -1x | ssam '...' | unhex | dd ...
+function hex(s, v){
+	if(s ~ /^0x/)
+		s = substr(s, 3)
+	for(n=1; n<=length(s); n++)
+		v = v * 16 + h[substr(s, n, 1)]
+	return v
+}
+BEGIN{
+	for(n=0; n<16; n++)
+		h[sprintf("%x", n)] = n
+}
+{
+	for(i=2; i<=NF; i++)
+		printf "%c", hex("0x" $i)
+}
