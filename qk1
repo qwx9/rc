@@ -1,0 +1,14 @@
+#!/bin/rc
+rfork ne
+switch($sysname){
+case u24 u27 u20 u25
+	res=(-dx 1032 -dy 776)
+case u11
+	res=(-dx 1608 -dy 1208)
+	a=(-m 32)
+case *
+	res=(-dx 808 -dy 608)
+}
+echo resize $res >/dev/wctl
+bind -q /sys/games/lib/quake/cd /mnt/cd	# cdfs(4)
+quake $a $* >/dev/null

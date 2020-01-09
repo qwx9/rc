@@ -1,0 +1,28 @@
+#!/bin/rc
+rfork ne
+res=(-dx 808 -dy 608)
+noresz=()
+c=(quake2)
+# launch ctf with: qk2 -g ctf $* +set ctf 1
+# launch crbot with: qk2 -g crbot $* +set deathmatch 1 +set ctf 0
+while(~ $1 -?){
+	switch($1){
+	case -g
+		# mods' executables are named q2$x
+		c=(q2$2 +set game $2)
+		shift
+	case -m
+		cdmnt=$2
+		shift
+	case -r
+		res=(-dx `{echo $2 + 8 | pc -n} -dy `{echo $3 + 8 | pc -n})
+		shift 2
+	case -z
+		noresz=1
+	}
+	shift
+}
+if(~ $#noresz 0)
+	echo resize $res >/dev/wctl
+bind -q /sys/games/lib/quake2/cd /mnt/cd	# cdfs(4)
+$c $* >/dev/null
