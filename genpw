@@ -1,0 +1,8 @@
+#!/bin/rc
+n=32
+if(~ $1 -n){
+	n=$2
+	shift 2
+}
+tr -cd ' '-~ </dev/random | read -c $n
+echo
