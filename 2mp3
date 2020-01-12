@@ -1,0 +1,4 @@
+#!/bin/rc
+play -o /fd/1 >[2]/dev/null |\
+	audio/pcmconv -i s16r1c1 -o S16r1c1 |\
+	audio/mp3enc -r -v -q 0

@@ -1,10 +1,6 @@
 # audio
-# convert audio file to mp3
-fn 2mp3{ play -o /fd/1 >[2]/dev/null | audio/pcmconv -i s16r1c1 -o S16r1c1 | audio/mp3enc -q 0 }
 # playback samples from microphone (needs setup)
 fn admp{ dd -bs 4x441 </dev/audio >/dev/audio }
-# audio file name standardization
-fn mfmt{ sed $"*^';s/^''//;s/''$//;s/[\[\]\!,\(\)''\$\*\?:\;=]//g;s/\&/and/g;s/ - /./g;s/\.[^\.]+$/.mp3/;s/ /./g;s/\.\././g' | tr A-Z a-z }
 # decode audio files(s) and visualize with pplay(1)
 fn pcm{ @{o=(); while(~ $1 -?) o=($o $1) && shift; play -o /fd/1 $* >[2]/dev/null | pplay $o}}
 # same, without temporary viariables (???)

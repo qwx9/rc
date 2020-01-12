@@ -1,0 +1,11 @@
+#!/bin/rc
+parm=()
+if(~ $1 -l){
+	parm=(-l)
+	shift
+}
+pref=$1
+for(i in $*(2-)){
+	echo $i
+	2opus $*(2-) <$i >`{echo $i | mfmt $pref opus}
+}

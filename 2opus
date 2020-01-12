@@ -1,0 +1,15 @@
+#!/bin/rc
+l=(--bitrate 128)
+if(~ $1 -l){
+	l=()
+	shift
+}
+play -o /fd/1 >[2]/dev/null |\
+	audio/opusenc \
+		--quiet \
+		--music \
+		--downmix-stereo \
+		--raw \
+		--raw-rate 44100 \
+		$l \
+		- -
