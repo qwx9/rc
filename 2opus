@@ -5,11 +5,4 @@ if(~ $1 -l){
 	shift
 }
 play -o /fd/1 >[2]/dev/null |\
-	audio/opusenc \
-		--quiet \
-		--music \
-		--downmix-stereo \
-		--raw \
-		--raw-rate 44100 \
-		$l \
-		- -
+	audio/opusenc --music --downmix-stereo $l
