@@ -1,4 +1,5 @@
 #!/bin/rc
+rfork nefs
 font=/lib/font/bit/vga/unicode.font
 bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
