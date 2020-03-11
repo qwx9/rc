@@ -1,0 +1,2 @@
+#!/bin/rc
+audio/opusenc --bitrate 128 --music --downmix-stereo 
