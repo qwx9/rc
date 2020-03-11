@@ -7,5 +7,5 @@ if(~ $1 -l){
 pref=$1
 for(i in $*(2-)){
 	echo $i
-	2opus $*(2-) <$i >`{echo $i | mfmt $pref opus}
+	2opus $parm <$i >`{echo $i | mfmt $pref opus}
 }
