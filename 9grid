@@ -8,8 +8,8 @@ rm /srv/grid*
 #echo 'none
 #none' | `{sed -n 's/^([^ ]+).* is gridftp.*/ftpfs -\/ \1/p' /n/gridreg/index}
 #bind -c /n/ftp/incoming /n/gridftp
-#rio -k 'window -r 813 1702 1001 1878 page -i; window -r 330 1122 1002 1880 mothra; window -r 4 1123 1001 1583 -scroll chat -n qwx; window -scroll grep -b qwx /n/chat/chat' || status=''
-rio -k 'window -scroll chat -n qwx; window -scroll grep -b qwx /n/chat/chat' || status=''
+#rio -k 'window -r 813 1702 1001 1878 page -i; window -r 330 1122 1002 1880 mothra; window -r 4 1123 1001 1583 -scroll chat -n qwx; window -scroll grep -bi ''''2600|q[uw7]+x|qk[12]|quake|doom|wl3d|wolf|igfx|vmx|glenda ⇒.*http'''' /n/chat/chat' || status=''
+rio -k 'window -scroll chat -n qwx; window -scroll grep -bi ''''2600|q[uw7]+x|qk[12]|quake|doom|wl3d|wolf|igfx|vmx|glenda ⇒.*http' /n/chat/chat'''' || status=''
 unmount /mnt/plumb
 #unmount /n/gridftp
 #unmount /n/ftp
