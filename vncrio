@@ -6,11 +6,14 @@ bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
 if(test -d $home/p/rc)
 	bind -a $home/p/rc /bin
+if(test -d $home/p/notes/bin)
+	bind -a $home/p/notes/bin /bin
 if(test -f $home/p/dot/fn)
 	. $home/p/dot/fn
 if(test -f /tmp/sk){
 	auth/factotum
 	auth/aescbc -d </tmp/sk | read -m >/mnt/factotum/ctl
+	ircs -ep qwx irc.freenode.net
 }
 webcookies
 webfs
