@@ -16,9 +16,9 @@ fn sigint{
 
 n=ether0
 M=1G
-k=/tmp/vmx/vmlinuz-5.3.0-19-generic
-m=/tmp/vmx/initrd.img-5.3.0-19-generic
-d=/dev/sdU7af84/data
+k=/tmp/vmx/vmlinuz-5.4.12_1
+m=/tmp/vmx/initramfs-5.4.12_1.img
+d=/dev/sdE0/data
 v=vesa:1280x1024
 c=('root=/dev/vda1')
 while(~ $1 -?){
