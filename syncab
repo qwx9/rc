@@ -1,0 +1,33 @@
+#!/bin/rc
+rfork n
+if(! ~ $#* 2){
+	echo usage: $0 left right
+	exit usage
+}
+
+ref=$1
+old=$2
+derp -t $ref $ref $old |\
+	awk \
+	-v 'ref='^$ref \
+	-v 'old='^$old \
+'
+BEGIN{
+	rm["na"] = rm["dn"] = rm["dm!"] = 1
+}
+{
+	if($1 in rm)
+		ls["rm"] = ls["rm"] " " old "/" $2
+	else
+		ls["cp"] = ls["cp"] " " $2
+	cnt[$1]++
+}
+END{
+	for(i in cnt)
+		print "#" i, cnt[i]
+	if("rm" in ls)
+		print "rm", ls["rm"]
+	if("cp" in ls)
+		print "@{cd", ref, "; tar c", ls["cp"], "} | @{cd", old, "; tar xT}"
+}
+'
