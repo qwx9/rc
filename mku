@@ -10,8 +10,8 @@ fn mkp{
 	cd $h/p
 	mk nuke
 	mk install && mk nuke || exit NOPE
-	cp opl2/man/1/opl2 pplay/man/1/pplay u6/man/1/u6mopl wl3d/man/1/wl3d /sys/man/1/
-	cp wl3d/man/6/wl3d /sys/man/6/
+	cp -x opl2/man/1/opl2 pplay/man/1/pplay u6/man/1/u6mopl wl3d/man/1/wl3d /sys/man/1/
+	cp -x wl3d/man/6/wl3d /sys/man/6/
 	cd $h/p/qk2
 	for(i in mkfile.*){
 		bind $i mkfile
@@ -36,6 +36,9 @@ bind -ac /dist/plan9front /
 hg revert --no-backup \
 	/lib/vgadb\
 	/rc/bin/^(9fs ircrc play)\
+	/sys/lib/plumb/basic\
+	/sys/lib/kbmap\
+	/sys/man/1/audio\
 	/sys/man/4/nusb\
 	/sys/src/9/pc64/mkfile\
 
@@ -50,7 +53,6 @@ bind /n/mk /sys/src
 colf=(\
 acme-col\
 kbmap-col\
-kbdfs-fshalt\
 libdraw-menucol\
 colors-col\
 faces-col\
@@ -61,7 +63,7 @@ stats-col\
 statusmsg-col\
 statusbar-col\
 sudoku-col\
-mothra-slmod\
+mothra-col\
 vt-col\
 )
 
@@ -78,17 +80,24 @@ doom-nodclick\
 doom-skywallhit\
 doom-spy\
 file-mod\
+file-opus\
 ircrc-jpmfix\
 ircrc-print-log\
+kbdfs-fshalt\
+libplumb-basic\
+man1audio-opus\
 man-joy\
+mothra-font\
 page-invert\
 page-tempfix\
-paint-colpick\
 paint-reverse\
 play-dmid-mod\
+play-opus\
 png-maxmem\
 rio-exit\
-samterm-cmdrect\
+sam-fullfrontalnudity\
+samterm-fullfrontalnudity\
+samterm-flayers\
 troff-nchars\
 )
 
@@ -109,10 +118,11 @@ case *
 	ko=386
 	k=(pc)
 }
+ape/patch -s -fp1 < $h/lib/extra/ftrvxmtrx/riow/9front.diff
 for(i in $f)
 	ape/patch -s --no-backup-if-mismatch -p1 < $h/p/patch/$i
 ape/patch -s -fp1 < $h/p/patch/doom-udpip # FIXME
-cp $h/p/dot/vgadb /lib/vgadb
+cp -x $h/p/dot/vgadb /lib/vgadb
 rm -f (/lib/vgadb /rc/bin/ircrc /sys/man/4/nusb)^.orig
 
 cd /sys/src
