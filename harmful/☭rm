@@ -1,0 +1,3 @@
+#!/bin/rc
+rm `'
+'{diff <{lr -dQ $1 | sort} <{cd $2 && lr -dQ $1 | sort} | sed -n '/^< /s/^< //p' | tac}

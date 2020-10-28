@@ -1,0 +1,3 @@
+#!/bin/rc
+tar c `'
+'{diff <{lr -dQ $1 | sort} <{cd $2 && lr -dQ $1 | sort} | sed -n '/^< /s/^< //p'} | @{cd $2 && tar xT}

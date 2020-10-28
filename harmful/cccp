@@ -1,0 +1,12 @@
+#!/bin/rc
+# советский синхронного сохранения республики
+if(! ~ $#* 2 || ! ~ $1 /* || ! ~ $2 /*)
+	exit usage
+rfork n
+src=`{basename $1}
+srcdir=`{basename -d $1}
+dst=`{basename $2}
+dstdir=`{basename -d $2}
+if(~ 0 $#dstdir $#srcdir $#src $#dst)
+	exit usage
+cd $dstdir && ☭rm $dst $srcdir && cd $srcdir && ☭cp $src $dstdir
