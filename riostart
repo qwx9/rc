@@ -21,7 +21,7 @@ case 3840x2160x*
 	window -scroll -r 2624 0 3284 568
 	window -r 1312 0 1972 568
 	window -r 656 0 1316 568
-	window -scroll -r 2526 564 3186 938 'label aib; aib'
+	#window -scroll -r 2526 564 3186 938 'label aib; aib'
 	window -scroll -r 2526 934 3036 1260 'label usbevent; cat /dev/usbevent'
 	#window -r 0 0 660 568 mw
 case 1920x1200x*
@@ -33,15 +33,16 @@ case 1920x1200x*
 	window -scroll -r 840 970 1244 1018 'label shp; rc'
 	window -r 840 924 1244 974 volume
 	window -scroll -r 1240 0 1920 80 cat /dev/kprint
-	window -scroll -r 1241 76 1920 162 'label wircrc; rc'
-	window -scroll -r 4 656 718 1200
+	#window -scroll -r 1241 76 1920 162
+	#window -scroll -r 4 656 718 1200
 	window -scroll -r 676 0 1262 162
-	window -r 676 158 1262 464
-	window -r 676 460 1262 928
-	window -r 1240 924 1920 1200
-	window -scroll -r 1258 828 1920 928
-	window -r 0 656 680 1200
-	window -r 0 0 680 660
+	window -r 0 561 718 1200 'label zuke; rc'
+	#window -r 676 158 1262 464
+	#window -r 676 460 1262 928
+	#window -r 1240 924 1920 1200
+	#window -scroll -r 1258 828 1920 928
+	#window -r 0 656 680 1200
+	#window -r 0 0 680 660
 case 1920x1080x*
 	#window -r 886 0 1600 1112 'page lib/doc/igfx/hsw/^(*display.pdf *registers_0.pdf)'
 	window -scroll -r 4 596 718 1080
@@ -125,3 +126,4 @@ case ''	# only u16
 case *
 	window
 }
+window -hide -r 1818 1152 1920 1200 'label riow; riow </srv/riogkbd*'
