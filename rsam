@@ -1,0 +1,35 @@
+#!/bin/rc
+rfork ne
+switch($vgasize){
+case 3840x2160x*
+	r=(0 564 3840 2152)
+	rs=(0 564 3840 1882)
+	rw=(0 1616 714 2160)
+case 1920x1200x*
+	r=(0 0 1920 1192)
+	rs=(0 0 1920 1018)
+	rw=(0 656 714 1200)
+case 1920x1080x*
+	r=(0 0 1920 1072)
+	rs=(0 0 1920 898)
+	rw=(0 536 714 1080)
+case 1600x1200x*
+	r=(0 0 1920 1192)
+	rs=(0 0 1920 928)
+	rw=(0 656 714 1200)
+case 1400x1050x*
+	r=(0 0 1400 1042)
+	rs=(0 0 1400 906)
+	rw=(0 506 714 1050)
+case 1366x768x*
+	r=(0 0 1366 760)
+	rs=(0 0 1366 625)
+	rw=(0 224 714 768)
+}
+if(! ~ $#r 0){
+	unmount /mnt/plumb
+	plumber
+	window -m -r $r -hide rio -k 'window -m -r '^$"rw^' -scroll; window -m -r '^$"rs^' sam -a '^$"*^' '^$home^'/p/^(not/todo.proj not/todo.sce pitch/pplay.c) '^$home^'/p/notes/net/todo/^(basic daily stack proj/pitch/notes.md proj/sce/notes.md proj/asif/notes.md)^.md '
+}
+if not
+	exit 'nope, unknown resolution'
