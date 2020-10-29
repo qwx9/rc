@@ -1,0 +1,11 @@
+#!/bin/rc
+parm=()
+if(~ $1 -l){
+	parm=(-l)
+	shift
+}
+pref=$1
+for(i in $*(2-)){
+	echo $i
+	audio/flacdec <$i | pcm2opus >`{echo $i | mfmt $pref opus}
+}
