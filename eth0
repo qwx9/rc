@@ -1,0 +1,4 @@
+#!/bin/rc
+ip/ipconfig ether /net/ether1 unbind
+Kill wpa | rc
+ip/ipconfig ether /net/ether0
