@@ -1,6 +1,8 @@
 #!/bin/rc
 if(test -d $home/p/rc)
 	bind -a $home/p/rc /bin
+if(test -d $home/p/rc2)
+	bind -a $home/p/rc2 /bin
 if(test -d $home/p/pico)
 	touch $home/bin/rc/pico && bind $home/p/pico/pico $home/bin/rc/pico
 if(test -d $home/p/sm2/bin)
