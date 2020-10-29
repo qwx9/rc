@@ -1,0 +1,58 @@
+#!/bin/rc
+rfork n
+if(test -d /net/ether1)
+	n=ether1
+if not
+	n=ether0
+switch($sysname){
+case u32
+	n=ether0
+	m=2G
+	d=/dev/sdU7af84/data
+	echo scroll >/dev/wctl
+	vmx \
+		-M $m \
+		-n $n \
+		-d $d \
+		-v vesa:1280x1024 \
+		/tmp/vmx/bsd65.rd \
+		'device=sd0a'
+case u27
+	if(~ $cputype amd64)
+		m=3G
+	if not
+		m=1G
+	if(test -f /tmp/vmx/bsd.img)
+		d=/tmp/vmx/bsd.img
+	if not
+		d=/dev/sdE1/data
+	if(test -f /dev/sdU999b0.0/data)
+		d=($d -d /dev/sdU999b0.0/data)
+	if(test -f /dev/sdU999b0.1/data)
+		d=($d -d /dev/sdU999b0.1/data)
+	echo scroll >/dev/wctl
+	vmx \
+		-M $m \
+		-n $n \
+		-d $d \
+		-v vesa:1200x800 \
+		/tmp/vmx/bsd65.sp \
+		'device=sd0a'
+case u24
+	if(~ $cputype amd64)
+		m=4G
+	if not
+		m=1G
+	echo scroll >/dev/wctl
+	vmx \
+		-M $m \
+		-n $n \
+		-d /dev/sdE0/data \
+		-v vesa:1366x768 \
+		$home/vmx/bsd64.sp \
+		'device=sd0a'
+case *
+	echo nope.
+	exit nope.
+}
+echo quit >'#X'/0/ctl

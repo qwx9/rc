@@ -1,0 +1,22 @@
+#!/bin/rc
+rfork n
+switch($sysname){
+case u27
+	if(test -d /net/ether1)
+		n=ether1
+	if not
+		n=ether0
+	m=3G
+	echo scroll >/dev/wctl
+	vmx \
+		-M $m \
+		-n $n \
+		-d /dev/sdE3/data \
+		-d /dev/sdUbff05/data \
+		-v 1024x768 \
+		$home/vmx/9ants64 \
+		'user=glenda mouseport=ps2 bootcmd=plan9rc tgzfs=no cdboot=yes'
+	echo quit >'#X'/0/ctl
+case *
+	echo nope.
+}
