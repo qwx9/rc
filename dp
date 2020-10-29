@@ -1,0 +1,7 @@
+#!/bin/rc
+
+audio/pcmconv -i u32r1c1 -o U32r1c1 <$home/dport*.bin >/dev/pl
+mkdir '#g'/fb
+echo 'va 0x40000000 0x10000000 fixed' > '#g'/fb/ctl
+@{ rfork n; run >/dev/null; bind -b '#i' /dev }	# ?
+
