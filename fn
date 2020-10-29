@@ -56,8 +56,6 @@ fn gr{ lr -Q $*(2-) | xargs grep -n $1 }
 # lower filenames
 fn lw{ for(i in $*) mv $i `'
 '{echo $i | tr A-Z a-z} }
-# recursive copy using mkfs(1)
-fn mkcp{ disk/mkfs -z 4096 -s $1 -d $*(2-) /sys/lib/sysconfig/proto/allproto }
 
 # printing
 # show troff document

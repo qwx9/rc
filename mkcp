@@ -1,0 +1,2 @@
+#!/bin/rc
+disk/mkfs -z 4096 -s $1 -d $*(2-) /sys/lib/sysconfig/proto/allproto
