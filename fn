@@ -51,8 +51,6 @@ fn catfn{ sed -n '/^'$1'\(/ {x;p;x;};/^'$1'\(/,/^}/p;h' *.c }
 # recursive chown implementation, given fs access
 fn chown{ for(i in `'
 '{lr -Qd $*(2-)}){ chgrp $1 $i && chgrp -o $1 $i } }
-# silly recursive grep(1)
-fn gr{ lr -Q $*(2-) | xargs grep -n $1 }
 # lower filenames
 fn lw{ for(i in $*) mv $i `'
 '{echo $i | tr A-Z a-z} }
@@ -67,7 +65,9 @@ fn doc2{ echo `{doctype $1} '| lp -dstdout | page' | rc }
 # connect to aijuboard
 fn aib{ echo b115200 >/dev/eiaU*.1ctl && con -r /dev/eiaU*.1 }
 # wircrc usage
-fn ii{ wircrc -T -p 6697 -c 'irc.freenode.net!#cat-v,irc.freenode.net!#setecastronomy' -n qwx }
+fn wii{ wircrc -T -p 6697 -c 'irc.freenode.net!#cat-v,irc.freenode.net!#setecastronomy' -n qwx }
+# ircs usage
+fn ii{ ircx -t '#cat-v' }
 # quake2 crbot
 fn q2cr{ qk2 -g crbot $* +set deathmatch 1 +set ctf 0 }
 # quake2 ctf
@@ -79,6 +79,8 @@ fn shi{ page `'
 fn t{ vt -2bf /lib/font/bit/fixed/unicode.6x10.font }
 # launch graphical program on a unix host
 fn ff{ A=$*(2-); ssh $user@$1 'DISPLAY=:0 '^$"A^' >/dev/null 2>&1'; A=() }
+# defunct linux script shortcut
+#fn lnx{ linux -r $home/mroot /bin/bash -i }
 
 # rio
 # clear window
@@ -105,6 +107,8 @@ fn vr{ @{rfork n; aux/realemu; aux/vga -lm vesa $vgasize} }
 fn arc{ cat >/mail/box/qwx/arc/`{date -n} }
 # update dir with new messages from archived mailing list
 fn mlu{ cd /n/lists.9front.org/lists/$1; tar c `{diff <{lr} <{cd $2; lr} | sed '/^[^<]/d;s/< //'} | @{cd $2; tar xT} }
+# attempt at quoting
+fn qt{ cat | sed 's/^/> /' }
 
 # webshit
 # simple ninetimes
@@ -118,3 +122,26 @@ fn geq{ plumb http://www.dictionary.com/browse/^$1 }
 fn gq{ plumb 'http://www.dict.cc/?s='^$* }
 # query weather
 fn wth{ plumb http://wttr.in/$1 }
+
+# trials from projects
+#fn ss{ sawk '{x[NR]=$4} END{freq(x); for(i in ans) print i, ans[i] | "sort -n"}' db0 }
+#fn wp{
+#	a=(`{dd </n/tapefs/piched000.^$2 >[2]/dev/null -bs 4 -count 1 -skip $1 | xd -s -2d | sed 's/ 0+/ /g'})
+#	wpic -x $a(2) -y $a(3) $*(3-) /n/tapefs/pic^$1^.$2 | page
+#	a=()
+#}
+#fn shirc{ aux/listen1 -vp 1 tcp!*!17066 /bin/exportfs -R -r $home/lib -P <{echo '+ ^/k?irc$'} }
+#fn itest{ @{cd p/igfx/igdump; aux/vga -Vipm auto -l $vgasize >$home/v/vga >[2=1]; dumpsnb.rc | prettysnb.rc >>/tmp/snbv} }
+#fn idump{ @{cd p/igfx/igdump; dumpsnb.rc | prettysnb.rc > $home/vgam} }
+#fn gd{ *=`{echo $"* | sed 's/ /|/g'}; @{cd $home/p/not/ger; grep -i $* *} }
+#fn gq2{
+#	{for(i in $*) hget 'http://dict.tu-chemnitz.de/dings.cgi?query='^$i} |
+#	sed -n 's/^.*onclick="return vi\(''([^)]+),[^,]+,''de'',''en'',this\).*/\1/p' |
+#	sed 's/''//g;s/,/	→	/'
+#}
+#fn ftp11{ ftpfs -/na anonymous@anonymous -o UNIX u11 }
+#fn ctopdf{ ps2pdf <{lp -dstdout -l100 -x0 -y0 -fCW.7 <{cat $*}} /fd/1 | pump }
+#fn shi{ xpage `'
+#'{lr -Q $* | shl | sed 5000q} }
+fn chi{ cd $home/p/sm2/cin && truetypefs && plumber && font=/n/ttf/unifont.ttf.16/font rio; unmount /mnt/plumb }
+fn chidiff{ diff <{ls *.pdf | sort} <{awk '{print $5}' db0 | sort} | sed -n '/^[0-9]/d;s/< /2.5 0 0 0 /p' }
