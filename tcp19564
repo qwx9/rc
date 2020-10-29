@@ -1,0 +1,2 @@
+#!/bin/rc
+exec tlssrv -A -l 9dump -r `{cat $3/remote} /bin/exportfs -R -r /usr/share

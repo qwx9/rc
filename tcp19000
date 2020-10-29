@@ -1,0 +1,4 @@
+#!/bin/rc
+cd /usr/share/radio
+while(~ $status '')
+	dd -bs 512x1024 -if `{fortune <{ls}} >[2]/dev/null
