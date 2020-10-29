@@ -1,0 +1,12 @@
+#!/bin/rc
+rfork n
+rimport -C -c -u share u16 /usr/share /n/share || exit rimport
+if(! ~ $#* 0)
+	t=$1
+if not
+	t=`{walk -demn /n/share/radio}
+cd $home/m
+for(i in `{walk -emn | awk '{if($1 > '^$t(1)^') print $2}'}){
+	echo $i
+	lofi <$i >/n/share/radio/$i
+}
