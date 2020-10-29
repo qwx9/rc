@@ -10,12 +10,7 @@ bind -a '#A' /dev
 bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
-if(test -d $home/p/rc)
-	bind -a $home/p/rc /bin
-if(test -d $home/p/notes/bin)
-	bind -a $home/p/notes/bin /bin
-if(test -f $home/p/dot/fn)
-	. $home/p/dot/fn
+test -f $home/p/rc/bindbins && . $home/p/rc/bindbins
 if(! ~ $sysname u16 && test -f /tmp/sk){
 	auth/factotum
 	auth/aescbc -d </tmp/sk | read -m >/mnt/factotum/ctl
@@ -35,5 +30,7 @@ if(! ~ $sysname u16)
 	echo master 40 >'#A/volume'
 echo accelerated 3 >'#m'/mousectl
 prompt=('; ' '	')
+# FIXME
+cat /sys/lib/kbmap/us >/dev/kbmap
 rio -i riostart
 # might be nice to do dontkill '^(rio|rc)$'

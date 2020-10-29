@@ -4,12 +4,7 @@ font=/lib/font/bit/vga/unicode.font
 bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
-if(test -d $home/p/rc)
-	bind -a $home/p/rc /bin
-if(test -d $home/p/notes/bin)
-	bind -a $home/p/notes/bin /bin
-if(test -f $home/p/dot/fn)
-	. $home/p/dot/fn
+test -f $home/p/rc/bindbins && . $home/p/rc/bindbins
 if(test -f /tmp/sk){
 	auth/factotum
 	auth/aescbc -d </tmp/sk | read -m >/mnt/factotum/ctl
@@ -20,4 +15,6 @@ webfs
 plumber
 echo accelerated 5 >'#m'/mousectl
 prompt=('; ' '	')
+# FIXME
+cat /sys/lib/kbmap/us >/dev/kbmap
 rio
