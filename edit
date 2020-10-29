@@ -1,0 +1,2 @@
+#!/bin/rc
+B /dev/wsys/`{sed 's/[ 	]+//g' /dev/winid}^/text
