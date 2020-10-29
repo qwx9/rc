@@ -1,0 +1,5 @@
+#!/bin/rc -e
+git/fs
+mkdir -p .git/index9/tracked/`{cd /mnt/git/HEAD/tree && walk -d .}
+touch .git/index9/tracked/`{cd /mnt/git/HEAD/tree && walk -f .}
+unmount /mnt/git

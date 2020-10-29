@@ -1,0 +1,4 @@
+#!/bin/rc
+sed 's/^/hex(/;s/$/)/' | pc -n | tr -d '
+'
+status=''

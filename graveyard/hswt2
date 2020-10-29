@@ -1,0 +1,12 @@
+#!/bin/rc
+
+cat $1 | sed -n '/^wport f000/{
+	N
+	s/wport f000 ([^ ]+)\nrport f004 ([^ ]+)/	rr(igfx, 0x\1);	\/\* is 0x\2 \*\//p
+	h
+}
+/^wport f004/{
+	x
+	G
+	s/rr\(igfx, (0x[^ ]+)\);.*\nwport f004 ([^ ]+)/wr(igfx, \1, 0x\2);/p
+}' | sed '/igfx, 0x000(4f0|45400|44008)/d'

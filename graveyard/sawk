@@ -1,0 +1,2 @@
+#!/bin/rc
+awk -f /bin/stats.awk -f <{echo $1} $*(2-)

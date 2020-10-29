@@ -1,0 +1,8 @@
+#!/bin/rc
+# FIXME: this lists both files and directories
+s='s/^[0-9]*	//'
+if(~ $1 -Q){	# remove rc quoting
+	s='s/^[0-9]*	''*(.*)/\1/;s/''$//;s/''''/''/g'
+	shift
+}
+du -n $* | sed $s

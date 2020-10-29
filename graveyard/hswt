@@ -1,0 +1,11 @@
+#!/bin/rc
+
+# don't care about simple port reads and about some writes
+cat $1 | sed -n '/^wport 5000/N
+/^wport 5004/{
+	x
+	G
+	s/wport 5000 ([^ ]+)\nrport 5004 ([^ ]+)\nwport 5004 ([^ ]+)/	wr(igfx, 0x\1, 0x\3);	\/\* was 0x\2 \*\//p;
+}
+h' | sed '/igfx, 0x000(4f0|45400)/d'
+# | sed '/igfx, 0x000(4f0|45400|e421|6401|44008)/d'

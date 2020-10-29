@@ -1,0 +1,42 @@
+#!/bin/rc
+# this is a pile of shit.
+
+e
+exit 'no. you are stupid for wanting to use this.'
+
+if(! ~ $#* 2 || ! test -d $1 || ! test -d $2)
+	exit 'usage: $0 ref dest'
+s=$1
+r=$2
+if(! ~ $1 /*)
+	s=`{pwd}^/^$"s
+if(! ~ $2 /*)
+	r=`{pwd}^/^$"r
+
+# get missing files in dest
+cd $s || exit
+ofs=$ifs
+ifs='
+'
+ref=`{du -n | sed '$d;s,^[0-9]+	['']?\./,,;s,['']?$,,;s,'''','',g' | sort -d}
+for(i in $ref){
+	f=$r^/^$"i
+	if(! test -e $f){
+		if(test -d $i)
+			mkdir $f
+		if not
+			cp $i $f
+	}
+	if not if(! test -d $i && ! ~ `{cmp $i $f} '')
+		cp $i $f
+}
+
+# remove extra files in dest
+cd $r || exit
+ref=`{du -n | sed '$d;s,^[0-9]+	['']?\./,,;s,['']?$,,;s,'''','',g' | sort -d}
+for(i in $ref){
+	f=$s^/^$"i
+	if(! test -e $f)
+		rm -r $i
+}
+ifs=$ofs

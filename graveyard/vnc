@@ -1,0 +1,26 @@
+#!/bin/rc
+
+# This works as is:
+# 
+# ; aux/listen1 -t tcp!*!5900 /bin/ssh tcp!9dump!17060 socat tcp-connect:localhost:5900 stdio
+# ; vncv $sysname	# from another window
+# 
+# This works if a password (I'm using one) is already in factotum, else
+# I don't get a prompt:
+# 
+# ; cat <<'!' >bin/rc/vnc
+# /bin/ssh tcp!9dump!17060 socat tcp-connect:localhost:5900 stdio
+# !
+# ; chmod +x bin/rc/vnc
+# ; execnet
+# ; echo 'key proto=vnc server=exec!vnc !password=setecastronomy' >/mnt/factotum/ctl
+# ; vncv exec!vnc
+
+#aux/listen1 -t tcp!*!5900 /bin/ssh tcp!9dump!17060 socat tcp-connect:localhost:5900 stdio
+#/bin/ssh tcp!9dump!17060 socat tcp-connect:localhost:5900 stdio
+#ssh tcp!9dump!17060 '~/vnc'
+#ssh tcp!9dump!17060 'pkill vnc'
+# try execnet when factotum key is already in place
+
+# FIXME: compression -> ?
+/bin/ssh tcp!9dump!17060 socat tcp-connect:localhost:5900 stdio
