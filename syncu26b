@@ -1,0 +1,23 @@
+#!/bin/rc -e
+rfork n
+if(! sshfs tcp!u26b!8022){
+	echo ssh failed: $status
+	exit ssh
+}
+cd
+for(i in m*){
+	if(! test -d /n/ssh/$i){
+		mkdir /n/ssh/storage/external-1/$i
+		ssh tcp!u26b!8022 ln -s storage/external-1/$i $i
+		clone -T $i/* /n/ssh/$i
+	}
+	if not
+		syncab $i /n/ssh/$i | tee -a /tmp/sync.$pid
+}
+syncab /n/ssh/Pictures $home/lib/i | tee -a /tmp/sync.$pid
+echo proceed?
+if(! ~ `{read} yes){
+	echo exiting
+	exit nope
+}
+. /tmp/sync.$pid && rm /tmp/sync.$pid
