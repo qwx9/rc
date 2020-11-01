@@ -17,9 +17,9 @@ BEGIN{
 }
 {
 	if($1 in rm)
-		ls["rm"] = ls["rm"] " " old "/" $2
+		ls["rm"] = "''" old "/" $2 "'' " ls["rm"]
 	else
-		ls["cp"] = ls["cp"] " " $2
+		ls["cp"] = ls["cp"] " " "''" $2 "''"
 	cnt[$1]++
 }
 END{
