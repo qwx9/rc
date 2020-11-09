@@ -1,4 +1,5 @@
 #!/bin/rc
+rfork n
 games/wadfs /sys/games/lib/doom/d2/doom2.wad >[2]/dev/null || exit
 cat <<! | mst | games/dmid | games/opl3 | pplay
 t $1
