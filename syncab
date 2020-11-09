@@ -9,6 +9,7 @@ ref=$1
 old=$2
 derp -t $ref $ref $old |\
 	awk \
+	-F'	' \
 	-v 'ref='^$ref \
 	-v 'old='^$old \
 '
