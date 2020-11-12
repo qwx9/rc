@@ -104,13 +104,13 @@ troff-nchars\
 ko=(amd64 386)
 k=(pc64 pc)
 switch($sysname){
-case u11 u16 u24 u25 u27 u32
+case hsw aib x220 t61p w520 u32
 	f=($f $colf)
 	ko=(amd64 386 arm)
 	k=(zynq pc pc64)
-case u14 u19 u20 u23 u28
+case t61 t61p2 t60p w500
 	f=($f $colf)
-case u2 u13 u21
+case ibm3000 t43
 	f=($f $colf)
 	ko=386
 	k=(pc)
@@ -154,10 +154,10 @@ if(~ $objtype amd64 386){
 for(i in $k)
 	switch($i){
 	case pc
-		if(! ~ $sysname u28 && ! ~ $sysname u16)
+		if(! ~ $sysname aib)
 			cp /386/9pc /n/9fat/
 	case pc64
-		if(! ~ $sysname u16)
+		if(! ~ $sysname aib)
 			cp /amd64/9pc64 /n/9fat/
 	case zynq
 		cp /arm/9zynq /n/9fat/

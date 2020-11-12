@@ -1,5 +1,5 @@
 #!/bin/rc
-if(! ~ $sysname u16 && ~ `{ns | grep '#v'} ''){
+if(! ~ $sysname aib && ~ `{ns | grep '#v'} ''){
 	screenrc
 	echo softscreen off >'#v/vgactl'
 	echo hwaccel on >'#v/vgactl'
@@ -11,7 +11,7 @@ bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
 test -f $home/p/rc/bindbins && . $home/p/rc/bindbins
-if(! ~ $sysname u16 && test -f /tmp/sk){
+if(! ~ $sysname aib && test -f /tmp/sk){
 	auth/factotum
 	auth/aescbc -d </tmp/sk | read -m >/mnt/factotum/ctl
 }
@@ -19,14 +19,14 @@ webcookies
 webfs
 plumber
 switch($sysname){
-case u28
+case w500
 	echo pin 22 >'#A'/audioctl
 	echo inpin 23 >'#A'/audioctl
-case u11
+case hsw
 	echo pin 27 >'#A/audioctl'
 	echo inpin 25 >'#A'/audioctl
 }
-if(! ~ $sysname u16)
+if(! ~ $sysname aib)
 	echo master 40 >'#A/volume'
 echo accelerated 3 >'#m'/mousectl
 prompt=('; ' '	')

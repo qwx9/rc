@@ -1,6 +1,6 @@
 #!/bin/rc -e
 rfork n
-if(! sshfs tcp!u26b!8022){
+if(! sshfs tcp!bv91!8022){
 	echo ssh failed: $status
 	exit ssh
 }
@@ -8,7 +8,7 @@ cd
 for(i in m*){
 	if(! test -d /n/ssh/$i){
 		mkdir /n/ssh/storage/external-1/$i
-		ssh tcp!u26b!8022 ln -s storage/external-1/$i $i
+		ssh tcp!bv91!8022 ln -s storage/external-1/$i $i
 		clone -T $i/* /n/ssh/$i
 	}
 	if not

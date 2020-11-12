@@ -1,7 +1,7 @@
 #!/bin/rc
 rfork n
 switch($sysname){
-case u27
+case w520
 	if(test -d /net/ether1)
 		n=ether1
 	if not

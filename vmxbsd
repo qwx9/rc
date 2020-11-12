@@ -17,7 +17,7 @@ case u32
 		-v vesa:1280x1024 \
 		/tmp/vmx/bsd65.rd \
 		'device=sd0a'
-case u27
+case w520
 	if(~ $cputype amd64)
 		m=3G
 	if not
@@ -38,7 +38,7 @@ case u27
 		-v vesa:1200x800 \
 		/tmp/vmx/bsd65.sp \
 		'device=sd0a'
-case u24
+case x220
 	if(~ $cputype amd64)
 		m=4G
 	if not

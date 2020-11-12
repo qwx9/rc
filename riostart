@@ -114,7 +114,7 @@ case 800x600x*
 	window -r 0 0 160 232 stats -lmswed
 	window -r 156 0 756 400
 	window -r 0 226 132 512 games/catclock
-case ''	# only u16
+case ''	# only aib
 	window -r 0 0 160 116 stats -lmsed
 	window -r 158 0 268 116 games/catclock
 	window -scroll -r 264 0 594 115 tail -f /dev/kmesg
