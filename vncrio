@@ -17,4 +17,9 @@ echo accelerated 5 >'#m'/mousectl
 prompt=('; ' '	')
 # FIXME
 cat /sys/lib/kbmap/us >/dev/kbmap
-rio
+rio -k '
+	window -r 586 0 1280 584 9grid
+	window -r 0 0 732 602 mw
+	window -scroll -r 0 324 612 806 ii
+	window -scroll -r 607 749 1280 800 girc /tmp/ircs/''#cat-v''
+'
