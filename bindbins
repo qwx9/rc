@@ -14,5 +14,5 @@ if(test -d /sys/lib/go/amd64-1.15.2/bin)
 if(test -f $home/p/rc/fn)
 	. $home/p/rc/fn
 
-if(test -d $home/p/sm2/lib)
-	bind -a $home/p/sm2/lib /lib
+#if(test -d $home/p/sm2/lib)
+#	bind -ac $home/p/sm2/lib /lib
