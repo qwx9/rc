@@ -1,7 +1,12 @@
 #!/bin/rc
 rfork n
+nomtime=0
+if(~ $1 -m){
+	nomtime=1
+	shift
+}
 if(! ~ $#* 2){
-	echo usage: $0 left right
+	echo usage: $0 [-m] left right
 	exit usage
 }
 
@@ -12,14 +17,17 @@ derp -t $ref $ref $old |\
 	-F'	' \
 	-v 'ref='^$ref \
 	-v 'old='^$old \
+	-v 'nomtime='^$nomtime \
 '
 BEGIN{
 	rm["na"] = rm["dn"] = rm["dm!"] = 1
+	if(nomtime)
+		nocp["nm"] = 1
 }
 {
 	if($1 in rm)
 		ls["rm"] = "''" old "/" $2 "'' " ls["rm"]
-	else
+	else if(! ($1 in nocp))
 		ls["cp"] = ls["cp"] " " "''" $2 "''"
 	cnt[$1]++
 }
