@@ -25,6 +25,7 @@ BEGIN{
 		nocp["nm"] = 1
 }
 {
+	gsub("\'", "\'\'", $2)
 	if($1 in rm)
 		ls["rm"] = "''" old "/" $2 "'' " ls["rm"]
 	else if(! ($1 in nocp))
