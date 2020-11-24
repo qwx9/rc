@@ -6,6 +6,9 @@ if(~ $#* 0){
 }
 switch($1){
 case aib
+case t30
+	sshnet tcp!$1!x || exit
+	*=u30
 case *
 	sshnet tcp!$1!x || exit
 }
