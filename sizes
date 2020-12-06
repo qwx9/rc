@@ -1,0 +1,76 @@
+#!/bin/rc
+screensize=`{echo $vgasize | sed 's/x/ /g'}
+#screensize=`{file /dev/screen | sed 's/.*size ([^x]+)x([^x]+)/\1 \2/'}
+# general placements
+briorect=(0 0 $screensize(1) `{echo $screensize(2) - 16 | pc -n})
+bsamrect=(0 0 $briorect(3) `{echo $briorect(4) - 64 | pc -n})
+bcmdrect=( \
+	0 \
+	`{echo $bsamrect(4) - $bsamrect(4) / 3 | pc -n} \
+	`{echo $bsamrect(3) / 3 | pc -n} \
+	$briorect(4) \
+)
+# default windows
+catrect=( \
+	0 \
+	0 \
+	130 \
+	296 \
+)
+volrect=( \
+	`{echo $catrect(3) + 4 | pc -n} \
+	0 \
+	768 \
+	28 \
+)
+kprintrect=( \
+	$volrect(1) \
+	`{echo $volrect(4) + 4 | pc -n} \
+	$volrect(3) \
+	`{echo $catrect(4) / 2 | pc -n} \
+)
+statrect=( \
+	$volrect(1) \
+	`{echo $kprintrect(4) + 4 | pc -n} \
+	$volrect(3) \
+	$catrect(4) \
+)
+cmdrect=( \
+	0 \
+	`{echo $catrect(4) + 4 | pc -n} \
+	$volrect(3) \
+	$screensize(2) \
+)
+riowrect=( \
+	`{echo $screensize(1) - 100 | pc -n} \
+	`{echo $screensize(2) - 26 | pc -n} \
+	$screensize(1) \
+	$screensize(2) \
+)
+zukerect=( \
+	`{echo $screensize(1) - 768 | pc -n} \
+	0 \
+	$screensize(1) \
+	$screensize(2) \
+)
+duckrect=( \
+	0 \
+	256 \
+	$cmdrect(3) \
+	$screensize(2) \
+)
+
+cat <<! >/tmp/sizes
+screensize=($screensize)
+briorect=($briorect)
+bsamrect=($bsamrect)
+bcmdrect=($bcmdrect)
+catrect=($catrect)
+volrect=($volrect)
+kprintrect=($kprintrect)
+statrect=($statrect)
+cmdrect=($cmdrect)
+riowrect=($riowrect)
+zukerect=($zukerect)
+duckrect=($duckrect)
+!
