@@ -12,4 +12,4 @@ case t30
 case *
 	sshnet tcp!$1!x || exit
 }
-vncv -l 8859-1 -e hextile $*
+vncv -l 8859-1 -e corre $*
