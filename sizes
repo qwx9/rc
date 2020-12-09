@@ -54,7 +54,7 @@ zukerect=( \
 	$screensize(2) \
 )
 duckrect=( \
-	`{echo $screensize(1) / 2.5 | pc -n} \
+	`{echo $screensize(1) / 2 | pc -n} \
 	0 \
 	$screensize(1) \
 	`{echo $screensize(2) - 256 | pc -n} \
