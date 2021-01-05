@@ -1,10 +1,10 @@
 #!/bin/rc -e
 rfork n
 
-auth/factotum
+auth/factotum -n
 echo 'key proto=dp9ik user=glenda dom=grid !password=9gridchan' >/mnt/factotum/ctl
 srvtls tcp!registry.9gridchan.org!16675 gridreg /n/gridreg
-sed -n '/gridregistry/d;/tlssrv/{s/^/srvtls -c /;s/(is |mountpoint|service.*$)//g;s/pubregistry/gridpubreg/g;p;}' /n/gridreg/index | rc
+sed -n '/gridregistry/d;/tlssrv/{s/^/srvtls -c /;s/(is |mountpoint|service.*$)//g;s/pubregistry/gridpubreg/g;p;}' /n/gridreg/index | grep -v gridplumb | rc
 rm /srv/grid*
 #echo 'none
 #none' | `{sed -n 's/^([^ ]+).* is gridftp.*/ftpfs -\/ \1/p' /n/gridreg/index}
