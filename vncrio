@@ -1,6 +1,6 @@
 #!/bin/rc
 rfork nefs
-font=/lib/font/bit/vga/unicode.font
+font=/lib/font/bit/uga.font
 bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin

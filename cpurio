@@ -5,7 +5,7 @@ if(! ~ $sysname aib && ~ `{ns | grep '#v'} ''){
 	echo hwaccel on >'#v/vgactl'
 }
 rfork efns	# weeeee
-font=/lib/font/bit/vga/unicode.font
+font=/lib/font/bit/uga.font
 bind -a '#A' /dev
 bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
