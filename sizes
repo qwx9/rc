@@ -43,7 +43,7 @@ cmdrect=( \
 )
 riowrect=( \
 	`{echo $screensize(1) - 100 | pc -n} \
-	`{echo $screensize(2) - 26 | pc -n} \
+	`{echo $screensize(2) - 28 | pc -n} \
 	$screensize(1) \
 	$screensize(2) \
 )
