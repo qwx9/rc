@@ -1,6 +1,6 @@
 #!/bin/rc
 rfork n
-auth/factotum
+auth/factotum -n
 echo 'key proto=dp9ik user=glenda dom=grid !password=9gridchan' >/mnt/factotum/ctl
 while(){
 	srvtls tcp!107.191.50.176!17675 gridpubreg /n/g
