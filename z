@@ -1,4 +1,4 @@
 #!/bin/rc
-list=$1
-shift
-theme=$home/lib/theme/dicks audio/zuke -cpD $* <$list
+rfork n
+theme=$home/lib/theme/dicks
+audio/mkplist $* >[2]/dev/null | audio/zuke -cpD
