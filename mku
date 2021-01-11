@@ -18,9 +18,11 @@ fn mkp{
 		mk install && mk nuke || exit NOPE
 		unmount mkfile
 	}
-	if(test -d $h/lib/extra/spew/aplay){
-		cd $h/lib/extra/spew/aplay
-		mk install && mk clean
+	for(i in spew/aplay ftrvxmtrx/imgtools ftrvxmtrx/mp3dec){
+		if(test -d $h/lib/extra/$i){
+			cd $h/lib/extra/$i
+			mk install && mk clean
+		}
 	}
 }
 
