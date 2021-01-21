@@ -7,5 +7,4 @@ window -r $volrect volume
 window -r $statrect stats -lmsed
 window -scroll -r $cmdrect 'label cmd; rc'
 window -r $duckrect duck
-cat /sys/lib/kbmap/us >/dev/kbmap
 window -hide -r $riowrect 'label riow; riow </srv/riogkbd*'
