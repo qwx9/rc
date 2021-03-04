@@ -30,7 +30,5 @@ if(! ~ $sysname aib)
 	echo master 40 >'#A/volume'
 echo accelerated 3 >'#m'/mousectl
 prompt=('; ' '	')
-# FIXME
-cat /sys/lib/kbmap/us >/dev/kbmap
 rio -i riostart
 # might be nice to do dontkill '^(rio|rc)$'

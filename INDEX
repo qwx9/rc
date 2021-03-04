@@ -1,0 +1,86 @@
+2600		2600(1) launcher
+2mp3		transcode input to mp3
+2opus		transcode input to opus
+9grid		(obsolete) connection script for the 9gridchan public grid
+aconv		transcode a list of files to opus, sanitizing the filenames
+aconv2		same as aconv but force input as flac files
+avgn		valley(1)-like with avgn insults
+bindbins	helper script, bind additional directories to /bin
+br		brightness controls for laptops with supported igfx and no hardware brightness buttons
+cex		attempt at simple mental calculus drills
+cinrio		open unifont rio for chinese drills
+cpurio		usual graphical setup on (r)cpu
+dmlotr		dmlotr comic scraper
+dmus.mp3	dmus script using mp3dec(1)
+doom		doom launcher, managing iwads
+dp		helper script, aijuboard displayport init
+dpal		convert doom palette to spred(1) palette
+duck		(deprecated) open mothra for duckduckgo search
+dw		fully riced parallel hget(1)
+edit		edit current window's text
+eth0		force /net/ether0 configuration
+fn		misc rc functions
+fpl		print last process in each play(1) tree
+frequenzbohrer	attempt at a note frequency drill
+gba		gba(1) launcher
+gbc		gb(1) launcher
+genpw		silly password generator
+graveyard	do not exhume
+gridreg		(broken) register service to grid
+harmful		do not look
+joygba		joystick script for use with nusb/joy and emulators
+joygba2		alternative to joygba for other controller
+joynes		alternative joynes script for other controller
+khinmidi	scraper
+khinsider	scraper
+lofi		like 2opus but for low quality settings
+md		md(1) launcher
+metro		simple metronome using mst and pplay
+mfmt		filename sanitizer filter
+mk9		paste all kernels in 9fat
+mkall		rebuild program for all (relevant) arches
+mkcp		recursive copy using mkfs(1)
+mkradio		update radio collection
+mku		(horror) rebuild world
+mpi		mkey→dmid→opl3 piano
+nes		nes(1) launcher
+nesj		nes(1) launcher probing last attached usb device as joystick
+oots		oots scraper
+pcm2opus	encode pcm stream to opus
+pcmf		play file using pplay via temp file
+pinyin		pinyin to ideograph translation
+psam		open a big samterm with preset files
+qdemo		look ma i can play all the games at the same time
+qk1		quake launcher
+qk2		quake2 launcher
+qk3		quake3 dedicated launcher
+qw		quakeworld client launcher
+repou		git/pull list of repos
+riostart	rio -i
+rsam		like psam, within subrio and using a list file
+shl		list shuffle
+sizes		precalculate some fixed window sizes and paste into /env
+snes		snes(1) launcher
+syncab		synchronize two directories
+syncbv91	synchronize my bv91 device
+t		open a vt with silly preset settings
+tac		reverse cat in awk
+tcp19000	(too) simple radio script
+tcp19564	tls access to a /usr/share
+tospr		convert image(6) to spred(1) pic
+ufo		connect to kiwi's ufo radio
+unhex		silly xxd
+unspr		produce RGB24 bitmap from spred(1) pal and spr
+v		vncv with options
+vmx9		start a plan9 vm
+vmxants		start an ants vm
+vmxbsd		start an openbsd vm
+vmxlinux	start a (void) linux vm
+vncrio		start a rio for vnc instance
+wircrc		pikeshedded cinap wircrc with tls and logging
+wl		wl3d launcher
+workspace	init workspace with preset subrios and their contents for riow
+wpa		connect to an encrypted wireless network
+z		start zuke on playlist built from arguments
+z2		start zuke on prebuilt playlist
+übung		attempt at german drill

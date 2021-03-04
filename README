@@ -1,0 +1,3 @@
+Some older scripts use lr.c, which is analogous to walk(1),
+but written prior to walk's inclusion.
+The update just hasn't been made yet.
