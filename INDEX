@@ -8,6 +8,7 @@ avgn		valley(1)-like with avgn insults
 bindbins	helper script, bind additional directories to /bin
 br		brightness controls for laptops with supported igfx and no hardware brightness buttons
 cex		attempt at simple mental calculus drills
+chord		metro-like but for a chord
 cinrio		open unifont rio for chinese drills
 cpurio		usual graphical setup on (r)cpu
 dmlotr		dmlotr comic scraper
