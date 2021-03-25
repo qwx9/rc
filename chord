@@ -3,7 +3,6 @@ rfork n
 games/wadfs /sys/games/lib/doom/d2/doom2.wad >[2]/dev/null || exit
 cat <<! | mst | games/dmid | games/opl3 | norm 5 | pplay
 t $1
-i 0 127
 4 0c♭3 0e♭3 0g♭3
 4 0c♭3 0e♭3 0g♭3
 4 0c♭3 0e♭3 0g♭3
