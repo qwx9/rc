@@ -1,10 +1,10 @@
 #!/bin/rc
 sizes
 . /tmp/sizes
-window -r $kprintrect cat /dev/kprint
+window -scroll -r $kprintrect cat /dev/kprint
 window -r $catrect games/catclock
 window -r $volrect volume
 window -r $statrect stats -lmsed
 window -scroll -r $cmdrect 'label cmd; rc'
 window -r $duckrect duck
-window -hide -r $riowrect 'label riow; riow </srv/riogkbd*'
+window -r $riowrect 'label riow; riow </srv/riogkbd*'
