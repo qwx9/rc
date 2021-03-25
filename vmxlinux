@@ -15,9 +15,9 @@ fn sigint{
 }
 
 n=ether0
-M=1G
-k=/tmp/vmx/vmlinuz-5.4.12_1
-m=/tmp/vmx/initramfs-5.4.12_1.img
+M=20G
+k=/tmp/vmx/vmlinuz-5.10.23_1
+m=/tmp/vmx/initramfs-5.10.23_1.img
 d=/dev/sdE0/data
 v=vesa:1280x1024
 c=('root=/dev/vda1')
@@ -43,6 +43,6 @@ vmx \
 	-M $M \
 	-m $m \
 	-n $n \
-	-v vesa:1280x1024 \
+	-v $v \
 	$k \
 	$c $*
