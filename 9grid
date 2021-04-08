@@ -1,22 +1,14 @@
 #!/bin/rc -e
-rfork n
-
-auth/factotum -n
-echo 'key proto=dp9ik user=glenda dom=grid !password=9gridchan' >/mnt/factotum/ctl
-srvtls tcp!registry.9gridchan.org!16675 gridreg /n/gridreg
-sed -n '/gridregistry/d;/tlssrv/{s/^/srvtls -c /;s/(is |mountpoint|service.*$)//g;s/pubregistry/gridpubreg/g;p;}' /n/gridreg/index | grep -v gridplumb | rc
-rm /srv/grid*
-#echo 'none
-#none' | `{sed -n 's/^([^ ]+).* is gridftp.*/ftpfs -\/ \1/p' /n/gridreg/index}
-#bind -c /n/ftp/incoming /n/gridftp
-
-unmount /mnt/plumb
-rio -k '
-window -scroll chat -n qwx
-window -scroll girc -g /n/chat/chat
-' || status=''
-
-for(i in /mnt/plumb /n/grid* /mnt/wiki /n/chat)
-	unmount $i
-#unmount /n/gridftp
-#unmount /n/ftp
+9fs tcp!chat.9p.zone!9990 /n/chat
+rm /srv/tcp!chat.9p.zone!9990
+# fukken quoting
+cat <<'!' >/tmp/grid.$pid
+#!/bin/rc
+window -r 0 0 656 516 -scroll chat -n qwx
+window -r 0 524 656 548 -scroll girc -g /n/chat/chat
+window -scroll 'echo cat /dev/wsys/1/text ''>>/tmp/chat''; echo ''{}>/dev/wsys/1/text''; rc'
+!
+chmod +x /tmp/grid.$pid
+rio -i /tmp/grid.$pid
+rm /tmp/grid.$pid
+unmount /n/chat
