@@ -14,10 +14,11 @@ fn sigint{
 	clean
 }
 
+ver=5.11.14_1
 n=ether0
 M=20G
-k=/tmp/vmx/vmlinuz-5.10.23_1
-m=/tmp/vmx/initramfs-5.10.23_1.img
+k=/tmp/vmx/vmlinuz-$ver
+m=/tmp/vmx/initramfs-^$ver^.img
 d=/dev/sdE0/data
 v=vesa:1280x1024
 c=('root=/dev/vda1')
