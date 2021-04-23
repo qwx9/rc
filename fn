@@ -44,7 +44,6 @@ fn b{ mk -f <{echo '
 }
 # dump c function body (thanks aiju)
 fn catfn{ sed -n '/^'$1'\(/ {x;p;x;};/^'$1'\(/,/^}/p;h' *.c }
-fn acid{ acid -l thread }
 
 # 
 
