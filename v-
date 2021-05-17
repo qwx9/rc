@@ -1,0 +1,2 @@
+#!/bin/rc
+awk '/^master/{print $1, $2-5}' /dev/volume >/dev/volume
