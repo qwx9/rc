@@ -8,15 +8,13 @@ test -f $home/p/rc/bindbins && . $home/p/rc/bindbins
 if(test -f /tmp/sk){
 	auth/factotum
 	auth/aescbc -d </tmp/sk | read -m >/mnt/factotum/ctl
-	ircs -ep qwx irc.freenode.net
+	ircs -ep qwx irc.oftc.net
 }
 webcookies
 webfs
 plumber
 echo accelerated 5 >'#m'/mousectl
 prompt=('; ' '	')
-# FIXME
-cat /sys/lib/kbmap/us >/dev/kbmap
 rio -k '
 	window -r 586 0 1280 584 9grid
 	window -r 0 0 732 602 mw
