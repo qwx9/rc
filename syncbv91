@@ -1,8 +1,10 @@
 #!/bin/rc -e
 rfork n
-echo nope
-exit nope
-if(! sshfs tcp!bv91!8022){
+if(! ~ $#* 1){
+	echo usage: $0 sys
+	exit usage
+}
+if(! sshfs tcp!$1!8022){
 	echo ssh failed: $status
 	exit ssh
 }
@@ -16,7 +18,7 @@ for(i in m*){
 	if not
 		syncab -m $i /n/ssh/m/$i | tee -a /tmp/sync.$pid
 }
-syncab /n/ssh/Pictures $home/lib/i | tee -a /tmp/sync.$pid
+syncab $home/lib/i /n/ssh/Pictures | tee -a /tmp/sync.$pid
 echo proceed?
 if(! ~ `{read} yes){
 	echo exiting
