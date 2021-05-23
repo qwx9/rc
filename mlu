@@ -1,0 +1,8 @@
+#!/bin/rc
+if(! ~ $#* 2){
+	echo usage: $0 listname destdir
+	exit usage
+}
+9fs lists.9front.org
+cd /n/lists.9front.org/lists/$1
+syncab /n/lists.9front.org/lists/$1 $2 | tee | rc

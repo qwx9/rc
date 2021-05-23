@@ -103,8 +103,6 @@ fn vr{ @{rfork n; aux/realemu; aux/vga -lm vesa $vgasize} }
 # mail
 # manual mail archive
 fn arc{ cat >/mail/box/qwx/arc/`{date -n} }
-# update dir with new messages from archived mailing list
-fn mlu{ cd /n/lists.9front.org/lists/$1; tar c `{diff <{lr} <{cd $2; lr} | sed '/^[^<]/d;s/< //'} | @{cd $2; tar xT} }
 # attempt at quoting
 fn qt{ cat | sed 's/^/> /' }
 
