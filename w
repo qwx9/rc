@@ -1,0 +1,7 @@
+#!/bin/rc
+if(! ~ $#* 1){
+	echo $0 site
+	exit usage
+}
+hget http://wttr.in/~^$1^.png \
+	| page -w
