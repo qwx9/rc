@@ -1,0 +1,4 @@
+#!/bin/rc
+if(~ $#* 1)
+	*=(ssh tcp!$1!x)
+vt -xbf /lib/font/bit/fixed/unicode.6x10.font $*
