@@ -1,0 +1,27 @@
+#!/bin/rc
+rate=49716
+norm=()
+bareimf=()
+while(~ $1 -?){
+	switch($1){
+	case -r
+		rate=$2
+		shift
+	case -f
+		norm=$2
+		shift
+	case -n
+		bareimf=1
+	case *
+		echo usage: $0 '[-n] [-r rate] [-f norm]'
+		exit usage
+	}
+	shift
+}
+cmd=(opl2 -r $rate)
+if(~ $#bareimf 0)
+	cmd=(imf '|' $cmd)
+if(! ~ $#norm 0)
+	cmd=($cmd '|' norm $norm)
+echo $cmd
+eval $cmd
