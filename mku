@@ -58,7 +58,6 @@ kbmap-col\
 libdraw-menucol\
 colors-col\
 faces-col\
-rio-col\
 samterm-col\
 spred-col\
 stats-col\
@@ -121,6 +120,7 @@ case *
 	k=(pc)
 }
 ape/patch -s -fp1 < $h/lib/extra/ftrvxmtrx/riow/9front.diff
+ape/patch -s -fp1 < $h/lib/extra/ftrvxmtrx/patches/rio-themes.patch
 for(i in $f)
 	ape/patch -s --no-backup-if-mismatch -p1 < $h/p/patch/$i
 ape/patch -s -fp1 < $h/p/patch/doom-udpip # FIXME

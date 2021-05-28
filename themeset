@@ -1,0 +1,5 @@
+#!/bin/rc -e
+cat $home/lib/theme/rio >/mnt/wsys/theme
+sleep 0.5
+grep softscreen /dev/vgactl >>/dev/vgactl
+echo hwblank off >>/dev/vgactl
