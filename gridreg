@@ -1,19 +1,13 @@
 #!/bin/rc
 rfork n
-auth/factotum -n
-echo 'key proto=dp9ik user=glenda dom=grid !password=9gridchan' >/mnt/factotum/ctl
-while(){
-	srvtls tcp!107.191.50.176!17675 gridpubreg /n/g
-	rm /srv/gridpubreg
-	>[3]/n/g/new{
-		echo tcp!9dump.net!t9fs sys 9dump service tlssrv mountpoint /n/9dump is 9dump >[1=3] || exit
-		while() sleep 3600
-	} &
-	>[3]/n/g/new{
-		echo tcp!9dump.net!19000 sys opusdump service /bin/play mountpoint /n/opusdump is opusdump >[1=3] || exit
-		while() sleep 3600
-	} &
-	wait
-	unmount /n/g
-	sleep 3600
+srv tcp!registry.9p.zone!registry registry /mnt/registry
+rm /srv/registry
+cd /mnt/registry
+>new{
+	echo tcp!9dump!9fs description '''read-only file dump''' contact qwx@sciops.net type fileserver
+	tail -f event
+} &
+>new{
+	echo tcp!9dump!t9fs description '''tls 9dump, ask for credentials''' contact qwx@sciops.net type fileserver
+	tail -f event
 }
