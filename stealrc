@@ -1,0 +1,11 @@
+#!/bin/rc
+repo=$home/lib/extra
+dest=$home/bin/rc
+cp -x \
+	$repo/kvik/bin.rc/bin/^(last pfx) \
+	$repo/jpm/rc/^(fcalls fman h top ircx netproc irctime) \
+	$repo/ftrvxmtrx/rc/youtube \
+	$repo/aiju/rc/fun \
+	$repo/qrstuv/9paste \
+	$repo/sources.extra/ps2txt \
+	$dest
