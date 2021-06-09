@@ -1,0 +1,108 @@
+#!/bin/rc
+# minimal chat client for hubfs: chat [-n NICK] [-j CHANNEL] [chatsrv]
+# dd -bs `{du -n /n/chat/chat | sed 's/ .*//'} -skip 1 -if /n/chat/chat
+rfork enf
+
+fn helpmessage{
+	echo -------------------------
+	echo '/q to quit  |  /c to list channels  |  /h for help message'
+	echo '/n NICK to change nick  |  /j CHANNEL to change channels'
+	echo -------------------------
+}
+
+fn close{
+	#echo PART $name from $channel >>/n/$chatsrv/$channel
+	@{echo kill>/proc/$catkill/ctl}
+}
+
+fn shutdown{
+	close
+	exit
+}
+
+fn sighup{
+	shutdown
+}
+
+fn sigint{
+	shutdown
+}
+
+channel=chat
+chatsrv=chat
+while (~ $1 -*){
+	switch($1){
+	case -n
+		name = $2
+		shift 2
+	case -j
+		channel = $2
+		shift 2
+	case *
+		echo bad flag $1 '-n NICK -j CHANNEL'
+		shift
+	}
+}
+if(! ~ $1 '')
+	chatsrv=$1
+if(! test -e /n/$chatsrv/chat)
+	mount /srv/$chatsrv /n/$chatsrv
+if(! test -e /n/$chatsrv/chat){
+	echo 'no chat service named $chatsrv found' >[1=2]
+	exit no.chat
+}
+
+echo '		-- hubchat 0.2 --'
+helpmessage
+sleep 2
+while(~ $#name 0){
+	echo 'please enter a chat name:'
+	name=`{read}
+}
+#echo JOIN $name to $channel >>/n/$chatsrv/$channel
+#grep -bv '^BurnZeZ :  ' /n/$chatsrv/$channel &
+cat /n/$chatsrv/$channel &
+catkill=$apid
+
+while(talk=`{read}){
+	switch($talk(1)){
+	case /q
+		shutdown
+	case /n
+		if(! ~ $talk(2) ''){
+			echo nick $name ' -> ' $talk(2) >>/n/$chatsrv/$channel
+			name=$talk(2)
+		}
+		if not
+			echo 'you need to provide a nick for /n NICK'
+	case /j
+		if (~ $talk(2) '')
+			echo must specify a channel to join
+		if not if(test -e /n/chat/$talk(2)){
+			close
+			channel=$talk(2)
+			cat /n/chat/$channel &
+			catkill=$apid
+			echo JOIN $name to $channel >>/n/$chatsrv/$channel
+		}
+		if not
+			echo channel does not exist
+	case /h
+		helpmessage
+		echo currently in $channel
+		echo
+	case /c
+		echo Available channels:
+		lc /n/$chatsrv
+		echo -------------------
+		echo currently in $channel
+		echo
+	case *
+#		ts=`{date -u}
+#		ts=`{echo '('^$ts(4)^')'}
+		if(! ~ $talk ''){
+			line=`{echo $name '→ ' $talk}
+			echo $line >>/n/chat/$channel
+		}
+	}
+}
