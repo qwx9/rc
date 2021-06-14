@@ -1,0 +1,5 @@
+#!/bin/rc -e
+bind -ac /dist/plan9front /
+old=`{git/query HEAD}
+sysupdate
+git/query -c $old HEAD
