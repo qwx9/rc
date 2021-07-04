@@ -1,0 +1,9 @@
+#!/bin/rc
+# easiest way, low quality
+if(! ~ $#* 1){
+	echo usage $0 videoid
+	exit usage
+}
+nvi -A 251 -a /fd/1 $"1 |\
+	mcfs -t audio |\
+	audio/opusdec
