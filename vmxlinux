@@ -1,28 +1,38 @@
 #!/bin/rc
 rfork n
 
+vmid=`{awk '
+BEGIN{
+	i = 0
+	while(system("test -e \''#X\''/" i) == 0)
+		i++
+	print i
+}'}
+
 fn clean{
-	for(i in '#X'/*/ctl)
+	for(i in '#X'/$vmid/ctl)
 		echo quit > $i
 }
-
 fn sigexit{
 	clean
 }
-
 fn sigint{
 	clean
 }
 
-ver=5.12.13_1
+ver=5.12.14_1
 mac=2ec3bc946389
 n=ether0
 M=12G
 k=/tmp/vmx/vmlinuz-$ver
 m=/tmp/vmx/initramfs-^$ver^.img
 d=/dev/sdE0/data
-v=vesa:1280x1024
+v=1280x1024
 c=('root=/dev/vda1')
+if(test -d '#l1'){
+	bind -aq '#l1' /net
+	n=ether1
+}
 while(~ $1 -?){
 	switch($1){
 	case -d; d=$2; shift;
@@ -32,6 +42,7 @@ while(~ $1 -?){
 	case -M; M=$2; shift;
 	case -m; m=$2; shift;
 	case -n; n=$2; shift;
+	case -v; v=$2; shift;
 	case --; break;
 	case *
 		echo usage: $0 [opts] [--] [more opts]
@@ -39,12 +50,13 @@ while(~ $1 -?){
 	}
 	shift
 }
+echo $v | awk -Fx '{ print "resize -dx", $1+8, "-dy", $2+8 }' >/dev/wctl
 echo scroll >/dev/wctl
 vmx \
 	-d $d \
 	-M $M \
 	-m $m \
 	-n ea:$mac!$n \
-	-v $v \
+	-v vesa:$v \
 	$k \
 	$c $*
