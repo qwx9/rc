@@ -1,0 +1,4 @@
+#!/bin/rc
+rfork n
+games/wadfs /sys/games/lib/doom/d2/doom2.wad >[2]/dev/null
+mkey | games/dmid -s | games/opl3 | norm 5 >/dev/audio
