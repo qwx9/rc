@@ -5,10 +5,9 @@ bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
 test -f $home/p/rc/bindbins && . $home/p/rc/bindbins
-if(test -f /tmp/sk){
+test -f $home/lib/ass){
 	auth/factotum
-	auth/aescbc -d </tmp/sk | read -m >/mnt/factotum/ctl
-	ircs -ep qwx irc.oftc.net
+	setec
 }
 webcookies
 webfs
