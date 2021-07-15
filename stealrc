@@ -8,4 +8,5 @@ cp -x \
 	$repo/aiju/rc/fun \
 	$repo/qrstuv/9paste \
 	$repo/sources.extra/ps2txt \
+	$repo/henesy/gelinks.rc \
 	$dest
