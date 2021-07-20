@@ -22,4 +22,4 @@ if not
 	}
 
 echo resize $r >/dev/wctl
-wl3d $*
+games/wl3d $*

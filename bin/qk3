@@ -1,4 +1,4 @@
 #!/bin/rc
 echo scroll >/dev/wctl
-#cd /sys/games/lib/quake3 && q3ded +set developer 1 +set fs_game cpma +map cpm22
-cd /sys/games/lib/quake3 && q3ded +set developer 1 +map q3dm17
+#cd /sys/games/lib/quake3 && games/q3ded +set developer 1 +set fs_game cpma +map cpm22
+cd /sys/games/lib/quake3 && games/q3ded +set developer 1 +map q3dm17

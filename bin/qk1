@@ -11,4 +11,4 @@ case *
 }
 echo resize $res >/dev/wctl
 bind -q /sys/games/lib/quake/cd /mnt/cd	# cdfs(4)
-quake $a $* >/dev/null
+games/quake $a $* >/dev/null
