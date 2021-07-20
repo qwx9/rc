@@ -1,6 +1,11 @@
 #!/bin/rc
 rfork ne
-res=(-dx 808 -dy 608)
+switch($sysname){
+	case w520 w520w
+		res=(-dx 984 -dy 766)
+	case *
+		res=(-dx 808 -dy 608)
+}
 noresz=()
 c=(quake2)
 # launch ctf with: qk2 -g ctf $* +set ctf 1
