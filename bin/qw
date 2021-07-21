@@ -1,7 +1,9 @@
 #!/bin/rc
 rfork ne
 switch($sysname){
-case x220 w520 t61p2 t61p
+case t61p2 t61p
+	res=(-dx 982 -dy 738)
+case w500 x220 w520
 	res=(-dx 1032 -dy 776)
 case hsw
 	res=(-dx 1608 -dy 1208)
