@@ -89,6 +89,7 @@ fn wsz{ dd -bs 4x12 -count 1 </mnt/wsys/wctl >[2]/dev/null | awk '{print $3-$1, 
 # sys
 # bind hg repo to root and execute hg command
 fn hg{ bind -ac /dist/plan9front /; fn hg; hg $* }
+fn git{ bind -ac /dist/plan9front / }
 # hangup connections to given hosts
 fn nctl{ echo 'echo hangup >/net/'^`{netstat -n|sed -n 's,^([^ ]+) +([^ ]+) +[^ ]+ +[^ ]+ +[^ ]+ +'$1'.*,\1/\2/ctl\;,p'} }
 # show announced ports and established connections
