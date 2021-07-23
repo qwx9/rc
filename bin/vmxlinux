@@ -20,7 +20,7 @@ fn sigint{
 	clean
 }
 
-ver=5.12.17_1
+ver=5.12.19_1
 mac=2ec3bc946389
 n=ether0
 M=12G
