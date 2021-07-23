@@ -12,4 +12,4 @@ case *
 }
 echo resize $res >/dev/wctl
 bind -q /sys/games/lib/quake/cd /mnt/cd	# cdfs(4)
-games/qwcl -mem 32 $* >/dev/null
+games/qwcl $* >/dev/null

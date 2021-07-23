@@ -5,7 +5,6 @@ case x220 w520 t61p2 t61p
 	res=(-dx 1032 -dy 776)
 case hsw
 	res=(-dx 1608 -dy 1208)
-	a=(-m 32)
 case *
 	res=(-dx 808 -dy 608)
 }
