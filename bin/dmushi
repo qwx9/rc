@@ -91,4 +91,4 @@ case ultima
 case victor
 	f=$home/mgam/doom.victor.opus
 }
-play -o /fd/1 $f
+play -o /fd/1 $f >[2]/dev/null
