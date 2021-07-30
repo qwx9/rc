@@ -1,0 +1,12 @@
+#!/bin/rc -e
+for(i in $*){
+	if(! test -f $i){
+		echo usage: $0 patch..
+		exit usage
+	}
+	h=`{sed 's,--- //.git/fs/.*,git,;q' $i}
+	p=1
+	if(~ git $h)
+		p=0
+	ape/patch --no-backup-if-mismatch -p$p <$i
+}
