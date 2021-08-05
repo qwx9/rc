@@ -1,0 +1,12 @@
+#!/bin/rc
+# thanks umbraticus
+# fun: #!/bin/rc\n$*
+# let me know if there's a better solution with tee(1)
+rfork n
+fn nv{ echo $1; nvi -i $1 }
+for(i in $*){
+	hget 'https://www.youtube.com/feeds/videos.xml?channel_id='^$i |\
+		sed -n 's/.*<id>yt:video:(.*)<\/id>.*/\1/p' |\
+		xargs -n 1 fun nv
+	echo
+}
