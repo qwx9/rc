@@ -4,10 +4,10 @@ srv tcp!registry.9p.zone!registry registry /mnt/registry
 rm /srv/registry
 cd /mnt/registry
 >new{
-	echo tcp!9dump!9fs description '''read-only file dump''' contact qwx@sciops.net type fileserver
+	echo tcp!9dump.net!9fs description '''read-only file dump''' contact qwx@sciops.net type fileserver
 	tail -f event
 } &
 >new{
-	echo tcp!9dump!t9fs description '''tls 9dump, ask for credentials''' contact qwx@sciops.net type fileserver
+	echo tcp!9dump.net!t9fs description '''tls 9dump, ask for credentials''' contact qwx@sciops.net type fileserver
 	tail -f event
 }
