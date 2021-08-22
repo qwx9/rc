@@ -1,0 +1,18 @@
+#!/bin/rc
+rfork ne
+flagfmt='f chatfile, n nick'
+args=''
+if(! eval `''{aux/getflags $*} || ! ~ $#* 0)
+	exec aux/usage
+cfile=/n/chat/chat
+nick=qwx
+if(~ $#flagf 1)
+	cfile=$flagf
+if(~ $#flagn 1)
+	nick=$flagn
+while(){
+	hold /tmp/hold >[2]/dev/null \
+	&& cat /tmp/hold | sed '1s/^/'$nick' → /' >>$cfile
+	&& rm -f /tmp/hold
+	clr
+}
