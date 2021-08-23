@@ -4,7 +4,7 @@ rm /srv/tcp!chat.9p.zone!9990
 # fukken quoting
 cat <<'!' >/tmp/grid.$pid
 #!/bin/rc
-window -r 0 0 656 516 -scroll chat -n qwx
+window -r 0 0 656 516 -scroll cat /n/chat/chat
 window -r 0 524 656 596 -scroll girc -g /n/chat/chat
 window -scroll 'echo cat /dev/wsys/1/text ''>>/tmp/chat''; echo ''{}>/dev/wsys/1/text''; rc'
 !
