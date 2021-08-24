@@ -30,4 +30,4 @@ while(~ $1 -?){
 if(~ $#noresz 0)
 	echo resize $res >/dev/wctl
 bind -q /sys/games/lib/quake2/cd /mnt/cd	# cdfs(4)
-$c $* >/dev/null
+$c $*
