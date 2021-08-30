@@ -1,5 +1,6 @@
 #!/bin/rc
-repo=$home/lib/extra
+repo=/sys/lib/extra/usr
+contrib=/sys/lib/extra/sources/contrib
 dest=$home/bin/rc
 cp -x \
 	$repo/kvik/bin.rc/bin/^(last pfx scr) \
@@ -10,4 +11,5 @@ cp -x \
 	$repo/sources.extra/ps2txt \
 	$repo/henesy/gelinks.rc \
 	$repo/ori/lstk \
+	$contrib/fgb/rc/fdict \
 	$dest
