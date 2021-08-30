@@ -6,6 +6,18 @@ window -r $catrect games/catclock
 window -r $volrect volume
 window -r $statrect stats -lmsedz
 window -r $duckrect duck
-window -r $riowrect 'label riow; riow </srv/riogkbd*'
+# for fuck's sake
+window -r $riowrect 'label riow;
+fn bar{
+	sed -u ''s/$/│⏵│⏸│⏭│⏶│⏷/g'' \
+	| /bin/bar -s ''│'' \
+	| awk ''
+		/⏵/{system("Sta")}
+		/⏸/{system("Sto")}
+		/⏭/{system("Fw")}
+		/⏶/{system("v+")}
+		/⏷/{system("v-")}
+	'' >[2]/dev/null
+}; riow'
 sleep 1
 window -scroll -r $cmdrect 'label cmd; rc'
