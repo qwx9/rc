@@ -1,0 +1,6 @@
+#!/bin/rc
+rfork n
+dict=fd-deu-eng
+if(~ $1 -r)
+	dict=fd-eng-deu
+fdict -d $dict $*
