@@ -1,41 +1,65 @@
 #!/bin/rc -xe
-# gottagofast update script
-# FIXME: this script is FUCKING RETARDED
-# FIXME: idea: don't rfork n, allow fixing whatever and continuing build; better
-# error detection and recovery
+# (idiot) gottagofast update script
 rfork en
-h=$home
-
-fn mkp{
-	cd $h/p
-	mk nuke
-	mk install && mk nuke || exit NOPE
-	cp -x opl2/man/1/opl2 pplay/man/1/pplay u6/man/1/u6mopl wl3d/man/1/wl3d /sys/man/1/
-	cp -x wl3d/man/6/wl3d /sys/man/6/
-	cd $h/p/qk2
-	for(i in mkfile.*){
-		bind $i mkfile
-		mk install && mk nuke || exit NOPE
-		unmount mkfile
-	}
-	for(i in spew/aplay ftrvxmtrx/imgtools ftrvxmtrx/mp3dec){
-		if(test -d $h/lib/extra/$i){
-			cd $h/lib/extra/$i
-			mk install && mk clean
-		}
-	}
-}
-
-if(! test -e $h/p){
-	h=/usr/qwx
-	if(! test -e $h/p)
-		exit 'no p to hand'
-}
-
-{
-cd /
-bind -ac /dist/plan9front /
-hg revert --no-backup \
+extra=/sys/lib/extra
+patches=(/usr/qwx/p/patch/^(\
+	9fs-9paste\
+	9nusbrc-nesusbjoy\
+	doom-autorun\
+	doom-chat\
+	doom-limits\
+	doom-mouseglitches\
+	doom-mousegrab\
+	doom-naivescaleup\
+	doom-nodclick\
+	doom-nomousemove\
+	doom-skywallhit\
+	doom-spy\
+	doom-udpip\
+	file-mod\
+	file-opus\
+	ircrc-jpmfix\
+	ircrc-print-log\
+	kbdfs-fshalt\
+	libplumb-basic\
+	man1audio-opus\
+	man-joy\
+	mothra-font\
+	page-invert\
+	paint-reverse\
+	play-dmid-mod\
+	play-opus-aac\
+	png-maxmem\
+	rio-exit\
+	sam-ham\
+	sam-sharedsnarf\
+	sam-fullfrontalnudity\
+	samterm-flayers\
+	samterm-fullfrontalnudity\
+	troff-nchars\
+	acme-col\
+	kbmap-col\
+	libdraw-menucol\
+	colors-col\
+	faces-col\
+	fplot-col\
+	mothra-col\
+	rio-col\
+	samterm-col\
+	spred-col\
+	stats-col\
+	statusmsg-col\
+	statusbar-col\
+	sudoku-col\
+	vt-col\
+	zuke-col\
+)\
+	$extra/usr/sigrid/^(riow/9front.diff patches/rio-select.patch)\
+)
+more=(\
+	$extra/usr/^(spew/aplay sigrid/imgtools sigrid/mp3dec)\
+)
+torevert=(\
 	/lib/vgadb\
 	/rc/bin/^(9fs ircrc play)\
 	/sys/lib/plumb/basic\
@@ -43,128 +67,42 @@ hg revert --no-backup \
 	/sys/man/1/audio\
 	/sys/man/4/nusb\
 	/sys/src/9/pc64/mkfile\
+)
 
-sysupdate
+{
+cd /
+git
+git/revert $torevert
+sysup
 . /sys/lib/rootstub
-ramfs -um /n/mk
-@{cd /sys/src; tar c *} | @{cd /n/mk; tar x}
-bind /n/mk /sys/src
-
-#fplot-col\
-#life-col.patch\	FIXME: goddamnit burnzez
-colf=(\
-acme-col\
-kbmap-col\
-libdraw-menucol\
-colors-col\
-faces-col\
-samterm-col\
-spred-col\
-stats-col\
-statusmsg-col\
-statusbar-col\
-sudoku-col\
-mothra-col\
-vt-col\
-zuke-col\
-)
-
-f=(\
-9fs-9paste\
-9nusbrc-nesusbjoy\
-doom-autorun\
-doom-chat\
-doom-limits\
-doom-mouseglitches\
-doom-mousegrab\
-doom-naivescaleup\
-doom-nodclick\
-doom-skywallhit\
-doom-spy\
-doom-udpip\
-file-mod\
-file-opus\
-ircrc-jpmfix\
-ircrc-print-log\
-kbdfs-fshalt\
-libplumb-basic\
-man1audio-opus\
-man-joy\
-mothra-font\
-page-invert\
-paint-reverse\
-play-dmid-mod\
-play-opus\
-png-maxmem\
-rio-exit\
-sam-fullfrontalnudity\
-samterm-fullfrontalnudity\
-samterm-flayers\
-troff-nchars\
-)
-
-ko=(amd64 386)
-k=(pc64 pc)
-switch($sysname){
-case hsw aib x220 t61p w520 u32
-	f=($f $colf)
-	ko=(amd64 386 arm)
-	k=(zynq pc pc64)
-case t61 t61p2 t60p w500
-	f=($f $colf)
-case ibm3000 t43
-	f=($f $colf)
-	ko=386
-	k=(pc)
-case *
-	ko=386
-	k=(pc)
-}
-for(i in $h/lib/extra/ftrvxmtrx/riow/9front.diff $h/lib/extra/ftrvxmtrx/patches/rio-select.patch $h/p/patch/$f)
-	ape/patch -s --no-backup-if-mismatch -p1 < $i
-cp -x $h/p/dot/vgadb /lib/vgadb
-rm -f (/lib/vgadb /rc/bin/ircrc /sys/man/4/nusb)^.orig
-
+pa4 $patches
+# FIXME: this should be a patch too
+cp -x /usr/qwx/p/dot/vgadb /lib/
 cd /sys/src
 {
 	mk clean
-	for(i in $ko)
+	for(i in amd64 386 arm)
 		objtype=$i mk nuke
-	mk install || exit 'NOPE'
-	for(i in $ko)
-		if(! ~ $i $objtype)
-			objtype=$i mk install || exit 'NOPE'
+	mkall || exit NOPE
 	mk clean
-	for(i in $ko)
-		objtype=$i mkp
+	cd /usr/qwx/p
+	mkall
+	cp -x opl2/man/1/opl2 pplay/man/1/pplay u6/man/1/u6mopl wl3d/man/1/wl3d /sys/man/1/
+	cp -x wl3d/man/6/wl3d /sys/man/6/
+	cd /usr/qwx/p/qk2
+	for(i in amd64 386 arm)
+		objtype=$i build.rc
+	for(i in $more){
+		if(test -d $i){
+			cd $i
+			mkall
+		}
+	}
+	stealrc
+	cd /
 } | pump || exit 'NOPE'
 cd /sys/man
 mk
-
-for(i in $k){
-	cd /sys/src/9/^$i
-	mk clean && mk install && mk clean
-}
-9fs 9fat
-if(~ $objtype amd64 386){
-	rm /n/9fat/9bootfat
-	cp /386/9bootfat /n/9fat/
-	chmod +al /n/9fat/9bootfat
-}
-for(i in $k)
-	switch($i){
-	case pc
-		if(! ~ $sysname aib)
-			cp /386/9pc /n/9fat/
-	case pc64
-		if(! ~ $sysname aib)
-			cp /amd64/9pc64 /n/9fat/
-	case zynq
-		cp /arm/9zynq /n/9fat/
-	}
-unmount /n/9fat
-unmount /n/9
-rm /srv/dos
+k9 || exit
 } >>/tmp/mku.$pid
-#echo sync >>/srv/hjfs.cmd
 rm /tmp/mku.$pid
