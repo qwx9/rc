@@ -1,9 +1,7 @@
 #!/bin/rc
-# run as "nusb/joy epX.Y | joygba"
-
-awk -safe '
-	BEGIN { k[0] = "" }
-
+# usage: nusb/joy epX.Y | joy [1|2]
+~ $#* 0 && *=''
+awk -safe -v 'joy='$1 '
 	/^axis 0 0/   { k[0] = "left " }
 	/^axis 0 255/ { k[0] = "right " }
 	/^axis 0 128/ { k[0] = "" }
@@ -31,7 +29,11 @@ awk -safe '
 	/^up 8$/ { k[7] = "" }
 
 	{
-		print k[0] k[1] k[2] k[3] k[4] k[5] k[6] k[7] k[8] k[9]
+		if(joy != "")
+			printf "joy%s ", joy
+		for(i in k)
+			printf k[i]
+		printf "\n"
 		fflush
 	}
 '

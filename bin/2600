@@ -10,6 +10,6 @@ echo resize `{echo $vgasize |\
 	}'
 } >/dev/wctl
 if(~ $1 -j)
-	nusb/joy /dev/usb/ep^$2^.0 | joygba | {games/2600 -a $*(3-) || games/2600 $*(3-)}
+	nusb/joy /dev/usb/ep^$2^.0 | joy | {games/2600 -a $*(3-) || games/2600 $*(3-)}
 if not
 	games/2600 -a $* || games/2600 $*
