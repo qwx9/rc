@@ -2,6 +2,7 @@
 # (idiot) gottagofast update script
 rfork en
 extra=/sys/lib/extra
+
 patches=(/usr/qwx/p/patch/^(\
 	9fs-9paste\
 	9nusbrc-nesusbjoy\
@@ -37,6 +38,7 @@ patches=(/usr/qwx/p/patch/^(\
 	samterm-flayers\
 	samterm-fullfrontalnudity\
 	troff-nchars\
+	vgadb-w500-w520\
 	acme-col\
 	kbmap-col\
 	libdraw-menucol\
@@ -76,8 +78,6 @@ git/revert $torevert
 sysup
 . /sys/lib/rootstub
 pa4 $patches
-# FIXME: this should be a patch too
-cp -x /usr/qwx/p/dot/vgadb /lib/
 cd /sys/src
 {
 	mk clean
