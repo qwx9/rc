@@ -6,6 +6,6 @@ for(i in amd64 386 arm){
 		objtype=$i mk install
 }
 if(! ~ $#* 0)
-	mk $*^.clean
+	mk cleancmds
 if not
 	mk clean
