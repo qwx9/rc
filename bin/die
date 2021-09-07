@@ -1,0 +1,15 @@
+#!/bin/rc
+if(! ~ $#* 2){
+	echo usage: $0 program parentpid >[1=2]
+	exit usage
+}
+ps -n |\
+	awk -v 'prg='$1 -v 'pid='$2 '
+BEGIN{
+	getline <("/proc/" pid "/noteid")
+	nid = $1
+}
+$3 == nid && $8 == prg{
+	print kill >("/proc/" $2 "/note")
+}
+'
