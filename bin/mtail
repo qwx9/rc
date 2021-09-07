@@ -1,0 +1,8 @@
+#!/bin/rc
+dir=/mail/box/$user/arc
+if(! test -d $dir)
+	exit
+n=10
+if(! ~ $#* 0)
+	n=$1
+ls -t $dir | sed $n^q
