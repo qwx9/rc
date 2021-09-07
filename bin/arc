@@ -1,0 +1,8 @@
+#!/bin/rc
+# started from /mail/lib/remotemail
+# message from stdin piped to upas/smtp
+dir=/mail/box/$user/arc
+if(! test -d $dir)
+	mkdir $dir || exit
+arc=$dir/`{date -n}
+exec tee -a $arc
