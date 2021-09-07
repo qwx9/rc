@@ -1,0 +1,36 @@
+#!/bin/rc
+rfork n
+if(! test -f $home/lib/mbox){
+	echo $0: $home/lib/mbox doesn''t exist >[1=2]
+	exit nope
+}
+wsz=`{read -c 48 /mnt/wsys/wctl}
+awk -v 'x1='$wsz(1) -v 'x2='$wsz(3) -v 'y2='$wsz(4) '
+BEGIN{
+	xmax = x2 - x1
+	ymax = y2
+	x2 = xmax - 8
+	y2 = ymax - 48
+	x1 = 0
+	y1 = 0
+	print "#!/bin/rc"
+}/^[^#]/{
+	print "window -r", x1, y1, x2, y2, "mailrio", $1, $2
+	y1 += 116
+	x2 -= 4
+}
+END{
+	x2 = xmax
+	y2 = y1 + 116
+	print "window -scroll -r", x1, y1, x2, y2, "tail -f /sys/log/smtp"
+	y1 += 116
+	y2 += 116
+	print "window -scroll -r", x1, y1, x2, y2, "tail -f /sys/log/smtp.fail"
+	y1 = ymax - 34
+	y2 = ymax
+	print "window -r", x1, y1, x2, y2, "winwatch"
+}
+' $home/lib/mbox >/tmp/mailrio.$pid
+chmod +x /tmp/mailrio.$pid
+rio -i /tmp/mailrio.$pid
+rm /tmp/mailrio.$pid
