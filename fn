@@ -102,8 +102,6 @@ fn psd{ *=`{echo $"* | sed 's/ /|/g'}; ps -n | grep $* }
 fn vr{ @{rfork n; aux/realemu; aux/vga -lm vesa $vgasize} }
 
 # mail
-# manual mail archive
-fn arc{ cat >/mail/box/qwx/arc/`{date -n} }
 # attempt at quoting
 fn qt{ cat | sed 's/^/> /' }
 
