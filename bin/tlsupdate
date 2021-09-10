@@ -1,0 +1,10 @@
+#!/bin/rc
+fn update {
+	echo |\
+	tlsclient -t /sys/lib/tls/$1 $2 |[2]\
+	awk '/sha256=.*/ { print "x509", $NF }' >> /sys/lib/tls/$1
+}
+update mail tcp!imap.gmail.com!imaps
+update smtp tcp!smtp.gmail.com!ssmtp
+update mail tcp!imap.mail.yahoo.com!imaps
+update smtp tcp!smtp.mail.yahoo.com!ssmtp
