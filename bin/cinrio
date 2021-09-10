@@ -1,12 +1,8 @@
 #!/bin/rc -e
 truetypefs
 font=/n/ttf/unifont.ttf.16/font
-plumber
+plumber -s plumb.$pid
 plumbsrv=()
 rio
 unmount /mnt/plumb
-# fuck you rc
-if(! ~ $#plumbsrv 0)
-	rm $plumbsrv
-if not
-	die plumber $pid
+rm /srv/plumb.$pid
