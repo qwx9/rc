@@ -30,7 +30,7 @@ END{
 	y2 = ymax
 	print "window -r", x1, y1, x2, y2, "winwatch"
 }
-' $home/lib/mbox >/tmp/mailrio.$pid
-chmod +x /tmp/mailrio.$pid
-rio -i /tmp/mailrio.$pid
-rm /tmp/mailrio.$pid
+' $home/lib/mbox >/tmp/mw.$pid
+chmod +x /tmp/mw.$pid
+rio -i /tmp/mw.$pid
+rm /tmp/mw.$pid
