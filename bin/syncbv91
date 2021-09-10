@@ -8,9 +8,9 @@ if(! sshfs tcp!$1!8022){
 	echo ssh failed: $status
 	exit ssh
 }
-cd
 # sd card mtimes are full of lies
-if(~ $1 ule){
+if(~ $1 bv91){
+	cd /lib/m
 	for(i in m*){
 		if(! test -d /n/ssh/m)
 			ssh tcp!bv91!8022 ln -s storage/external-1/m m || exit
