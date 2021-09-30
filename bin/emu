@@ -1,0 +1,23 @@
+#!/bin/rc -e
+rfork n
+if(~ $*(3) ''){
+	echo $0 '[-j usbep] emu width height [params] rom'
+	exit usage
+}
+emu=$1
+rescale $2 $3
+shift 3
+joy=()
+if(~ $1 -j){
+	joy=$2
+	shift 2
+}
+if(test -d /sys/games/lib/rom/$emu){
+	mkdir -p $home/lib/$emu
+	bind -bc $home/lib/$emu /sys/games/lib/rom/$emu
+	cd /sys/games/lib/rom/$emu
+}
+if(~ $#joy 1)
+	nusb/joy /dev/usb/ep^$joy^.0 | joy | {eval games/$emu -a $* || eval games/$emu $*}
+if not
+	eval games/$emu -a $* || eval games/$emu $*
