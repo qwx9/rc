@@ -1,15 +1,2 @@
 #!/bin/rc
-echo resize `{echo $vgasize |\
-	awk -Fx '{
-		a=$1/240;
-		b=$2/160;
-		c=int(b<a?b:a);
-		if(c*240 == $1 || c*160 == $2)
-			c--;
-		print "-dx", c*240+8, "-dy", c*160+8
-	}'
-} >/dev/wctl
-if(~ $1 -j)
-	nusb/joy /dev/usb/ep^$2^.0 | joy | {games/gba -a $*(3-) || games/gba $*(3-)}
-if not
-	games/gba -a $* || games/gba $*
+emu gba 240 160 $*
