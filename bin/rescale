@@ -1,0 +1,10 @@
+#!/bin/rc
+echo $vgasize | awk -Fx -v 'w='$1 -v 'h='$2 '
+{
+	dx = $1 / w
+	dy = $2 / h
+	scale = int(dy < dx ? dy : dx)
+	if(scale * w == $1 || scale * h == $2)
+		scale--
+	print "resize -dx", scale * w + 8, "-dy", scale * h + 8 >"/dev/wctl"
+}'
