@@ -1,0 +1,4 @@
+#!/bin/rc
+walk -f $* |\
+	grep -v '[^/]*.git/' |\
+	fm
