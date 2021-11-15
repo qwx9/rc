@@ -5,7 +5,7 @@ bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
 test -f $home/p/rc/bin/bindbins && . $home/p/rc/bin/bindbins
-test -f $home/lib/ass){
+if(test -f $home/lib/ass){
 	auth/factotum
 	setec
 }
@@ -17,6 +17,8 @@ prompt=('; ' '	')
 rio -k '
 	window -r 586 0 1280 584 9grid
 	window -r 0 0 732 602 mw
-	window -scroll -r 0 324 612 806 ii
-	window -scroll -r 607 749 1280 800 girc /tmp/ircs/''#cat-v''
+	#window -scroll -r 0 324 612 806 wii
+	window -scroll -r 607 749 1280 800 girc ''/tmp/irc.irc.oftc.net!#cat-v''
+	window stats -lmse
+	window ''label wii; echo wii; rc''
 '

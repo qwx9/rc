@@ -11,7 +11,7 @@ bind -c $home/tmp /tmp
 bind -a $home/bin/rc /bin
 bind -a $home/bin/$cputype /bin
 test -f $home/p/rc/bin/bindbins && . $home/p/rc/bin/bindbins
-test -f $home/lib/ass){
+if(test -f $home/lib/ass){
 	auth/factotum
 	setec
 }
