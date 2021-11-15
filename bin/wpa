@@ -1,6 +1,7 @@
 #!/bin/rc -e
-ip/ipconfig unbind || status=''
+ip/ipconfig ether /net/ether0 unbind || status=''
 if(! test -d /net/ether1)
 	bind -a '#l1' /net
 aux/wpa -s $1 /net/ether1
+# if shit really fucks out, kill ipconfig
 ip/ipconfig ether /net/ether1
