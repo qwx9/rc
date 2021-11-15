@@ -5,7 +5,6 @@ extra=/sys/lib/extra
 
 patches=(/usr/qwx/p/patch/^(\
 	9fs-9paste\
-	9nusbrc-nesusbjoy\
 	doom-autorun\
 	doom-chat\
 	doom-limits\
@@ -21,10 +20,7 @@ patches=(/usr/qwx/p/patch/^(\
 	file-opus\
 	ircrc-jpmfix\
 	ircrc-print-log\
-	kbdfs-fshalt\
-	libplumb-basic\
 	man1audio-opus\
-	man-joy\
 	mothra-font\
 	page-invert\
 	paint-reverse\
@@ -32,9 +28,7 @@ patches=(/usr/qwx/p/patch/^(\
 	play-opus-aac\
 	png-maxmem\
 	rio-exit\
-	sam-ham\
 	sam-sharedsnarf\
-	sam-fullfrontalnudity\
 	samterm-flayers\
 	samterm-fullfrontalnudity\
 	troff-nchars\
@@ -53,10 +47,11 @@ patches=(/usr/qwx/p/patch/^(\
 	statusmsg-col\
 	statusbar-col\
 	sudoku-col\
+	winwatch-col\
 	vt-col\
 	zuke-col\
 )\
-	$extra/usr/sigrid/^(riow/9front.diff patches/rio-select.patch)\
+	$extra/usr/sigrid/^(riow/9front.diff patches/rio-semicolon-prompt.patch)\
 )
 more=(\
 	$extra/usr/^(spew/aplay sigrid/imgtools sigrid/mp3dec)\
@@ -64,10 +59,8 @@ more=(\
 torevert=(\
 	/lib/vgadb\
 	/rc/bin/^(9fs ircrc play)\
-	/sys/lib/plumb/basic\
 	/sys/lib/kbmap\
 	/sys/man/1/audio\
-	/sys/man/4/nusb\
 	/sys/src/9/pc64/mkfile\
 )
 
@@ -77,6 +70,9 @@ git
 git/revert $torevert
 sysup
 . /sys/lib/rootstub
+ramfs -um /mnt/b
+@{cd /sys/src; tar c *} | @{cd /mnt/b; tar xT}
+bind -bc /mnt/b /sys/src
 pa4 $patches
 cd /sys/src
 {
