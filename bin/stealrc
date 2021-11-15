@@ -1,15 +1,15 @@
 #!/bin/rc
 repo=/sys/lib/extra/usr
-contrib=/sys/lib/extra/sources/contrib
+sources=/sys/lib/extra/sources
 dest=$home/bin/rc
 cp -x \
 	$repo/kvik/bin.rc/bin/^(last pfx scr) \
 	$repo/jpm/rc/^(fcalls fman h top ircx netproc irctime) \
-	$repo/ftrvxmtrx/rc/youtube \
+	$repo/sigrid/rc/youtube \
 	$repo/aiju/rc/fun \
 	$repo/qrstuv/9paste \
-	$repo/sources.extra/ps2txt \
-	$repo/henesy/gelinks.rc \
+	$sources/extra/ps2txt \
+	$repo/henesy/getlinks.rc \
 	$repo/ori/lstk \
-	$contrib/fgb/rc/fdict \
+	$sources/contrib/fgb/rc/fdict \
 	$dest
