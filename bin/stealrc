@@ -13,3 +13,4 @@ cp -x \
 	$repo/ori/lstk \
 	$sources/contrib/fgb/rc/fdict \
 	$dest
+chmod +x $dest/*
