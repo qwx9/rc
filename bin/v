@@ -6,6 +6,8 @@ if(~ $#* 0){
 }
 switch($1){
 case aib
+case taib
+	$1=$1
 case t16
 case t30
 	sshnet tcp!$1!x || exit
@@ -13,4 +15,4 @@ case t30
 case *
 	sshnet tcp!$1!x || exit
 }
-vncv -l utf8 -e corre $*
+vncv -l utf8 -e corre $* >[2]/dev/null
