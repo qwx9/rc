@@ -1,0 +1,25 @@
+#!/bin/awk -f
+BEGIN{
+	mo["Jan"] = "01"
+	mo["Feb"] = "02"
+	mo["Mar"] = "03"
+	mo["Apr"] = "04"
+	mo["May"] = "05"
+	mo["Jun"] = "06"
+	mo["Jul"] = "07"
+	mo["Aug"] = "08"
+	mo["Sep"] = "09"
+	mo["Oct"] = "10"
+	mo["Nov"] = "11"
+	mo["Dec"] = "12"
+}$1 ~ /^--$/{
+	d = $3
+	m = mo[$4]
+	y = substr($5, 2)
+	s = sprintf("%02d%02d%02d", y, m, d)
+}$1 !~ /^--$/ && $2 !~ /^(JOIN|NICK|PART|QUIT|[0-9]+|ircs:)$/{
+	gsub(":", "", $1)
+	$1 = s ":" substr($1, 1, 4)
+	sub("→", "⇒", $3)
+	print
+}
