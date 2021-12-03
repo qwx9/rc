@@ -1,2 +1,5 @@
 #!/bin/rc
-emu gbc 160 144 $*
+ramfs
+cp /bin/games/gb /tmp/gbc
+bind -a /tmp /bin/games
+emu gbc 160 144 $* -c
