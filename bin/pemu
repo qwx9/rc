@@ -1,0 +1,28 @@
+#!/bin/rc
+rfork n
+if(~ $#* 0){
+	echo usage: $0 '[-j ep]' rom.ext >[1=2]
+	exit usage
+}
+if(~ $1 -j){
+	j=$1
+	shift
+}
+if not
+	j=`{sed -n '/ep.\.0/h;${g;s/^ep(.)\.0.*/\1/p;}' /dev/usb/ctl}
+ext=`{echo $1 | sed 's/.*\.([^\.]+)$/\1/'}
+switch($ext){
+case 2600 gb gbc gba md nes snes
+	e=$ext
+case smc
+	e=snes
+case bin
+	if(~ `{file $1} *SEGA*)
+		e=md
+	if not
+		e=2600
+case *
+	echo unknown rom type >[1=2]
+	exit usage
+}
+exec $e -j $j $1
