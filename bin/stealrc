@@ -6,6 +6,7 @@ cp -x \
 	$repo/kvik/bin.rc/bin/^(last pfx scr) \
 	$repo/jpm/rc/^(fcalls fman h top ircx netproc irctime) \
 	$repo/sigrid/rc/youtube \
+	$repo/sigrid/pdffs/pdf2txt \
 	$repo/aiju/rc/fun \
 	$repo/qrstuv/9paste \
 	$sources/extra/ps2txt \
