@@ -11,4 +11,4 @@ if(~ $#v 0)
 v=`{echo 'v='$v'; v & ~0xffff | ((v>>16) / '$1')' | pc -n}
 if(! ~ $#v 1)
 	exit 'invalid factor'
-seg -Lw igfxmmio 0x400000 0xc8254 $v
+seg -Lw igfxmmio 0x400000 0x48254 $v
