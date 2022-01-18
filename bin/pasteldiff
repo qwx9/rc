@@ -3,6 +3,15 @@ git
 cd /
 rm -f /sys/src/cmd/rio/menuhit.c* /sys/src/cmd/rio/col.h*
 git/revert /sys/src/^(libdraw games/sudoku cmd/^(acme colors.c faces fplot.c kbmap.c mothra sam* spred stats.c aux/status* vt winwatch.c audio/zuke rio))
+exit nope: deprecated patch
+pa4 $home/p/patch/^(\
+	sam-sharedsnarf\
+	samterm-flayers\
+	samterm-fullfrontalnudity\
+	samterm-mousefocus\
+	samterm-pastelcol\
+	libdraw-pastelmenucol\
+)
 pa4 $home/p/patch/pastels
 ramfs
 mkdir /tmp/lib

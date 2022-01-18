@@ -22,6 +22,7 @@ patches=(/usr/qwx/p/patch/^(\
 	ircrc-print-log\
 	man1audio-opus\
 	mothra-font\
+	page-del\
 	page-invert\
 	paint-reverse\
 	play-dmid-mod\
@@ -31,6 +32,7 @@ patches=(/usr/qwx/p/patch/^(\
 	sam-sharedsnarf\
 	samterm-flayers\
 	samterm-fullfrontalnudity\
+	samterm-mousefocus\
 	troff-nchars\
 	vgadb-w500-w520\
 	acme-col\
@@ -51,7 +53,7 @@ patches=(/usr/qwx/p/patch/^(\
 	vt-col\
 	zuke-col\
 )\
-	$extra/usr/sigrid/^(riow/9front.diff patches/rio-semicolon-prompt.patch)\
+	$extra/usr/sigrid/^(riow/9front.diff)\
 )
 more=(\
 	$extra/usr/^(spew/aplay sigrid/imgtools sigrid/mp3dec)\
@@ -62,6 +64,7 @@ torevert=(\
 	/sys/lib/kbmap\
 	/sys/man/1/audio\
 	/sys/src/9/pc64/mkfile\
+	/sys/src/cmd/^(page.c)\
 )
 
 {
@@ -73,7 +76,8 @@ sysup
 ramfs -um /mnt/b
 @{cd /sys/src; tar c *} | @{cd /mnt/b; tar xT}
 bind -bc /mnt/b /sys/src
-pa4 $patches
+for(i in $patches)
+	pa4 $i
 cd /sys/src
 {
 	mk clean
