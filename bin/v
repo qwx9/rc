@@ -5,14 +5,12 @@ if(~ $#* 0){
 	exit usage
 }
 switch($1){
-case aib
-case taib
+case aib taib t490s u30
 	$1=$1
-case t16
 case t30
 	sshnet tcp!$1!x || exit
 	*=u30
 case *
 	sshnet tcp!$1!x || exit
 }
-vncv -l utf8 -e corre $* >[2]/dev/null
+vncv -l utf8 -e hextile $* >[2]/dev/null
