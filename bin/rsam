@@ -38,7 +38,7 @@ unmount /mnt/plumb
 plumber
 rio -k '
 	window -r $rw -scroll
-	window -r $rs sam -a $* $f
+	window -r $rs jam -a $* $f
 '
 !
 window -m -hide -r $r rc /env/fuckrc

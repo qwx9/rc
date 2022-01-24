@@ -15,4 +15,4 @@ case 1366x768x*
 	r=(0 0 1366 625)
 }
 if(! ~ $#r 0)
-	window -m -r $r sam -a $* $home/p/not/todo.proj
+	window -m -r $r jam -a $* $home/p/not/todo.proj
