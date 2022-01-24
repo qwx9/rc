@@ -1,3 +1,2 @@
 #!/bin/rc
-#plumb -d web 'http://duckduckgo.com/lite'
-mothra 'http://duckduckgo.com/lite'
+mothra 'http://duckduckgo.com/lite?q='^`"{echo $* | sed 's/ /+/g'}
