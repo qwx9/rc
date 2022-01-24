@@ -29,10 +29,6 @@ patches=(/usr/qwx/p/patch/^(\
 	play-opus-aac\
 	png-maxmem\
 	rio-exit\
-	sam-sharedsnarf\
-	samterm-flayers\
-	samterm-fullfrontalnudity\
-	samterm-mousefocus\
 	troff-nchars\
 	vgadb-w500-w520\
 	acme-col\

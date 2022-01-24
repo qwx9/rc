@@ -2,14 +2,9 @@
 git
 cd /
 rm -f /sys/src/cmd/rio/menuhit.c* /sys/src/cmd/rio/col.h*
-git/revert /sys/src/^(libdraw games/sudoku cmd/^(acme colors.c faces fplot.c kbmap.c mothra sam* spred stats.c aux/status* vt winwatch.c audio/zuke rio))
+git/revert /sys/src/^(libdraw games/sudoku cmd/^(acme colors.c faces fplot.c kbmap.c mothra spred stats.c aux/status* vt winwatch.c audio/zuke rio))
 exit nope: deprecated patch
 pa4 $home/p/patch/^(\
-	sam-sharedsnarf\
-	samterm-flayers\
-	samterm-fullfrontalnudity\
-	samterm-mousefocus\
-	samterm-pastelcol\
 	libdraw-pastelmenucol\
 )
 pa4 $home/p/patch/pastels
@@ -21,7 +16,6 @@ cd /sys/src/libdraw && mk nuke && mk install && mk clean
 cd /
 mkdir -p /tmp/bin/^(aux games audio)
 cd /sys/src/cmd/rio && mk && mv 6.out /tmp/bin/rio && mk clean
-cd /sys/src/cmd/samterm && mk && mv 6.out /tmp/bin/aux/samterm && mk clean
 cd /sys/src/cmd/mothra && mk && mv 6.out /tmp/bin/aux/mothra && mk nuke
 cd /sys/src/cmd/acme && mk && mv 6.out /tmp/bin/acme && mk clean
 cd /sys/src/cmd/faces && mk && mv 6.out /tmp/bin/faces && mk clean
@@ -43,4 +37,4 @@ cd /sys/src/cmd && mk cleancmds
 cd /sys/lib/extra/usr/spew/aplay && mk 6.volume && mv 6.volume /tmp/bin/volume && mk clean
 cd /sys/lib/extra/usr/sigrid/bar && mk 6.bar && mv 6.bar /tmp/bin/bar && mk clean
 dircp /tmp/bin /usr/qwx/pastel
-git/revert /sys/src/^(libdraw games/sudoku cmd/^(acme colors.c faces fplot.c kbmap.c mothra sam* spred stats.c aux/status* vt winwatch.c audio/zuke rio))
+git/revert /sys/src/^(libdraw games/sudoku cmd/^(acme colors.c faces fplot.c kbmap.c mothra spred stats.c aux/status* vt winwatch.c audio/zuke rio))
