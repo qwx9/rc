@@ -79,6 +79,8 @@ fn shi{ page `'
 fn ff{ A=$*(2-); ssh $user@$1 'DISPLAY=:0 '^$"A^' >/dev/null 2>&1'; A=() }
 # defunct linux script shortcut
 #fn lnx{ linux -r $home/mroot /bin/bash -i }
+# vdir(1)
+fn ‡{ vdir $* }
 
 # rio
 # clear window
