@@ -10,6 +10,7 @@ if(~ $#flagf 1)
 	cfile=$flagf
 if(~ $#flagn 1)
 	nick=$flagn
+echo no. >[1=2]; exit no.
 while(){
 	hold /tmp/hold >[2]/dev/null \
 	&& cat /tmp/hold | sed '1s/^/'$nick' → /' >>$cfile

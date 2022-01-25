@@ -1,4 +1,5 @@
 #!/bin/rc -e
+echo no. >[1=2]; exit no.
 9fs tcp!chat.9p.zone!9990 /n/chat
 rm /srv/tcp!chat.9p.zone!9990
 # fukken quoting
