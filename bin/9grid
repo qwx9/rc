@@ -1,14 +1,14 @@
 #!/bin/rc -e
-echo no. >[1=2]; exit no.
+#echo no. >[1=2]; exit no.
 9fs tcp!chat.9p.zone!9990 /n/chat
 rm /srv/tcp!chat.9p.zone!9990
 # fukken quoting
 cat <<'!' >/tmp/grid.$pid
 #!/bin/rc
-window -r 0 0 656 516 -scroll cat /n/chat/chat
+window -r 0 0 656 516 -scroll grep -b :// /n/chat/chat
 window -r 0 524 656 596 -scroll girc -g /n/chat/chat
-window -scroll 'echo cat /dev/wsys/1/text ''>>/tmp/chat''; echo ''{}>/dev/wsys/1/text''; rc'
-window -r 1589 109 1910 182 holdchat
+#window -scroll 'echo cat /dev/wsys/1/text ''>>/tmp/chat''; echo ''{}>/dev/wsys/1/text''; rc'
+#window -r 1589 109 1910 182 holdchat
 !
 chmod +x /tmp/grid.$pid
 rio -i /tmp/grid.$pid
