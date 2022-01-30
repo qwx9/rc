@@ -9,7 +9,7 @@ if(~ $1 -j){
 	shift
 }
 if not
-	j=`{sed -n '/ep.\.0/h;${g;s/^ep(.)\.0.*/\1/p;}' /dev/usb/ctl}
+	j=`{sed -n '/^ep[0-9]+\.0/h;${g;s/^ep([0-9]+)\.0.*/\1/p;}' /dev/usb/ctl}
 ext=`{echo $1 | sed 's/.*\.([^\.]+)$/\1/'}
 switch($ext){
 case 2600 gb gbc gba md nes snes
