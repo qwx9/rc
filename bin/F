@@ -1,0 +1,5 @@
+#!/bin/rc
+rm -f /tmp/hold
+hold /tmp/hold >[2]/dev/null && \
+	{echo; fmt </tmp/hold | tee /dev/snarf}
+rm -f /tmp/hold
