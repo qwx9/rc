@@ -1,0 +1,12 @@
+#!/bin/rc
+rfork e
+x=1
+if(! ~ $#* 0)
+	x=$1
+awk -v 'x='^$x '
+/^; /{
+	a[++n] = NR
+} END {
+	cmd = a[n-x]","a[n-x+1]-1"d;"NR"d"
+	system("sed \''" cmd "\'' /dev/text >/tmp/a; mv /tmp/a /dev/text")
+}' /dev/text
