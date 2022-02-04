@@ -1,0 +1,139 @@
+# to update: cp $home/lib/plumbing /mnt/plumb/rules
+# don't fucking append to the file
+
+editor = jam
+browser = mothra
+
+# audio
+
+# nothing besides zuke listens to audio port for now,
+# unless we use umbraticus' rc scripts
+# if zuke is on, the message will be intercepted even with ptrap
+# so disable plumbing to audio port for now
+type	is	text
+data	matches	'[a-zA-Z¡-￿0-9_\-.,/ ]+'
+data	matches	'([a-zA-Z¡-￿0-9_\-.,/ ]+)\.(mp3|MP3|ogg|OGG|flac|FLAC|wav|WAV|au|AU|mid|MID|mus|MUS|m3u|M3U|pls|PLS|opus|OPUS|aac|AAC|m4a|M4A|mod|MOD)'
+arg	isfile	$0
+plumb start window play -o /fd/1 <$file >[2]/dev/null | pplay
+
+type is text
+data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
+data matches '([a-zA-Z¡-￿0-9_\-.,/]+)\.(pcm|PCM)'
+arg isfile	$0
+plumb start window pplay $file
+
+type is text
+data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
+data matches '([a-zA-Z¡-￿0-9_\-.,/]+)\.(xm|XM)'
+arg isfile	$0
+plumb start window audio/ft2 $file
+
+# treason/yt
+
+dst	is	video
+plumb	to	video
+plumb	client	window	treason
+
+type	is	text
+data	matches	'.+\.(mkv|MKV|mp4|MP4|webm|WEBM)'
+data	set	$file
+plumb	to	video
+plumb	client	window -dx 480 -dy 360 echo ''''rc -c ''''''''treason ''''''''''''$file''''''''''''''''| rc
+
+#type	is	text
+#data	matches	'https?://(www\.youtube\.com/watch\?v=|youtu\.be/)...........'
+#plumb	start	window -scroll 'ssh qwx@tcp!u11!17666 ''DISPLAY=:0 mpv 2>/dev/null '$0''''
+
+type	is text
+data	matches	'https?://www.youtube\.com/watch\?v=[^ "]+|https?://youtu\.be/[^ "]+'
+plumb	start window yv ''''$0''''
+
+type	is text
+data	matches	'youtube\.com/watch\?v=([^ "]+)|youtu\.be/([^ "]+)'
+plumb	start window yv ''''https://$0''''
+
+# emu
+
+type	is	text
+data	matches	'.+\.(2600|bin|BIN|gb|GB|gbc|GBC|gba|GBA|nes|NES|md|MD|smc|SMC)'
+data	set	$file
+plumb	start	window echo ''''rc -c ''''''''pemu ''''''''''''$file''''''''''''''''| rc
+
+# docs
+
+type	is	text
+data	matches	'[a-zA-Z¡-￿0-9_\-.,/]+\.[Zz][Ii][Pp]'
+plumb	to	image
+plumb	client	page -wi
+
+# notes
+
+type	is text
+data	matches	'\[[^\]]*\]\(([^/][^\)]*)\)'
+plumb	start	note/add $wdir/$1
+
+type	is text
+data	matches	'\[[^\]]*\]\((/[^\)]+)\)'
+plumb	start	note/add $1
+
+# web
+
+#data matches 'https?://.+|/tmp/webshit.*|[₀-₉]+|hpost.*'
+#plumb to webshit
+#plumb client window webshit
+
+type	is	text
+data	matches	'file:/[^ ]+'
+plumb	to	web
+plumb	client	window $browser
+
+type	is	text
+data	matches	'\[[^\]]*\]\((https?://[^\)]*)\)'
+data	set	$1
+plumb	to	web
+plumb	client	window $browser
+
+# thanks cinap
+type is text
+data matches 'https?://twitter.com/(.*)'
+data set https://nitter.eu/$1
+plumb to web
+plumb client window $browser
+
+# thanks khm/umbraticus
+type is text
+data matches https?://imgur.com/a/[a-zA-Z0-9]+
+plumb start rc -c 'hget '$data' | sed -n ''s/.*<meta property="og:image"[^>]+content="([^"?]+).*/\1/p'' | xargs -n 1 plumb'
+
+# gemnine
+type	is	text
+data	matches	'gemini://[^ ]+'
+plumb	to	gemini
+plumb	client	window gemnine -w $0
+
+# screenshots: show window image in page (thanks sigrid)
+# probably would be better to save to /tmp/scr.png automatically and page that
+type	is	text
+data	matches	'/dev/wsys/.*/window$'
+plumb	start	page -wi $0
+
+# open debugger for suicides (thanks kvik, ori)
+type	is	text
+data	matches	'[^ ]+ ([0-9]+): suicide:.*'
+plumb	to	none
+plumb	start	window acid -l thread $1
+
+# overwrite default mail rules
+type is text
+data matches '[a-zA-Z0-9_+.\-]+@[a-zA-Z0-9_+.\-]*'
+plumb to sendmail
+plumb start window rc -c '''fo; echo -n ''''>> '''' ; s=`"{read -n 1 | ssam ,s,\n,,}; mail -s $s '''$0
+
+type	is	text
+data	matches	'[a-zA-Z¡-￿0-9_\-./]+'
+data	matches	'/mail/fs/[a-zA-Z¡-￿0-9/]+/[0-9]+'
+plumb	to	showmail
+plumb	start	window -noscroll -r 4 120 750 1000 upas/nedmail -s $0
+
+
+include basic
