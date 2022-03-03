@@ -1,11 +1,10 @@
 #!/bin/rc
 sizes
-. /tmp/sizes
+. /tmp/sizes.$sysname
 window -scroll -r $kprintrect cat /dev/kprint
 window -r $catrect games/catclock
 window -r $volrect volume
 window -r $statrect stats -lmsedz
-window -r $duckrect duck
 # for fuck's sake
 window -r $riowrect 'label riow;
 fn bar{
