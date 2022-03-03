@@ -7,5 +7,5 @@ w=(music proj monitoring social)
 if(! ~ $#* 0)
 	w=$*
 . /tmp/sizes.$sysname
-for(i in /bin/work/^$w)
+for(i in $w)
 	k $i
