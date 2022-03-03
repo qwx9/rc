@@ -1,12 +1,11 @@
 #!/bin/rc
-if(! test -d $home/lib/work){
+if(! test -d /bin/work){
 	echo no work files
 	exit 'no work nor worry'
 }
-. /tmp/sizes
-for(i in $home/lib/work/*){
-	window -hide -r $briorect $i
-	sleep 2
-	last=`{cd /dev/wsys; ls | sort -n | tail -1}
-	echo -n `{basename $i} >/dev/wsys/$last/label
-}
+w=(music proj monitoring social)
+if(! ~ $#* 0)
+	w=$*
+. /tmp/sizes.$sysname
+for(i in /bin/work/^$w)
+	k $i
