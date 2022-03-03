@@ -1,4 +1,6 @@
 #!/bin/rc
+if(test -f /tmp/sizes.$sysname)
+	exit
 screensize=`{echo $vgasize | sed 's/x/ /g'}
 #screensize=`{file /dev/screen | sed 's/.*size ([^x]+)x([^x]+)/\1 \2/'}
 # general placements
@@ -59,8 +61,27 @@ duckrect=( \
 	$screensize(1) \
 	`{echo $screensize(2) - 256 | pc -n} \
 )
+mailrect=( \
+	0 \
+	0 \
+	`{echo $briorect(3) / 3 | pc -n} \
+	$briorect(4) \
+)
+# force corner
+vncrect=( \
+	`{echo $screensize(1) - 64 | pc -n} \
+	0 \
+	$screensize(1) \
+	28 \
+)
+ffvncrect=( \
+	32 \
+	32 \
+	64 \
+	64 \
+)
 
-cat <<! >/tmp/sizes
+cat <<! >/tmp/sizes.$sysname
 screensize=($screensize)
 briorect=($briorect)
 bsamrect=($bsamrect)
@@ -73,4 +94,7 @@ cmdrect=($cmdrect)
 riowrect=($riowrect)
 zukerect=($zukerect)
 duckrect=($duckrect)
+mailrect=($mailrect)
+vncrect=$(vncrect)
+ffvncrect=$(ffvncrect)
 !
