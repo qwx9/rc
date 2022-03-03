@@ -1,0 +1,19 @@
+#!/bin/rc
+rfork ne
+
+. /tmp/sizes.$sysname
+unmount /mnt/plumb
+plumber -s plumb.$pid
+
+cat <<! >/tmp/work.$pid
+#!/bin/rc
+window -r $mailrect mw
+window -r $vncrect v aib
+!
+chmod +x /tmp/work.$pid
+rio -i /tmp/work.$pid
+
+rm /tmp/work.$pid
+unmount /mnt/plumb
+rm /srv/plumb.$pid
+exit

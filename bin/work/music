@@ -1,0 +1,22 @@
+#!/bin/rc
+rfork ne
+
+. /tmp/sizes.$sysname
+cd /lib/m
+#audio/mixfs
+unmount /mnt/plumb
+plumbsrv=()
+plumber -s plumb.$pid
+
+cat <<! >/tmp/work.$pid
+#!/bin/rc
+window -r $volrect volume
+window -r $bcmdrect -scroll
+window -scroll -r $zukerect 'label zuke; rc'
+!
+chmod +x /tmp/work.$pid
+rio -i /tmp/work.$pid
+rm /tmp/work.$pid
+
+unmount /mnt/plumb
+rm /srv/plumb.$pid

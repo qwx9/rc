@@ -1,0 +1,32 @@
+#!/bin/rc
+rfork ne
+
+. /tmp/sizes.$sysname
+#	/lib/books/doomrpg/doom-rpg-bnf.txt \
+f=( \
+	$home/p/notes/net/todo/^(9front/igfx/stack)^.md \
+	$home/p/notes/net/todo/proj/^(sce/gather sce/pathfinding asif/path)^.md \
+)
+unmount /mnt/plumb
+plumber -s plumb.$pid
+
+cat <<! >/tmp/work.$pid
+#!/bin/rc
+window -r $bcmdrect -scroll
+#window -r $duckrect mothra
+#plumb /lib/books/doomrpg/decoding.doomrpg.pdf!8
+#plumb /lib/books/Sanglard/sanglard.game.engine.black.book.doom.v1.1.pdf!209
+#plumb /lib/books/algorithms/albertetal.cours.et.exercices.dinformatique.pdf!12
+#plumb /lib/books/specs/igfx/kbl/intel-gfx-prm-osrc-kbl-vol12-display.pdf!126
+#plumb /lib/books/specs/igfx/hsw/intel-gfx-prm-osrc-hsw-display.pdf!171
+#plumb /lib/books/gameai/millington.artificial.intelligence.for.games.pdf
+#plumb /lib/books/maths/lengyel.mathematics.for.3d.game.programming.and.computer.graphics.pdf
+window -r $bsamrect jam -a $f
+!
+chmod +x /tmp/work.$pid
+rio -i /tmp/work.$pid
+
+rm /tmp/work.$pid
+unmount /mnt/plumb
+rm /srv/plumb.$pid
+exit

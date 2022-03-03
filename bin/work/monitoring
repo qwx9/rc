@@ -1,0 +1,21 @@
+#!/bin/rc
+rfork ne
+
+. /tmp/sizes.$sysname
+unmount /mnt/plumb
+plumbsrv=()
+plumber -s plumb.$pid
+
+cat <<! >/tmp/work.$pid
+#!/bin/rc
+window -r $ffvncrect v kekw
+window -r $duckrect tx hsw
+#window -r $cmdrect tx t30
+window -r $cmdrect tx kekw
+!
+chmod +x /tmp/work.$pid
+rio -i /tmp/work.$pid
+rm /tmp/work.$pid
+
+unmount /mnt/plumb
+rm /srv/plumb.$pid
