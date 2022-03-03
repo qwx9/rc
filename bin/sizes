@@ -69,16 +69,16 @@ mailrect=( \
 )
 # force corner
 vncrect=( \
-	`{echo $screensize(1) - 64 | pc -n} \
+	`{echo $screensize(1) - 160 | pc -n} \
 	0 \
 	$screensize(1) \
-	28 \
+	64 \
 )
 ffvncrect=( \
 	32 \
 	32 \
-	64 \
-	64 \
+	1320 \
+	1064 \
 )
 
 cat <<! >/tmp/sizes.$sysname
@@ -95,6 +95,6 @@ riowrect=($riowrect)
 zukerect=($zukerect)
 duckrect=($duckrect)
 mailrect=($mailrect)
-vncrect=$(vncrect)
-ffvncrect=$(ffvncrect)
+vncrect=($vncrect)
+ffvncrect=($ffvncrect)
 !
