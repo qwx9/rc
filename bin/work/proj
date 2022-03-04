@@ -21,7 +21,7 @@ window -r $bcmdrect -scroll
 #plumb /lib/books/specs/igfx/hsw/intel-gfx-prm-osrc-hsw-display.pdf!171
 #plumb /lib/books/gameai/millington.artificial.intelligence.for.games.pdf
 #plumb /lib/books/maths/lengyel.mathematics.for.3d.game.programming.and.computer.graphics.pdf
-window -r $bcmdrect jam -a $f
+window -r $bsamrect jam -a $f
 !
 chmod +x /tmp/work.$pid
 rio -i /tmp/work.$pid
