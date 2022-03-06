@@ -3,6 +3,6 @@ truetypefs
 font=/n/ttf/unifont.ttf.16/font
 plumber -s plumb.$pid
 plumbsrv=()
-rio
+bof
 unmount /mnt/plumb
 rm /srv/plumb.$pid

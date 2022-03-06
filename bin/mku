@@ -28,7 +28,6 @@ patches=(/usr/qwx/p/patch/^(\
 	play-dmid-mod\
 	play-opus-aac\
 	png-maxmem\
-	rio-exit\
 	troff-nchars\
 	vgadb-w500-w520\
 	acme-col\
@@ -38,7 +37,6 @@ patches=(/usr/qwx/p/patch/^(\
 	faces-col\
 	fplot-col\
 	mothra-col\
-	rio-col\
 	samterm-col\
 	spred-col\
 	stats-col\
@@ -49,7 +47,6 @@ patches=(/usr/qwx/p/patch/^(\
 	vt-col\
 	zuke-col\
 )\
-	$extra/usr/sigrid/^(riow/9front.diff)\
 )
 more=(\
 	$extra/usr/^(spew/aplay sigrid/imgtools sigrid/mp3dec)\

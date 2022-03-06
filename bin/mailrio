@@ -21,7 +21,7 @@ cat <<! >/tmp/mailrio.$pid
 window -r $facerect faces -i
 !
 chmod +x /tmp/mailrio.$pid
-rio -i /tmp/mailrio.$pid
+bof -i /tmp/mailrio.$pid
 rm /tmp/mailrio.$pid
 unmount /mail/fs
 unmount /mnt/plumb

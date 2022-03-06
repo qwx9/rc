@@ -24,7 +24,7 @@ window -r 554 742 1194 -scroll 1179
 window -r 4 4 783 1178 tx $m
 !
 chmod +x /tmp/work.$pid
-rio -i /tmp/work.$pid
+bof -i /tmp/work.$pid
 rm /tmp/work.$pid
 
 unmount /n/ssh

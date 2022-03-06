@@ -5,30 +5,10 @@ if(! ~ $sysname aib && ~ `{ns | grep '#v'} ''){
 	echo hwaccel on >'#v/vgactl'
 }
 rfork efns	# weeeee
-font=/lib/font/bit/uga.font
 bind -a '#A' /dev
-bind -c $home/tmp /tmp
-bind -a $home/bin/rc /bin
-bind -a $home/bin/$cputype /bin
-test -f $home/p/rc/bin/bindbins && . $home/p/rc/bin/bindbins
+service=terminal
 if(test -f $home/lib/ass){
 	auth/factotum
 	setec
 }
-webcookies
-webfs
-plumber
-switch($sysname){
-case w500
-	echo pin 22 >'#A'/audioctl
-	echo inpin 23 >'#A'/audioctl
-case hsw
-	echo pin 27 >'#A/audioctl'
-	echo inpin 25 >'#A'/audioctl
-}
-if(! ~ $sysname aib)
-	echo master 40 >'#A/volume'
-echo accelerated 3 >'#m'/mousectl
-prompt=('; ' '	')
-rio -i riostart
-# might be nice to do dontkill '^(rio|rc)$'
+. $home/lib/profile

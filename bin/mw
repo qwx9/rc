@@ -32,5 +32,5 @@ END{
 }
 ' $home/lib/mbox >/tmp/mw.$pid
 chmod +x /tmp/mw.$pid
-rio -i /tmp/mw.$pid
+bof -i /tmp/mw.$pid
 rm /tmp/mw.$pid

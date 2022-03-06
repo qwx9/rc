@@ -3,4 +3,4 @@ rfork n
 srv tcp!plan-nue.youkai.pw!4458 ufo /n/ufo
 rm /srv/ufo
 audio/mixfs
-rio -k 'window ''echo ''''pump -k 51200 -b 131072 </n/ufo/radio | audio/mp3dec >/dev/audio''''; rc'''
+bof -k 'window ''echo ''''pump -k 51200 -b 131072 </n/ufo/radio | audio/mp3dec >/dev/audio''''; rc'''

@@ -11,7 +11,7 @@ rm /srv/grid*
 #bind -c /n/ftp/incoming /n/gridftp
 
 unmount /mnt/plumb
-rio -k '
+bof -k '
 window -scroll chat -n qwx
 window -scroll girc -g /n/chat/chat
 ' || status=''

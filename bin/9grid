@@ -11,6 +11,6 @@ window -r 0 524 656 596 -scroll girc -g /n/chat/chat
 #window -r 1589 109 1910 182 holdchat
 !
 chmod +x /tmp/grid.$pid
-rio -i /tmp/grid.$pid
+bof -i /tmp/grid.$pid
 rm /tmp/grid.$pid
 unmount /n/chat
