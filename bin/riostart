@@ -6,7 +6,6 @@ window -r $catrect games/catclock
 window -r $volrect volume
 window -r $statrect stats -lmsedz
 window -hide /bin/themeset
-# for fuck's sake
 window -r $riowrect 'label riow;
 fn bar{
 	sed -u ''s/$/│⏵│⏸│⏭│⏶│⏷/g'' \
@@ -18,6 +17,6 @@ fn bar{
 		/⏶/{system("v+")}
 		/⏷/{system("v-")}
 	'' >[2]/dev/null
-}; riow'
-sleep 0.1
+}; sleep 0.1; riow'	# themeshit delay
+sleep 0.5
 window -scroll -r $cmdrect 'label cmd; rc'
