@@ -2,5 +2,5 @@
 d=$home/pastel
 if(~ $1 -2)
 	d=$home/pastel2
-for(i in acme bar colors faces fplot kbmap mothra spred stats vt winwatch aux/^(jamterm statusmsg statusbar) games/sudoku audio/zuke volume vdir)
+for(i in acme colors faces fplot kbmap mothra spred stats vt winwatch aux/^(statusmsg statusbar) games/sudoku audio/zuke volume)
 	bind $d/$i /bin/$i
