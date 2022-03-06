@@ -1,8 +1,8 @@
 #!/bin/rc -e
 if(! test -f $home/lib/theme/rio)
 	exit
-while(! test -f /mnt/wsys/theme)
+while(! test -f /dev/theme)
 	sleep 0.1
-cp $home/lib/theme/rio /mnt/wsys/theme
+cp $home/lib/theme/rio /dev/theme
 grep softscreen /dev/vgactl >>/dev/vgactl
 echo hwblank off >>/dev/vgactl
