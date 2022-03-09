@@ -1,0 +1,9 @@
+#!/bin/rc
+rfork n
+while(! walk -dn1,1 | grep '\.git$' >/dev/null && ! ~ `{pwd} /)
+	cd ..
+if(~ `{pwd} /){
+	echo no git to hand >[1=2]
+	exit
+}
+git/fs && git/walk -fMAR
