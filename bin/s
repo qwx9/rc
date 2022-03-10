@@ -1,0 +1,15 @@
+#!/bin/rc
+# sam functions
+
+# from kvik's rc/rwin
+# ^W [cmd]: open window in current file's directory
+fn W{
+	echo !exec window -m -cd `{basename -d $%} $*
+}
+
+# ^b [cmd]: run command and send output to jam.err window
+fn b{
+	echo B /tmp/jam.err
+	{ cd `{basename -d $%} && $* } >[1=2]
+	echo e
+}
