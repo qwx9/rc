@@ -135,5 +135,16 @@ data	matches	'/mail/fs/[a-zA-Z¡-￿0-9/]+/[0-9]+'
 plumb	to	showmail
 plumb	start	window -noscroll -r 4 120 750 1000 upas/nedmail -s $0
 
+# vdir/fm
+src is vdir
+type is text
+arg isdir $data
+plumb start window -cd $data f
+
+src is vdirw
+type is text
+arg isdir $data
+plumb start window -cd $data rc
+
 
 include basic
