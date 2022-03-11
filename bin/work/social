@@ -7,8 +7,8 @@ plumber -s plumb.$pid
 
 cat <<! >/tmp/work.$pid
 #!/bin/rc
-window -r $mailrect mw
-window -r $vncrect v aib
+#window -r $mailrect mw
+window -r $vncrect v t60p
 !
 chmod +x /tmp/work.$pid
 bof -i /tmp/work.$pid
