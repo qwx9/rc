@@ -7,9 +7,98 @@ fn W{
 	echo !exec window -m -cd `{basename -d $%} $*
 }
 
-# ^b [cmd]: run command and send output to jam.err window
-fn b{
+# ^R [cmd]: run command and send output to jam.err window
+fn R{
+	echo w
 	echo B /tmp/jam.err
 	{ cd `{basename -d $%} && $* } >[1=2]
 	echo e
+}
+
+# from umbraticus' rc/s
+# ^+ [n] # increase indent
+fn +{
+	if(~ $%dot(2) $%dot(3)) echo ,
+	if(~ $1 [1-9]) echo 'x/^/i/'^`''{seq $1 | tr -d \xa | tr 1-9 '	'}
+	if not echo 'x/^/i/	/'
+}
+# ^- [n] # decrease indent
+fn -{
+	if(~ $%dot(2) $%dot(3)) echo ,
+	if(~ $1 [1-9]) echo 'x/^'^`''{seq 9 | tail -$1 | tr -d \xa | tr 1-9 '	'}^/d
+	if not echo 'x/^	/d'
+}
+# ^cc # c comment
+fn cc{
+	echo '#'^$%dot(3)^'a/*\//'
+	echo '#'^$%dot(2)^'i/\/*/'
+}
+# _i # find information about selected C function/struct or command
+fn i{
+	rfork e
+	name = `{read}
+	if(! ~ $#name 1){
+		echo !echo select a function/struct/command name first!
+		exit
+	}
+	cd `{basename -d $%}
+	match = `{g '^([*a-zA-Z]+[ 	]+)*'^$name^'[ 	]*(\([^;]*)?$' | sed '1{s/: .*//;q;}'}
+	if(~ $#match 1)	# local function definition
+		plumb $match
+	if not{
+		match = `{g 'struct[ 	]+'^$name^'[ 	]*({|$)' | sed '1{s/: .*//;q;}'}
+		if(~ $#match 1)	# local struct definition
+			plumb $match
+		if not{
+			match = `{struct $name | sed 1q}
+			if(~ $#match 1)	# system struct definition
+				plumb $match
+			if not{
+				match = `{man -w $name >[2]/dev/null | sed 's†.*/([0-9])/(.*)†\2(\1)†'}
+				if(! ~ $#match 0){	# system function or command
+					echo !echo ''''^$"match^''''
+					echo !sig $name
+				}
+				if not{	# getting really desperate now...
+					match = `{lookman $name | sed 's/.*#//'}
+					if(~ $#match 0)
+						echo !echo no information found for $name
+					if not
+						echo !echo ''''^$"match^''''
+				}
+			}
+		}
+	}
+}
+# _m # plumb man page for selected name
+fn m{sed '1s/.*/!plumb &''(0)''/;q'}
+# ^rc # rc comment
+fn rc{
+	if(~ $%dot(2) $%dot(3)) echo ,
+	echo 'x/^/i/# '
+}
+# ^rn from to # rename C identifier
+fn rn{
+	rfork e
+	if(! ~ $#* 2){
+		echo 'usage: ^rn from to'
+		exit
+	}
+	if(~ $%dot(2) $%dot(3)) echo ,
+	charconst='''[^'']*'''
+	strconst='"([^"]|\\")*"'
+	name='[a-zA-Z_¡-￿][a-zA-Z_0-9¡-￿]*'
+	partial=`{
+		echo -n $1 |
+		awk '{for(i = 0; i < length($1) + 1; i++) printf "."}'
+	}
+	echo 'y/'$charconst'/ y/'$strconst'/ x/'$name'/ g/'$1'/ v/'$partial'/ c/'$2
+}
+# _s # print function signature
+fn s{
+	sed '1s/.*/!sig &/;q'
+}
+# ^uc # uncomment c/rc code
+fn uc{
+	echo 'x/^(#|\/\/) ?/d'
 }
