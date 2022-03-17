@@ -2,11 +2,11 @@
 rfork n
 
 fn usage{
-	usage: $0 '[-u sys] [-w]' >[1=2]
+	echo usage: $0 '[-u sys] [-w]' >[1=2]
 	exit usage
 }
 
-if(! test -f /tmp/t2)
+if(! test -f /tmp/t)
 	usage
 
 echo hwgc soft >/dev/vgactl
