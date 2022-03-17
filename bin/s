@@ -15,6 +15,16 @@ fn R{
 	echo e
 }
 
+# !o cmd: save a sam command
+fn o{
+	echo 'fn '^$1^'{ echo '''^$2^''' }' >/env/'fn#'^$1
+}
+# ^O cmd: run any rc function
+fn O{
+	fun $*
+}
+
+
 # from umbraticus' rc/s
 # ^+ [n] # increase indent
 fn +{
@@ -72,11 +82,6 @@ fn i{
 }
 # _m # plumb man page for selected name
 fn m{sed '1s/.*/!plumb &''(0)''/;q'}
-# ^rc # rc comment
-fn rc{
-	if(~ $%dot(2) $%dot(3)) echo ,
-	echo 'x/^/i/# '
-}
 # ^rn from to # rename C identifier
 fn rn{
 	rfork e
