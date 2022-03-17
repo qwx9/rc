@@ -1,0 +1,56 @@
+#!/bin/rc
+rfork n
+
+fn usage{
+	usage: $0 '[-u sys] [-w]' >[1=2]
+	exit usage
+}
+
+if(! test -f /tmp/t2)
+	usage
+
+echo hwgc soft >/dev/vgactl
+echo blanktime 0 >/dev/mousectl
+switch($sysname){
+case hsw
+	echo linear >/dev/mousectl
+	parm=(-f 60 -k 1000 -Q 50)
+case w520
+	parm=(-f 30 -Q 33)
+case *
+	res=(-f 15 -Q 33)
+}
+
+pl=()
+h=()
+audio=/mnt/mix/audio
+scr=/dev/screen
+while(~ $1 -?){
+	switch($1){
+	case -u
+		h=$2
+		rimport $h '#u' /n/c
+		audio=/n/c/audioin
+		shift 2
+	case -w
+		echo resize -dx 1288 -dy 1032 >/dev/wctl
+		pl=plumb.$pid
+		unmount /mnt/plumb
+		plumber -s $pl
+		scr=/dev/wsys/^`{sed 's/ +//g' /mnt/wsys/winid}
+	case *
+		usage
+	}
+}
+if(~ $#h 0)
+	window -hide -m rc -c 'dd -bs 44100 -if /dev/zero -of /mnt/mix/audio'
+video/hj264 $parm $scr |\
+	video/rtmp -a <{audio/aacenc -b <$audio} \
+	`{cat /tmp/t} &
+if(! ~ $#pl 0)
+	bof
+
+echo 'slay rtmp hj264 dd | rc'
+echo 'blanktime 5 >/dev/mousectl'
+if(! ~ $#pl 0)
+	echo rm -f $pl
