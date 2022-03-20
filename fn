@@ -20,8 +20,8 @@ fn Fw{ fw | sed 1q | rc }
 fn Sta{ sta | sed 1q | rc }
 fn Sto{ sto | sed 1q | rc }
 # recursively list all files in arguments and play shuffled list forever
-fn shp{ *=`"{lr -Q $*}; while(! ~ $#* 0) play `'
-' {echo -n $* | shl} }
+fn shp{ *=`"{walk -f $*}; while(! ~ $#* 0) play `'
+' {echo -n $* | shl} >[2]/dev/null }
 # shuffle play pre-arranged list of files forever
 fn shpp{ status='' while(~ $status '') play `{shl <$1} }
 
@@ -50,7 +50,7 @@ fn catfn{ sed -n '/^'$1'\(/ {x;p;x;};/^'$1'\(/,/^}/p;h' *.c }
 # file processing
 # recursive chown implementation, given fs access
 fn chown{ for(i in `'
-'{lr -Qd $*(2-)}){ chgrp $1 $i && chgrp -o $1 $i } }
+'{walk $*(2-)}){ chgrp $1 $i && chgrp -o $1 $i } }
 # lower filenames
 fn lw{ for(i in $*) mv $i `'
 '{echo $i | tr A-Z a-z} }
@@ -72,9 +72,6 @@ fn ii{ ircx -t '#cat-v' }
 fn q2cr{ qk2 -g crbot $* +set deathmatch 1 +set ctf 0 }
 # quake2 ctf
 fn q2f{ qk2 -g ctf $* +set ctf 1 }
-# display shuffled list of images
-fn shi{ page `'
-'{lr -Q $* | shl | sed 5000q} }
 # launch graphical program on a unix host
 fn ff{ A=$*(2-); ssh $user@$1 'DISPLAY=:0 '^$"A^' >/dev/null 2>&1'; A=() }
 # defunct linux script shortcut
@@ -138,7 +135,5 @@ fn wth{ plumb http://wttr.in/$1 }
 #}
 #fn ftp11{ ftpfs -/na anonymous@anonymous -o UNIX u11 }
 #fn ctopdf{ ps2pdf <{lp -dstdout -l100 -x0 -y0 -fCW.7 <{cat $*}} /fd/1 | pump }
-#fn shi{ xpage `'
-#'{lr -Q $* | shl | sed 5000q} }
 fn chi{ cd $home/p/sm2/cin && truetypefs && plumber && font=/n/ttf/unifont.ttf.16/font rio; unmount /mnt/plumb }
 fn chidiff{ diff <{ls *.pdf | sort} <{awk '{print $5}' db0 | sort} | sed -n '/^[0-9]/d;s/< /2.5 0 0 0 /p' }
