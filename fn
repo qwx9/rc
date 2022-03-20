@@ -21,7 +21,7 @@ fn Sta{ sta | sed 1q | rc }
 fn Sto{ sto | sed 1q | rc }
 # recursively list all files in arguments and play shuffled list forever
 fn shp{ *=`"{walk -f $*}; while(! ~ $#* 0) play `'
-' {echo -n $* | shl} >[2]/dev/null }
+'{echo -n $* | shl} |[2] sed -u '/^COVERART/d'}
 # shuffle play pre-arranged list of files forever
 fn shpp{ status='' while(~ $status '') play `{shl <$1} }
 
