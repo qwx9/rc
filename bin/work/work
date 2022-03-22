@@ -2,7 +2,7 @@
 rfork ne
 
 . /tmp/sizes.$sysname
-m=t490s
+m=t490sw
 w=tcp!$m!17060
 root=/n/ssh
 wdir=$root/p/tsfs/software
@@ -17,10 +17,10 @@ f=(`{walk src | grep \.rs} ../../^(rs.notes todo))
 cat <<! >/tmp/work.$pid
 #!/bin/rc
 #window -r $bcmdrect -scroll
-#window -r $bsamrect 'echo 4 >/env/tabstop; jam -ia $f'
+#window -r $bsamrect 'echo 4 >/env/tabstop; jam -i $f'
 #window -r $duckrect tx $m
-window -r $bsamrect 'jam -a $f'
-window -r 554 742 1194 -scroll 1179
+window -r $bsamrect jam $f
+window -r 554 742 1194 -scroll
 window -r 4 4 783 1178 tx $m
 !
 chmod +x /tmp/work.$pid
