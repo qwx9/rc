@@ -1,6 +1,0 @@
-#!/bin/rc -e
-d=$home/pastel
-if(~ $1 -2)
-	d=$home/pastel2
-for(i in acme colors faces fplot kbmap mothra spred winwatch games/sudoku audio/zuke volume)
-	bind $d/$i /bin/$i
