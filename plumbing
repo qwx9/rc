@@ -4,6 +4,11 @@
 editor = jam
 browser = mothra
 
+# man index entries are synthesized
+type is text
+data matches '([a-zA-Z¡-￿0-9_\-./]+)\(([0-9])\)'
+plumb	start	window -dy 800 man $2 $1 '; read'
+
 # audio
 
 # nothing besides zuke listens to audio port for now,
