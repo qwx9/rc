@@ -22,6 +22,7 @@ fn O{
 # from kvik's rc/rwin
 # ^W [cmd]     # open window in current file's directory
 fn W{
+	echo w
 	echo !exec window -m -cd `{basename -d $%} $*
 }
 
