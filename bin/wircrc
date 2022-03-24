@@ -9,6 +9,8 @@ srvpass=()
 chans=()
 realname='<nil>'
 nick=$user
+latch=$*
+again=0
 
 while (~ $1 -*) {
 	switch ($1) {
@@ -173,7 +175,7 @@ fn sighup {
 fn sigint {
 	shutdown
 }
-
+echo $0 $"latch
 wmk $server &
 dial tcp!$server!$port $tls irc $server &
 
@@ -213,6 +215,7 @@ dial tcp!$server!$port $tls irc $server &
 				if(~ $i $id || ~ $i $id!*)
 					wio $i HUNGUP $id
 			}
+			again=1
 		case wnew
 			wd$id=$a(3)
 			wp$id=$a(4)
@@ -313,3 +316,5 @@ dial tcp!$server!$port $tls irc $server &
 	}
 }
 shutdown
+if(~ $again 1)
+	window -dx 162 -dy 64 $0 $"latch
