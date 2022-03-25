@@ -64,8 +64,6 @@ fn doc2{ echo `{doctype $1} '| lp -dstdout | page' | rc }
 # shortcuts
 # connect to aijuboard
 fn aib{ echo b115200 >/dev/eiaU*.1ctl && con -r /dev/eiaU*.1 }
-# wircrc usage
-fn wii{ wircrc -T -p 6697 -c 'irc.oftc.net!#cat-v' -n qwx irc.oftc.net }
 # ircs usage
 fn ii{ ircx -t '#cat-v' }
 # quake2 crbot

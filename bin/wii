@@ -1,0 +1,8 @@
+#!/bin/rc
+while(){
+	x=`{netstat -n | awk '$6 == 6697 && $4 == "Established"'}
+	if(~ $#x 0)
+		window -dx 162 -dy 64 \
+			'wircrc -T -p 6697 -c ''irc.oftc.net!#cat-v'' -n qwx irc.oftc.net'
+	sleep 300
+}
