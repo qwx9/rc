@@ -2,11 +2,11 @@
 rfork nefs
 service=terminal
 norio=1
+. $home/lib/profile
 if(test -f $home/lib/ass){
 	auth/factotum
 	setec
 }
-. $home/lib/profile
 cat <<! >/tmp/bof.$pid
 #!/bin/rc
 window -r 586 0 1280 584 9grid

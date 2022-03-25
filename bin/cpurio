@@ -7,8 +7,10 @@ if(! ~ $sysname aib && ~ `{ns | grep '#v'} ''){
 rfork efns	# weeeee
 bind -a '#A' /dev
 service=terminal
+norio=1
+. $home/lib/profile
 if(test -f $home/lib/ass){
 	auth/factotum
 	setec
 }
-. $home/lib/profile
+bof
