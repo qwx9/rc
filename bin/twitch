@@ -11,7 +11,7 @@ if(! test -f /tmp/t)
 echo hwgc soft >/dev/vgactl
 echo blanktime 0 >/dev/mousectl
 switch($sysname){
-case hsw
+case hsw t490s x240
 	parm=(-f 60 -k 1000 -Q 50)
 case w520
 	parm=(-f 30 -Q 33)
