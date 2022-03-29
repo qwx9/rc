@@ -4,9 +4,11 @@
 # ^R [cmd]     # run command and send output to jam.err window
 fn R{
 	echo w
+	f=$%
+	echo !'{' cd `{basename -d $%} '&&' $"* '}'
 	echo B /tmp/jam.err
-	{ cd `{basename -d $%} && $* } >[1=2]
 	echo e
+	echo b $f
 }
 
 # !o name expr # save a sam command
