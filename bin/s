@@ -9,6 +9,7 @@ fn R{
 	echo B /tmp/jam.err
 	echo e
 	echo b $f
+	echo b ~~jam~~
 }
 
 # !o name expr # save a sam command
