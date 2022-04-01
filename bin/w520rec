@@ -1,0 +1,30 @@
+#!/bin/rc
+# no noise gate/suppression for the mic
+# everything plugged into mixer, mixer's usb card on w500, recording
+# on w520 using w500's audio
+
+echo hwgc soft >/dev/vgactl
+echo blanktime 0 >/dev/mousectl
+
+window -r 1730 839 1920 1055 'label cam
+	nusb/cam 7
+	cat <<! >/dev/cam7.1/ctl
+format 320x240
+fps 30
+backlight-compensation 1
+brightness 20
+contrast 95
+saturation 40
+sharpness 7
+gamma 200
+!
+	{ while() sleep 2 && echo top >/dev/wctl} &
+	camv /dev/cam7.1'
+window -scroll 'echo slay hj264 aacenc cam ''|'' rc; rc'
+
+echo 'proceed?'
+read -n 1 >/dev/null
+
+rimport -u qwx w500 '#u' /n/c
+window -m rc -c 'audio/aacenc -b </n/c/audioin >/tmp/rec.`{date -t}^.aac'
+video/hj264 -f 50 -k 1000 -Q 50 /dev/screen > /tmp/rec.^`{date -t}^.264
