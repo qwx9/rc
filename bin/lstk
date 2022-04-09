@@ -9,4 +9,4 @@ if not if(~ $#* 0)
 if not
 	p usage: $0 '[broken]' >[2=1]
 echo lstk'()' | acid -lthread $p
-echo acid -lthread $p $*(2-)
+echo acid -lthread -lpool $*
