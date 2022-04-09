@@ -1,2 +1,2 @@
 #!/bin/rc
-git/log | awk '$1 == "Hash:" { system("git/export " $2) }'
+git/log $* | awk '$1 == "Hash:" { system("git/export " $2); print ""}'
