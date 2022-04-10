@@ -10,6 +10,7 @@ plumber -s plumb.$pid
 cd $home/p/sm2/ger
 cat <<! >/tmp/work.$pid
 #!/bin/rc
+label ger
 #window 'netsurf https://www.dw.com/de/themen/wissen-umwelt/s-12296'
 window -r $zukerect page /lib/books/german/AFoundationCourseInReadingGerman.pdf
 window -r $bcmdrect -scroll

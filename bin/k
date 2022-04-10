@@ -6,6 +6,3 @@ if(! ~ $#* 1 || ! test -f /bin/work/$1){
 . /tmp/sizes.$sysname
 x=/bin/work/$1
 window -hide -r $briorect $x
-sleep 2
-last=`{cd /dev/wsys; ls | sort -n | tail -1}
-echo -n `{basename $x} >/dev/wsys/$last/label

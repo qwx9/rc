@@ -8,6 +8,7 @@ plumber -s plumb.$pid
 
 cat <<! >/tmp/work.$pid
 #!/bin/rc
+label monitoring
 window -r $ffvncrect v kekw
 window -r $duckrect tx hsw
 #window -r $cmdrect tx t30
