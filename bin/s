@@ -4,12 +4,18 @@
 # ^R [cmd]     # run command and send output to jam.err window
 fn R{
 	echo w
+	c=''''^($*)^''''
 	f=$%
-	echo !'{' cd `{basename -d $%} '&&' $"* '}'
+	echo !'{' cd `{basename -d $f} '&&' $c '}'
 	echo B /tmp/jam.err
 	echo e
 	echo b $f
 	echo b ~~jam~~
+}
+
+# ^T	# write to disk any modified files
+fn T{
+	echo X/^''''/w
 }
 
 # !o name expr # save a sam command
