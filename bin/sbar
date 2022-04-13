@@ -1,0 +1,9 @@
+#!/bin/rc
+rfork n
+rm -f /srv/bar
+bind -a '#|' /mnt/bar
+<>[3]/mnt/bar/data1 {
+	echo 3 >/srv/bar
+#	aux/statusmsg -k -w 720,1052,1590,1080 </mnt/bar/data &
+	aux/statusmsg -k -w 720,1048,1590,1080 </mnt/bar/data &
+}
