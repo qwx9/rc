@@ -26,5 +26,5 @@ echo 'proceed?'
 read -n 1 >/dev/null
 
 rimport -u qwx w500 '#u' /n/c
-window -m rc -c 'audio/aacenc -b </n/c/audioin >/tmp/rec.`{date -t}^.aac'
+window -m rc -c 'audio/aacenc -B 262144 -b </n/c/audioin >/tmp/rec.`{date -t}^.aac'
 video/hj264 -f 50 -k 1000 -Q 50 /dev/screen > /tmp/rec.^`{date -t}^.264

@@ -43,7 +43,7 @@ while(~ $1 -?){
 if(~ $#h 0)
 	window -hide -m rc -c 'dd -bs 44100 -if /dev/zero -of /mnt/mix/audio'
 video/hj264 $parm $scr |\
-	video/rtmp -a <{audio/aacenc -b <$audio} \
+	video/rtmp -a <{audio/aacenc -B 262144 -b <$audio} \
 	`{cat /tmp/t} &
 if(! ~ $#pl 0)
 	bof
