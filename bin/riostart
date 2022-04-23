@@ -4,15 +4,21 @@ sizes
 window -scroll -r $kprintrect cat /dev/kprint
 window -r $catrect games/catclock
 window -r $volrect volume
+window -r $duckrect mothra
 if(test -f /mnt/acpi/battery)
 	window -r $statrect stats -blmsez -T 10
 if not
 	window -r $statrect stats -lmsez
 window -r $riowrect 'label riow;
 fn bar{
-	sed -u ''s/$/│⏵│⏸│⏭│⏶│⏷/g'' \
+	sed -u ''s/$/│⏪│⏯│⏩│⑨│⏵│⏸│⏭│⏶│⏷/g'' \
 	| /bin/bar -s ''│'' \
 	| awk ''
+		# zuke
+		/⏪/{system("plumb -d audio ''''key <''''")}
+		/⏯/{system("plumb -d audio ''''key p''''")}
+		/⏩/{system("plumb -d audio ''''key >''''")}
+		# shp
 		/⏵/{system("Sta")}
 		/⏸/{system("Sto")}
 		/⏭/{system("Fw")}
@@ -20,5 +26,4 @@ fn bar{
 		/⏷/{system("v-")}
 	'' >[2]/dev/null
 }; riow'
-sleep 0.3
-window -scroll -r $cmdrect 'label cmd; rc'
+{ sleep 0.5; window -scroll -r $cmdrect 'label cmd; rc' } &
