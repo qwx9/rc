@@ -11,15 +11,13 @@ plumb	start	window -dy 800 man $2 $1 '; read'
 
 # audio
 
-# nothing besides zuke listens to audio port for now,
-# unless we use umbraticus' rc scripts
-# if zuke is on, the message will be intercepted even with ptrap
-# so disable plumbing to audio port for now
+plumb	to	audio
+
 type	is	text
 data	matches	'[a-zA-Z¡-￿0-9_\-.,/ ]+'
 data	matches	'([a-zA-Z¡-￿0-9_\-.,/ ]+)\.(mp3|MP3|ogg|OGG|flac|FLAC|wav|WAV|au|AU|mid|MID|mus|MUS|m3u|M3U|pls|PLS|opus|OPUS|aac|AAC|m4a|M4A|mod|MOD)'
 arg	isfile	$0
-plumb start window play -o /fd/1 <$file >[2]/dev/null | pplay
+plumb start window play -o /fd/1 $file >[2]/dev/null | pplay
 
 type is text
 data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
