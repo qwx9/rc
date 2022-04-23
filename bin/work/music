@@ -3,10 +3,6 @@ rfork ne
 
 . /tmp/sizes.$sysname
 cd /lib/m
-#audio/mixfs
-unmount /mnt/plumb
-plumbsrv=()
-plumber -s plumb.$pid
 
 cat <<! >/tmp/work.$pid
 #!/bin/rc
@@ -18,6 +14,3 @@ window -scroll -r $zukerect 'label zuke; rc'
 chmod +x /tmp/work.$pid
 bof -i /tmp/work.$pid
 rm /tmp/work.$pid
-
-unmount /mnt/plumb
-rm /srv/plumb.$pid
