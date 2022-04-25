@@ -10,10 +10,12 @@ if(test -f /mnt/acpi/battery)
 if not
 	window -r $statrect stats -lmsez
 window -r $riowrect 'label riow;
+fn ⑨ { if(test -f /srv/bar) window ''echo -n >/dev/snarf; hold /dev/snarf && cat /dev/snarf >>/srv/bar'' }
 fn bar{
 	sed -u ''s/$/│⏪│⏯│⏩│⑨│⏵│⏸│⏭│⏶│⏷/g'' \
 	| /bin/bar -s ''│'' \
 	| awk ''
+		/⑨/{system("⑨")}
 		# zuke
 		/⏪/{system("plumb -d audio ''''key <''''")}
 		/⏯/{system("plumb -d audio ''''key p''''")}
