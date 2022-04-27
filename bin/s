@@ -3,6 +3,10 @@
 
 # ^R [cmd]     # run command and send output to jam.err window
 fn R{
+	if(~ $% jam.err */jam.err){
+		echo nope >[1=2]
+		exit
+	}
 	echo w
 	c=''''^($*)^''''
 	f=$%
@@ -31,6 +35,10 @@ fn O{
 # from kvik's rc/rwin
 # ^W [cmd]     # open window in current file's directory
 fn W{
+	if(~ $% jam.err */jam.err){
+		echo nope >[1=2]
+		exit
+	}
 	echo w
 	echo !exec window -m -cd `{basename -d $%} $*
 }
