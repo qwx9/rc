@@ -9,6 +9,7 @@ cat <<! >/tmp/work.$pid
 #!/bin/rc
 label social
 #window -r $mailrect mw
+window -r $ffvncrect v aib
 window -r $vncrect v t60p
 !
 chmod +x /tmp/work.$pid

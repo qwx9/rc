@@ -3,7 +3,7 @@ if(! test -d /bin/work){
 	echo no work files
 	exit 'no work nor worry'
 }
-w=(music proj monitoring social)
+w=(music proj social work)
 if(! ~ $#* 0)
 	w=$*
 . /tmp/sizes.$sysname
