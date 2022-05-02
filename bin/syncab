@@ -7,7 +7,7 @@ if(~ $1 -m){
 }
 if(! ~ $#* 2){
 	echo usage: $0 [-m] left right
-	exit usage
+	exit usage >[1=2]
 }
 
 ref=$1
