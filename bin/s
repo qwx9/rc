@@ -53,25 +53,33 @@ fn u{
 	window -m -dx 636 rc -c 'U; read'
 }
 
-# from umbraticus' rc/s/calc
-# |pc        # inline arithmetic
-fn pc{
-	/bin/pc -n | tr -d '
-'
-}
-
-# from umbraticus' rc/s
 # ^+ [n]       # increase indent
 fn +{
-	if(~ $%dot(2) $%dot(3)) echo ,
-	if(~ $1 [1-9]) echo 'x/^/i/'^`''{seq $1 | tr -d \xa | tr 1-9 '	'}
-	if not echo 'x/^/i/	/'
+	t='	'
+	if(! ~ $#* 0)
+		for(i in `{seq 2 1 $1}) t=$t^'	'
+	echo 's/^/'^$t^'/g'
 }
 # ^- [n]       # decrease indent
 fn -{
-	if(~ $%dot(2) $%dot(3)) echo ,
-	if(~ $1 [1-9]) echo 'x/^'^`''{seq 9 | tail -$1 | tr -d \xa | tr 1-9 '	'}^/d
-	if not echo 'x/^	/d'
+	t='	'
+	if(! ~ $#* 0)
+		for(i in `{seq 2 1 $1}) t=$t^'	'
+	echo 's/^'^$t^'//g'
+}
+
+# ^swap        # swap two strings specified as regular expressions
+fn swap{
+	echo s/''^$"1^''/‡‡'&'‡‡/g
+	echo s/''^$"2^''/''^$"1^''/g
+	echo s/‡‡''^$"1^''‡‡/''^$"2^''/g
+}
+
+# from umbraticus' rc/s
+# |pc          # inline arithmetic
+fn pc{
+	/bin/pc -n | tr -d '
+'
 }
 # _s           # print function signature
 fn s{
