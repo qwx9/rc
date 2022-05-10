@@ -81,8 +81,8 @@ fn pc{
 	/bin/pc -n | tr -d '
 '
 }
-# _s           # print function signature
-fn s{
+# _sig           # print function signature
+fn sig{
 	sed '1s/.*/!sig &/;q'
 }
 # _i           # find information about selected C function/struct or command
@@ -152,3 +152,10 @@ fn cc{
 fn uc{
 	echo 'x/^(#|\/\/) ?/d'
 }
+
+# common menu items
+cat <<!
+M ^W
+M ^R mk install
+M |fmt -l 82
+!
