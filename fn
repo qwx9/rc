@@ -16,9 +16,9 @@ fn sto{ for(i in `{fpl}) echo 'echo stop >/proc/'^$i^/ctl }
 # resume playback
 fn sta{ for(i in `{fpl}) echo 'echo start >/proc/'^$i^/ctl }
 # shortcuts for first play(1) process
-fn Fw{ fw | sed 1q | rc }
-fn Sta{ sta | sed 1q | rc }
-fn Sto{ sto | sed 1q | rc }
+fn Fw{ fw | tail -1 | rc }
+fn Sta{ sta | tail -1 | rc }
+fn Sto{ sto | tail -1 | rc }
 # recursively list all files in arguments and play shuffled list forever
 fn shp{ *=`"{walk -f $*}; while(! ~ $#* 0) play `'
 '{echo -n $* | shl} |[2] sed -u '/^COVERART/d'}
