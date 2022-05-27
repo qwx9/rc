@@ -1,12 +1,26 @@
 #!/bin/rc
 rfork n
-if(~ $#* 1){
+print=()
+if(~ $1 -p){
+	print=1
+	shift
+}
+if(~ $#* 0)
+	p=Broken
+if not{
 	p=$1
 	shift
 }
-if not if(~ $#* 0)
-	p=`{ps | grep Broken | awk '{print $2}' | sort -n | tail -n 1}
-if not
-	p usage: $0 '[broken]' >[2=1]
-echo lstk'()' | acid -lthread $p
-echo acid -lthread -lpool $* $p
+psd $p
+p=`{psd $p | sed 's/^[^ ]+[ ]+([^ ]+).*/\1/;1q'}
+if(~ $#p 0){
+	echo no proc $p >[1=2]
+	exit noproctohand
+}
+if(! ~ $#print 0){
+	echo lstk'()' | acid -lthread $p
+	echo acid -lthread -lpool $* $p
+}
+if not{
+	{echo lstk'()'; cat} | acid -lthread -lpool $* $p
+}
