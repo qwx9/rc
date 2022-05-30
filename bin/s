@@ -155,6 +155,7 @@ fn uc{
 
 # common menu items
 cat <<!
+M ^T
 M ^W
 M ^R mk install
 M |fmt -l 82
