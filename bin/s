@@ -7,10 +7,10 @@ fn R{
 		echo nope >[1=2]
 		exit
 	}
-	echo w
+	echo '^T'
 	c=''''^($*)^''''
 	f=$%
-	echo !'{' cd `{basename -d $f} '&&' $c '}'
+	echo !'{' cd `{basename -d $f} '&&' '@{' $c '}' '}'
 	echo B /tmp/jam.err
 	echo e
 	echo b $f
@@ -39,7 +39,7 @@ fn W{
 		echo nope >[1=2]
 		exit
 	}
-	echo w
+	echo '^T'
 	echo !exec window -m -cd `{basename -d $%} $*
 }
 
