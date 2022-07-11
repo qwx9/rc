@@ -43,6 +43,16 @@ fn W{
 	echo !exec window -m -cd `{basename -d $%} $*
 }
 
+# ^dump		# print all files in menu
+fn dump{
+	rfork e
+	d = `{pwd}
+	echo 'Y/^..\./!echo `{cleanname -d' $d '$%}^'':#''^$%dot(2)^'',#''^$%dot(3) >>/tmp/dump.'$pid
+	echo 'X/^..\./!echo `{cleanname -d' $d '$%}^'':#''^$%dot(2)^'',#''^$%dot(3) >>/tmp/dump.'$pid
+	echo r '/tmp/dump.'$pid
+	echo !rm '/tmp/dump.'$pid
+}
+
 # from umbraticus' rc/s/u
 # !u [fn...]   # print sam fn usage
 fn U{
@@ -160,3 +170,6 @@ M ^W
 M ^R mk install
 M |fmt -l 82
 !
+# more common menu items
+if(test -f $home/lib/jam)
+	. $home/lib/jam
