@@ -8,7 +8,6 @@ BEGIN{
 		i++
 	print i
 }'}
-
 fn clean{
 	for(i in '#X'/$vmid/ctl)
 		echo quit > $i
@@ -20,10 +19,10 @@ fn sigint{
 	clean
 }
 
-ver=5.15.9_1
+ver=5.15.52_1
 mac=2ec3bc946389
 n=ether0
-M=12G
+M=3G
 k=/tmp/vmx/vmlinuz-$ver
 m=/tmp/vmx/initramfs-^$ver^.img
 d=/dev/sdE0/data
