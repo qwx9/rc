@@ -3,5 +3,5 @@ if(! ~ $#* 1){
 	echo $0 site
 	exit usage
 }
-hget http://wttr.in/~^$1^.png \
+hget http://wttr.in/~^$1^.png^'?m' \
 	| page -w
