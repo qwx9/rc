@@ -1,14 +1,15 @@
-#!/bin/rc
-rfork n
+#!/bin/rc -e
+rfork ne
 
 vmid=`{awk '
 BEGIN{
 	i = 0
-	while(system("test -e \''#X\''/" i) == 0)
+	while(system("test -e \''#X\''/" i+1) == 0)
 		i++
 	print i
 }'}
 fn clean{
+	sleep 1
 	for(i in '#X'/$vmid/ctl)
 		echo quit > $i
 }
@@ -19,14 +20,14 @@ fn sigint{
 	clean
 }
 
-ver=5.15.52_1
+ver=5.18.14_1
 mac=2ec3bc946389
 n=ether0
 M=3G
 k=/tmp/vmx/vmlinuz-$ver
 m=/tmp/vmx/initramfs-^$ver^.img
 d=/dev/sdE0/data
-v=1280x1024
+v=1920x1050
 c=('root=/dev/vda1')
 if(test -d '#l1'){
 	bind -aq '#l1' /net
