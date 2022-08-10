@@ -13,4 +13,4 @@ if(test -f $home/lib/ass){
 	auth/factotum
 	setec
 }
-bof
+bof -i riostart
