@@ -1,17 +1,7 @@
-#!/bin/rc
-if(test -d $home/p/rc)
-	bind -a $home/p/rc/bin /bin
-if(test -d $home/p/rc2)
-	bind -a $home/p/rc2/bin /bin
-if(test -d $home/p/pico)
-	touch $home/bin/rc/pico && bind $home/p/pico/pico $home/bin/rc/pico
-if(test -d $home/p/sm2/bin)
-	bind -a $home/p/sm2/bin /bin
-if(test -d $home/p/notes/bin)
-	bind -a $home/p/notes/bin /bin
-if(test -d /sys/lib/go/amd64-1.15.2/bin)
-	bind -a /sys/lib/go/amd64-1.15.2/bin /bin
+f=()
+for(i in $home/p/^(rc/bin rc2/bin pico sm2/bin notes/bin) $home/bin/^($objtype rc) /sys/lib/go/amd64-1.15.2/bin /usr/ocaml/bin)
+	if(test -e $i)
+		f=($f $i)
+unionfs -bm /bin $f /rc/bin /$objtype/bin
 if(test -f $home/p/rc/fn)
 	. $home/p/rc/fn
-if(test -d /usr/ocaml/bin)
-	bind -b /usr/ocaml/bin /bin
