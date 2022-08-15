@@ -1,6 +1,22 @@
 #!/bin/rc
 # sam functions
 
+# ^D [cmd]     # run command in cwd and send output to jam.err window
+fn D{
+	if(~ $% jam.err */jam.err){
+		echo nope >[1=2]
+		exit
+	}
+	echo '^T'
+	c=''''^($*)^''''
+	f=$%
+	echo !'{' '@{' $c '}' '}'
+	echo B /tmp/jam.err
+	echo e
+	echo b $f
+	echo b ~~jam~~
+}
+
 # ^R [cmd]     # run command and send output to jam.err window
 fn R{
 	if(~ $% jam.err */jam.err){
@@ -40,7 +56,7 @@ fn W{
 		exit
 	}
 	echo '^T'
-	echo !exec window -m -cd `{basename -d $%} $*
+	echo !exec window -minx 0 -miny 0 -dx 600 -dy 600 -m -cd `{basename -d $%} $*
 }
 
 # ^dump		# print all files in menu
