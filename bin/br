@@ -1,14 +1,85 @@
 #!/bin/rc
-# SBLC_PWM_CTL2: bytes 15:0, range 0 (off) to v>>16 (full)
-
-if(! ~ $#* 1){
-	echo usage: $0 factor
-	exit 'usage'
+rfork e
+if(! ~ $#* 1 || {test $1 -lt 0 || test $1 -gt 100}){
+	echo usage: $0 [percent]
+	exit usage >[1=2]
 }
-v=`{seg -Lr igfxmmio 0x400000 0xc8254}
-if(~ $#v 0)
-	exit 'no such named segment'
-v=`{echo 'v='$v'; v & ~0xffff | ((v>>16) / '$1')' | pc -n}
-if(! ~ $#v 1)
-	exit 'invalid factor'
-seg -Lw igfxmmio 0x400000 0x48254 $v
+pci | awk -v 'fac='$1 '
+function pipe(cmd, 	v){
+	cmd | getline v
+	close(cmd)
+	return v
+}
+BEGIN{
+	# intel graphics
+	vid["8086"] = "igfx"
+	# gm15 (doesn't work on t43p)
+	did["8086/2592","r"] = "0x61254";  did["8086/2592","w"] = "0x61254"
+	# gm45
+	did["8086/27ae","r"] = "0x61254";  did["8086/27ae","w"] = "0x61254"
+	did["8086/27a2","r"] = "0x61254";  did["8086/27a2","w"] = "0x61254"
+	# gm965
+	did["8086/29a2","r"] = "0x61254";  did["8086/29a2","w"] = "0x61254"
+	did["8086/2a02","r"] = "0x61254";  did["8086/2a02","w"] = "0x61254"
+	did["8086/2a42","r"] = "0x61254";  did["8086/2a42","w"] = "0x61254"
+	did["8086/a011","r"] = "0x61254";  did["8086/a011","w"] = "0x61254"
+	# sandy bridge
+	did["8086/0046","r"] = "0xc8254";  did["8086/0046","w"] = "0x48254"
+	did["8086/0102","r"] = "0xc8254";  did["8086/0102","w"] = "0xc8254"
+	# works on x220, not on w520
+	did["8086/0126","r"] = "0xc8254";  did["8086/0126","w"] = "0x48254"
+	# ivy bridge
+	did["8086/0152","r"] = "0x48254";  did["8086/0152","w"] = "0x48254"
+	did["8086/0166","r"] = "0x48254";  did["8086/0166","w"] = "0x48254"
+	# haswell
+	did["8086/0412","r"] = "0xc8254";  did["8086/0412","w"] = "0x48254"
+	did["8086/041a","r"] = "0xc8254";  did["8086/041a","w"] = "0x48254"
+	did["8086/0a06","r"] = "0xc8254";  did["8086/0a06","w"] = "0x48254"
+	did["8086/0a16","r"] = "0xc8254";  did["8086/0a16","w"] = "0x48254"
+	did["8086/0a26","r"] = "0xc8254";  did["8086/0a26","w"] = "0x48254"
+	# broadwell
+	did["8086/1616","r"] = "0xc8254";  did["8086/1616","w"] = "0xc8254"
+	# skylake
+	did["8086/1916","r"] = "0xc8254";  did["8086/1916","w"] = "0xc8254"
+	# kaby lake (not working)
+	did["8086/3ea0","r"] = "0xc8254";  did["8086/1916","w"] = "0xc8254"
+	# gemini lake (not working)
+	did["8086/3185","r"] = "0xc8254";  did["8086/3185","w"] = "0xc8254"
+}
+$2 == "vid" && dev == ""{
+	split($4, id, "/")
+	if(vid[id[1]] == ""){
+		print "unsupported vendor", id[1] >"/fd/2"
+		next
+	}
+	if(did[$4,"r"] == ""){
+		print "unsupported device", id[2] ">/fd/2"
+		next
+	}
+	type = vid[id[1]]
+	dev = $4
+	mem = $7
+}
+function igfxpwm(){
+	if(system("echo type igfx >/dev/vgactl") != 0){
+		print "unsupported device", $4 >"/fd/2"
+		exit "attach failed"
+	}
+	r = pipe("seg -Lr igfxmmio " mem " " did[dev,"r"])
+	v = pipe("echo \''" r " & ~0xffff | ((" r ">>16) * " fac " / 100)\'' | pc -n")
+	if(system("seg -Lw igfxmmio " mem " " did[dev,"w"] " " v) != 0)
+		exit "write failed"
+}
+END{
+	if(dev == ""){
+		print "no known devices" >"/fd/2"
+		exit "no known devices"
+	}
+	if(type == "igfx")
+		igfxpwm()
+	else{
+		print "no known devices" >"/fd/2"
+		exit "no known devices"
+	}
+}
+'
