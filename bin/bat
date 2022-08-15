@@ -1,0 +1,9 @@
+#!/bin/rc
+rfork ne
+if(! test -f /mnt/pm/ctl)
+	aux/acpi || exit
+awk '
+{
+	print $1, $11, $12
+}
+' /mnt/pm/battery
