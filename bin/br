@@ -13,7 +13,7 @@ function pipe(cmd, 	v){
 BEGIN{
 	# intel graphics
 	vid["8086"] = "igfx"
-	# gm15 (doesn't work on t43p)
+	# gm15 (doesn''''t work on t43p)
 	did["8086/2592","r"] = "0x61254";  did["8086/2592","w"] = "0x61254"
 	# gm45
 	did["8086/27ae","r"] = "0x61254";  did["8086/27ae","w"] = "0x61254"
