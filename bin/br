@@ -1,7 +1,7 @@
 #!/bin/rc
 rfork e
 if(! ~ $#* 1 || {test $1 -lt 0 || test $1 -gt 100}){
-	echo usage: $0 [percent]
+	echo usage: $0 percent
 	exit usage >[1=2]
 }
 pci | awk -v 'fac='$1 '
@@ -13,7 +13,7 @@ function pipe(cmd, 	v){
 BEGIN{
 	# intel graphics
 	vid["8086"] = "igfx"
-	# gm15 (doesn''''t work on t43p)
+	# gm15 (not working on t43p)
 	did["8086/2592","r"] = "0x61254";  did["8086/2592","w"] = "0x61254"
 	# gm45
 	did["8086/27ae","r"] = "0x61254";  did["8086/27ae","w"] = "0x61254"
@@ -48,12 +48,8 @@ BEGIN{
 }
 $2 == "vid" && dev == ""{
 	split($4, id, "/")
-	if(vid[id[1]] == ""){
-		print "unsupported vendor", id[1] >"/fd/2"
-		next
-	}
-	if(did[$4,"r"] == ""){
-		print "unsupported device", id[2] ">/fd/2"
+	if(vid[id[1]] == "" || did[$4,"r"] == ""){
+		print "unsupported device", id[1] "/" id[2] >"/fd/2"
 		next
 	}
 	type = vid[id[1]]
@@ -71,10 +67,6 @@ function igfxpwm(){
 		exit "write failed"
 }
 END{
-	if(dev == ""){
-		print "no known devices" >"/fd/2"
-		exit "no known devices"
-	}
 	if(type == "igfx")
 		igfxpwm()
 	else{
