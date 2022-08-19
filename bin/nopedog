@@ -1,0 +1,20 @@
+#!/bin/rc
+rfork n
+if(! test -f '#s'/acpi)
+	exit ''
+mount '#s'/acpi /mnt/pm || exit
+if(! test -f /mnt/pm/battery)
+	exit no battery to hand
+awk '
+{
+	if($1 > bat)
+		bat = $1
+}END{
+	if(bat == 0)
+		exit
+	if(bat < 5)
+		system("fshalt")
+	else if(bat < 10)
+		system("window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; play /lib/m/mamb/pripyat.evacuation.audio.opus; rc\''")
+}
+' /mnt/pm/battery
