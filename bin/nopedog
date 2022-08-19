@@ -5,16 +5,24 @@ if(! test -f '#s'/acpi)
 mount '#s'/acpi /mnt/pm || exit
 if(! test -f /mnt/pm/battery)
 	exit no battery to hand
-awk '
-{
-	if($1 > bat)
-		bat = $1
+awk -v 'sys='^$sysname '
+NR == 1{ bat = $1; chg = $12 ~ /charging/ }
+NR > 1 { bat0 = bat; bat = $1; chg = chg || $12 ~ /charging/ }
 }END{
-	if(bat == 0)
+	if(bat == 0 || chg)
 		exit
-	if(bat < 5)
+	if(sys ~ /x250/){	# internal battery is scratched as fuck
+		bat = bat0
+		low = 50
+		crit = 30
+	}else{
+		bat = bat0 > bat ? bat0 : bat;
+		low = 10
+		crit = 5
+	}
+	if(bat < crit)
 		system("fshalt")
-	else if(bat < 10)
+	else if(bat < low)
 		system("window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; play /lib/m/mamb/pripyat.evacuation.audio.opus; rc\''")
 }
 ' /mnt/pm/battery
