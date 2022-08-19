@@ -1,0 +1,45 @@
+#!/bin/rc -x
+rfork ne
+wdir=/n/ssh
+fn usage{
+	echo $0 >[1=2]
+	exit usage
+}
+while(~ $1 -?){
+	switch($1){
+	case -r
+		wdir=/n/ssh/$2
+		shift
+	case *
+		usage
+	}
+	shift
+}
+if(! ~ $#* 1)
+	usage
+if(! ~ $1 tcp!*)
+	m=tcp!$1!17060
+. /tmp/sizes.$sysname
+
+cat <<! >/tmp/work.$pid
+#!/bin/rc
+label kx.$pid
+window -r $bsamrect jam
+!
+
+cat <<! >/tmp/kx.$pid
+#!/bin/rc
+sshfs $m || exit
+cd $wdir || {echo root directory $wdir does not exist >[1=2]; exit usage}
+unmount /mnt/plumb
+plumbsrv=()
+plumber -s plumb.$pid
+bof -i /tmp/work.$pid
+unmount /n/ssh
+unmount /mnt/plumb
+rm /srv/plumb.$pid #/tmp/kx.$pid /tmp/work.$pid
+!
+
+chmod +x /tmp/work.$pid
+chmod +x /tmp/kx.$pid
+window -r $briorect /tmp/kx.$pid
