@@ -1,8 +1,10 @@
-#!/bin/rc
+#!/bin/rc -e
+rfork ne
 # no noise gate/suppression for the mic
 # everything plugged into mixer, mixer's usb card on w500, recording
 # on w520 using w500's audio
 
+echo slay hj264 aacenc cam '|' rc
 echo hwgc soft >/dev/vgactl
 echo blanktime 0 >/dev/mousectl
 
@@ -26,5 +28,8 @@ echo 'proceed?'
 read -n 1 >/dev/null
 
 rimport -u qwx w500 '#u' /n/c
+#window -hide -m rc -c 'norm 2 </n/c/audioin | audio/flacenc >/tmp/rec.`{date -t}^.flac'
 window -m rc -c 'audio/aacenc -B 262144 -b </n/c/audioin >/tmp/rec.`{date -t}^.aac'
+# monitor's refresh rate is 30Hz on hdmi (4k)
+# for 1080p, optimum: -f 60 -k 2000 -Q 50
 video/hj264 -f 50 -k 1000 -Q 50 /dev/screen > /tmp/rec.^`{date -t}^.264
