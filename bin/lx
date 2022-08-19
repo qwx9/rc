@@ -1,0 +1,6 @@
+#!/bin/rc
+rfork n
+vmxlinux -n ether0 &
+wait
+for(i in '#X'/*/ctl)
+	echo quit >$i
