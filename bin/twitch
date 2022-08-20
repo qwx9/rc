@@ -49,6 +49,6 @@ if(! ~ $#pl 0)
 	bof
 
 echo 'slay rtmp hj264 dd | rc'
-echo 'blanktime 5 >/dev/mousectl'
+echo 'echo blanktime 5 >/dev/mousectl'
 if(! ~ $#pl 0)
 	echo rm -f $pl
