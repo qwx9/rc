@@ -17,7 +17,10 @@ END{
 		exit
 	if(bat < 5 || left / cap < 0.05)
 		system("fshalt")
-	else if(bat < 10)
-		system("window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; while() play /lib/m/mamb/pripyat.evacuation.audio.opus\''")
+	else if(bat < 10){
+		print "master 100" >"#A/volume"
+		if("ls /srv/riowctl.*" | getline x > 0)
+			system("wctl=" x " window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; while() play /lib/m/mamb/pripyat.evacuation.audio.opus\''")
+	}
 }
 ' /mnt/pm/battery
