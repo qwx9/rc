@@ -1,28 +1,23 @@
 #!/bin/rc
 rfork n
 if(! test -f '#s'/acpi)
-	exit ''
+	aux/acpi -s acpi || exit
 mount '#s'/acpi /mnt/pm || exit
 if(! test -f /mnt/pm/battery)
 	exit no battery to hand
-awk -v 'sys='^$sysname '
-NR == 1{ bat = $1; chg = $12 ~ /charging/ }
-NR > 1 { bat0 = bat; bat = $1; chg = chg || $12 ~ /charging/ }
-}END{
-	if(bat == 0 || chg)
+# safer to assume that if one battery has dipped very low and we're not charging,
+# either it has to be removed or replaced, or we're in a danger zone
+# total capacity is taken from design capacity and ratio will be lower, as a
+# precaution
+awk -v 'sys='^$sysname -v 'bat=-1' '
+NR == 1{ bat = $1; left = $3; cap = $4; chg = $12 ~ /charging/ }
+NR > 1{ bat = $1 < bat ? $1 : bat; left += $3; cap += $4; chg = chg || $12 ~ /charging/ }
+END{
+	if(bat < 0 || chg)
 		exit
-	if(sys ~ /x250/){	# internal battery is scratched as fuck
-		bat = bat0
-		low = 50
-		crit = 30
-	}else{
-		bat = bat0 > bat ? bat0 : bat;
-		low = 10
-		crit = 5
-	}
-	if(bat < crit)
+	if(bat < 5 || left / cap < 0.05)
 		system("fshalt")
-	else if(bat < low)
-		system("window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; play /lib/m/mamb/pripyat.evacuation.audio.opus; rc\''")
+	else if(bat < 10)
+		system("window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; while() play /lib/m/mamb/pripyat.evacuation.audio.opus\''")
 }
 ' /mnt/pm/battery
