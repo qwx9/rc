@@ -9,9 +9,9 @@ if(! test -f /mnt/pm/battery)
 # either it has to be removed or replaced, or we're in a danger zone
 # total capacity is taken from design capacity and ratio will be lower, as a
 # precaution
-awk -v 'sys='^$sysname -v 'bat=-1' '
-NR == 1{ bat = $1; left = $3; cap = $4; chg = $12 ~ /charging/ }
-NR > 1{ bat = $1 < bat ? $1 : bat; left += $3; cap += $4; chg = chg || $12 ~ /charging/ }
+awk -v 'sys='^$sysname -v 'bat='-1 '
+NR == 1{ bat = $1; left = $3; cap = $4; chg = $12 ~ / charging/ }
+NR > 1{ bat = $1 < bat ? $1 : bat; left += $3; cap += $4; chg = chg || $12 ~ / charging/ }
 END{
 	if(bat < 0 || chg)
 		exit
@@ -19,7 +19,7 @@ END{
 		system("fshalt")
 	else if(bat < 10){
 		print "master 100" >"#A/volume"
-		if("ls /srv/riowctl.*" | getline x > 0)
+		if("ls \''#s\''/riowctl.*" | getline x > 0)
 			system("wctl=" x " window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; while() play /lib/m/mamb/pripyat.evacuation.audio.opus\''")
 	}
 }
