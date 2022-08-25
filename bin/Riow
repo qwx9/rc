@@ -1,0 +1,24 @@
+#!/bin/rc
+rfork en
+fn ⑨{
+	if(test -f /srv/bar)
+		window 'echo -n >/dev/snarf; hold /dev/snarf && cat /dev/snarf >>/srv/bar'
+}
+fn bar{
+	sed -u 's/$/│⏪│⏯│⏩│⑨│⏵│⏸│⏭│⏶│⏷/g' \
+	| /bin/bar -s '│' \
+	| awk '
+		/⑨/{system("⑨")}
+		# zuke
+		/⏪/{system("plumb -d audio ''key <''")}
+		/⏯/{system("plumb -d audio ''key p''")}
+		/⏩/{system("plumb -d audio ''key >''")}
+		# shp
+		/⏵/{system("Sta")}
+		/⏸/{system("Sto")}
+		/⏭/{system("Fw")}
+		/⏶/{system("v+")}
+		/⏷/{system("v-")}
+	' >[2]/dev/null
+}
+riow </dev/kbdtap >/dev/kbdtap |[3] bar
