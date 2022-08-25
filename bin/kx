@@ -1,4 +1,4 @@
-#!/bin/rc -x
+#!/bin/rc
 rfork ne
 wdir=/n/ssh
 fn usage{
@@ -24,7 +24,7 @@ if(! ~ $1 tcp!*)
 cat <<! >/tmp/work.$pid
 #!/bin/rc
 label kx.$pid
-window -r $bsamrect jam
+window -r $bsamrect 'echo 4 >/env/tabstop; jam'
 !
 
 cat <<! >/tmp/kx.$pid
