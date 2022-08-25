@@ -10,17 +10,23 @@ if(! test -f /mnt/pm/battery)
 # total capacity is taken from design capacity and ratio will be lower, as a
 # precaution
 awk -v 'sys='^$sysname -v 'bat='-1 '
-NR == 1{ bat = $1; left = $3; cap = $4; chg = $12 ~ / charging/ }
-NR > 1{ bat = $1 < bat ? $1 : bat; left += $3; cap += $4; chg = chg || $12 ~ / charging/ }
+function alert(){
+	wcmd = "\''label alert; " \
+		"echo FAILURE IS IMMINENT; " \
+		"while() play /lib/m/mamb/pripyat.evacuation.audio.opus\''"
+	print "master 100" >"#A/volume"
+	if("ls \''#s\''/riowctl.*" | getline x > 0)
+		system("wctl=" x " window -dx 120 -dy 200 -minx 0 -miny 0 " wcmd)
+}
+NR == 1{ bat = $1; left = $3; cap = $4; chg = $12 == "charging" }
+NR > 1{ bat = $1 > bat ? $1 : bat; left += $3; cap += $4; chg = chg || $12 == "charging" }
 END{
 	if(bat < 0 || chg)
 		exit
-	if(bat < 5 || left / cap < 0.05)
+	rem = left / cap
+	if(NR > 1 && rem < 0.10 || NR == 1 && bat < 5)
 		system("fshalt")
-	else if(bat < 10){
-		print "master 100" >"#A/volume"
-		if("ls \''#s\''/riowctl.*" | getline x > 0)
-			system("wctl=" x " window -dx 120 -dy 200 -minx 0 -miny 0 \''label alert; echo FAILURE IS IMMINENT; while() play /lib/m/mamb/pripyat.evacuation.audio.opus\''")
-	}
+	else if(NR > 1 && rem < 0.16 || NR == 1 && bat < 10)
+		alert()
 }
 ' /mnt/pm/battery
