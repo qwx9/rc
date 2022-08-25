@@ -5,27 +5,9 @@ window -scroll -r $kprintrect cat /dev/kprint
 window -r $catrect games/catclock
 window -r $volrect volume
 #window -r $duckrect mothra
-if(test -f /mnt/acpi/battery)
+if(test -f /mnt/pm/battery)
 	window -r $statrect stats -blmsez -T 10
 if not
 	window -r $statrect stats -lmsez
-window -r $riowrect 'label riow;
-fn ⑨ { if(test -f /srv/bar) window ''echo -n >/dev/snarf; hold /dev/snarf && cat /dev/snarf >>/srv/bar'' }
-fn bar{
-	sed -u ''s/$/│⏪│⏯│⏩│⑨│⏵│⏸│⏭│⏶│⏷/g'' \
-	| /bin/bar -s ''│'' \
-	| awk ''
-		/⑨/{system("⑨")}
-		# zuke
-		/⏪/{system("plumb -d audio ''''key <''''")}
-		/⏯/{system("plumb -d audio ''''key p''''")}
-		/⏩/{system("plumb -d audio ''''key >''''")}
-		# shp
-		/⏵/{system("Sta")}
-		/⏸/{system("Sto")}
-		/⏭/{system("Fw")}
-		/⏶/{system("v+")}
-		/⏷/{system("v-")}
-	'' >[2]/dev/null
-}; riow'
+window -r $riowrect 'label riow; Riow'
 { sleep 0.5; window -scroll -r $cmdrect 'label cmd; rc' } &
