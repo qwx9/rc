@@ -1,7 +1,10 @@
 #!/bin/rc
 rfork ne
-if(! test -f /mnt/pm/ctl)
-	aux/acpi || exit
+if(! test -f '#s'/acpi)
+	aux/acpi -s acpi || exit
+mount '#s'/acpi /mnt/pm || exit
+if(! test -f /mnt/pm/battery)
+	exit no battery to hand
 awk '
 {
 	print $1, $11, $12
