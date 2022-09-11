@@ -48,6 +48,11 @@ fn O{
 	fun $*
 }
 
+# ^w [cmd]     # open window in cwd
+fn w{
+	echo !exec window -m -minx 0 -miny 0 -dx 600 -dy 600 $*
+}
+
 # from kvik's rc/rwin
 # ^W [cmd]     # open window in current file's directory
 fn W{
@@ -179,13 +184,6 @@ fn uc{
 	echo 'x/^(#|\/\/) ?/d'
 }
 
-# common menu items
-cat <<!
-M ^T
-M ^W
-M ^R mk install
-M |fmt -l 82
-!
-# more common menu items
+# source common menu items
 if(test -f $home/lib/jam)
 	. $home/lib/jam
