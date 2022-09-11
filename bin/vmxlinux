@@ -20,14 +20,14 @@ fn sigint{
 	clean
 }
 
-ver=5.18.14_1
+ver=5.18.19_1
 mac=2ec3bc946389
 n=ether0
 M=2G
 k=/tmp/vmx/vmlinuz-$ver
 m=/tmp/vmx/initramfs-^$ver^.img
 d=/dev/sdE0/data
-v=1920x1050
+v=vesa:1920x1050
 c=('root=/dev/vda1')
 if(test -d '#l1'){
 	bind -aq '#l1' /net
@@ -50,13 +50,17 @@ while(~ $1 -?){
 	}
 	shift
 }
-echo $v | awk -Fx '{ print "resize -dx", $1+8, "-dy", $2+8 }' >/dev/wctl
+echo $v | awk -Fx '
+{
+	gsub(".*:", "")
+	print "resize -dx", $1+8, "-dy", $2+8
+}' >/dev/wctl
 echo scroll >/dev/wctl
 vmx \
 	-d $d \
 	-M $M \
 	-m $m \
 	-n ea:$mac!$n \
-	-v vesa:$v \
+	-v $v \
 	$k \
 	$c $*
