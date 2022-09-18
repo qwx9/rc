@@ -5,18 +5,18 @@ screensize=`{echo $vgasize | sed 's/x/ /g'}
 
 # tentative bar(1) placement, which is determined by riostart policy
 barrect=( \
-	`{echo $bsamrect(1) - 430 | pc -n} \
-	`{echo $bsamrect(2) - 28 | pc -n} \
+	`{echo $bsamrect(1) - 430 | pc} \
+	`{echo $bsamrect(2) - 28 | pc} \
 	$screensize(3) \
 	$screensize(4) \
 )
 
-briorect=(0 0 $screensize(1) `{echo $screensize(2) - 16 | pc -n})
+briorect=(0 0 $screensize(1) `{echo $screensize(2) - 16 | pc})
 bsamrect=(0 32 $briorect(3) $briorect(4))
 bcmdrect=( \
 	0 \
-	`{echo $bsamrect(4) - $bsamrect(4) / 3 | pc -n} \
-	`{echo $bsamrect(3) / 3 | pc -n} \
+	`{echo $bsamrect(4) - $bsamrect(4) / 3 | pc} \
+	`{echo $bsamrect(3) / 3 | pc} \
 	$briorect(4) \
 )
 # default windows
@@ -27,56 +27,56 @@ catrect=( \
 	296 \
 )
 volrect=( \
-	`{echo $catrect(3) - 4 | pc -n} \
+	`{echo $catrect(3) - 4 | pc} \
 	0 \
 	768 \
 	28 \
 )
 kprintrect=( \
 	$volrect(1) \
-	`{echo $volrect(4) - 4 | pc -n} \
+	`{echo $volrect(4) - 4 | pc} \
 	$volrect(3) \
-	`{echo $catrect(4) / 2 | pc -n} \
+	`{echo $catrect(4) / 2 | pc} \
 )
 statrect=( \
 	$volrect(1) \
-	`{echo $kprintrect(4) - 4 | pc -n} \
+	`{echo $kprintrect(4) - 4 | pc} \
 	$volrect(3) \
 	$catrect(4) \
 )
 cmdrect=( \
 	0 \
-	`{echo $catrect(4) - 4 | pc -n} \
+	`{echo $catrect(4) - 4 | pc} \
 	$volrect(3) \
 	$screensize(2) \
 )
 riowrect=( \
-	`{echo $screensize(1) - 100 | pc -n} \
-	`{echo $screensize(2) - 28 | pc -n} \
+	`{echo $screensize(1) - 100 | pc} \
+	`{echo $screensize(2) - 28 | pc} \
 	$screensize(1) \
 	$screensize(2) \
 )
 zukerect=( \
-	`{echo $screensize(1) - 768 | pc -n} \
+	`{echo $screensize(1) - 768 | pc} \
 	0 \
 	$screensize(1) \
 	$screensize(2) \
 )
 duckrect=( \
-	`{echo $screensize(1) / 2 | pc -n} \
+	`{echo $screensize(1) / 2 | pc} \
 	0 \
 	$screensize(1) \
-	`{echo $screensize(2) - 256 | pc -n} \
+	`{echo $screensize(2) - 256 | pc} \
 )
 mailrect=( \
 	0 \
 	0 \
-	`{echo $briorect(3) / 3 | pc -n} \
+	`{echo $briorect(3) / 3 | pc} \
 	$briorect(4) \
 )
 # force corner
 vncrect=( \
-	`{echo $screensize(1) - 160 | pc -n} \
+	`{echo $screensize(1) - 160 | pc} \
 	0 \
 	$screensize(1) \
 	64 \

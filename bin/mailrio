@@ -13,7 +13,7 @@ wsz=`{read -c 48 /mnt/wsys/wctl}
 facerect=( \
 	0 \
 	0 \
-	`{echo $wsz(3) - $wsz(1) | pc -n} \
+	`{echo $wsz(3) - $wsz(1) | pc} \
 	116 \
 )
 cat <<! >/tmp/mailrio.$pid

@@ -20,7 +20,7 @@ while(~ $1 -?){
 		cdmnt=$2
 		shift
 	case -r
-		res=(-dx `{echo $2 + 8 | pc -n} -dy `{echo $3 + 8 | pc -n})
+		res=(-dx `{echo $2 + 8 | pc} -dy `{echo $3 + 8 | pc})
 		shift 2
 	case -z
 		noresz=1

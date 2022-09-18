@@ -62,7 +62,7 @@ function igfxpwm(){
 		exit "attach failed"
 	}
 	r = pipe("seg -Lr igfxmmio " mem " " did[dev,"r"])
-	v = pipe("echo \''" r " & ~0xffff | ((" r ">>16) * " fac " / 100)\'' | pc -n")
+	v = pipe("echo \''" r " & ~0xffff | ((" r ">>16) * " fac " / 100)\'' | pc")
 	if(system("seg -Lw igfxmmio " mem " " did[dev,"w"] " " v) != 0)
 		exit "write failed"
 }

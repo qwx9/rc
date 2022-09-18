@@ -109,7 +109,7 @@ fn swap{
 # from umbraticus' rc/s
 # |pc          # inline arithmetic
 fn pc{
-	/bin/pc -n | tr -d '
+	/bin/pc | tr -d '
 '
 }
 # _sig           # print function signature
