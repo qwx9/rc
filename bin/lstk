@@ -12,7 +12,7 @@ if not{
 	shift
 }
 psd $p
-p=`{psd $p | sed 's/^[^ ]+[ ]+([^ ]+).*/\1/;1q'}
+p=`{ps | awk -v 'P='^$p '$6 == P{ p=$2 } END{ print p }'}
 if(~ $#p 0){
 	echo no proc $p >[1=2]
 	exit noproctohand
