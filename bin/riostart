@@ -5,9 +5,11 @@ window -scroll -r $kprintrect cat /dev/kprint
 window -r $catrect games/catclock
 window -r $volrect volume
 #window -r $duckrect mothra
-if(test -f /mnt/pm/battery)
+
+if(test -f /dev/battery)
 	window -r $statrect stats -blmsez -T 10
 if not
 	window -r $statrect stats -lmsez
+
 window -r $riowrect 'label riow; Riow'
 { sleep 0.5; window -scroll -r $cmdrect 'label cmd; rc' } &
