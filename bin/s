@@ -1,12 +1,8 @@
 #!/bin/rc
 # sam functions
 
-# ^D [cmd]     # run command in cwd and send output to jam.err window
-fn D{
-	if(~ $% jam.err */jam.err){
-		echo nope >[1=2]
-		exit
-	}
+# ^r [cmd]     # run command in cwd and send output to jam.err window
+fn r{
 	echo '^T'
 	c=''''^($*)^''''
 	f=$%
