@@ -1,9 +1,8 @@
 #!/bin/rc
 rfork n
-if(! test -f '#s'/acpi)
-	aux/acpi -s acpi || exit
-mount '#s'/acpi /mnt/pm || exit
-if(! test -f /mnt/pm/battery)
+if(! test -f /dev/battery)
+	aux/acpi || exit
+if(! test -f /dev/battery)
 	exit no battery to hand
 # safer to assume that if one battery has dipped very low and we're not charging,
 # either it has to be removed or replaced, or we're in a danger zone
@@ -29,4 +28,4 @@ END{
 	else if(NR > 1 && rem < 0.16 || NR == 1 && bat < 10)
 		alert()
 }
-' /mnt/pm/battery
+' /dev/battery
