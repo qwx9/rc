@@ -18,6 +18,7 @@ facerect=( \
 )
 cat <<! >/tmp/mailrio.$pid
 #!/bin/rc
+label $upasname
 window -r $facerect faces -i
 !
 chmod +x /tmp/mailrio.$pid
