@@ -4,13 +4,18 @@
 # ^r [cmd]     # run command in cwd and send output to jam.err window
 fn r{
 	echo '^T'
-	c=''''^($*)^''''
 	f=$%
-	echo !'{' '@{' $c '}' '}'
-	echo B /tmp/jam.err
-	echo e
-	echo b $f
-	echo b ~~jam~~
+	if(~ $#* 0){
+		w
+	}
+	if not{
+		c=''''^($*)^''''
+		echo !'{' '@{' $c '}' '}'
+		echo B /tmp/jam.err
+		echo e
+		echo b $f
+		echo b ~~jam~~
+	}
 }
 
 # ^R [cmd]     # run command and send output to jam.err window
@@ -20,13 +25,19 @@ fn R{
 		exit
 	}
 	echo '^T'
-	c=''''^($*)^''''
 	f=$%
-	echo !'{' cd `{basename -d $f} '&&' '@{' $c '}' '}'
-	echo B /tmp/jam.err
-	echo e
-	echo b $f
-	echo b ~~jam~~
+	d=`{basename -d $f}
+	if(~ $#* 0){
+		W
+	}
+	if not{
+		c=''''^($*)^''''
+		echo !'{' cd $d '&&' '@{' $c '}' '}'
+		echo B /tmp/jam.err
+		echo e
+		echo b $f
+		echo b ~~jam~~
+	}
 }
 
 # ^T	# write to disk any modified files
@@ -181,5 +192,8 @@ fn uc{
 }
 
 # source common menu items
-if(test -f $home/lib/jam)
+if(~ $#radarappearsjammed 0 && test -f $home/lib/jam)
 	. $home/lib/jam
+status=''
+
+radarappearsjammed=1
