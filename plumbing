@@ -131,7 +131,17 @@ plumb	start	page -wi $0
 type	is	text
 data	matches	'[^ ]+ ([0-9]+): suicide:.*'
 plumb	to	none
-plumb	start	window acid -lthread -lpool $1
+plumb	start	window lstk $1
+
+type	is	text
+data	matches	'[^ ]+ +([0-9]+) +[0-9]+ +[0-9:]+ +[0-9:]+ +[0-9]+K +[A-Z][^ ]+ +[^ ]+'
+plumb	to	none
+plumb	start	window lstk $1
+
+type	is	text
+data	matches	'[^ ]+ +([0-9]+) +[0-9:]+ +[0-9:]+ +[0-9]+K +[A-Z][^ ]+ +[^ ]+'
+plumb	to	none
+plumb	start	window lstk $1
 
 # overwrite default mail rules
 type is text
