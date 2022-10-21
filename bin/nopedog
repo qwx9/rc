@@ -1,21 +1,25 @@
 #!/bin/rc
 rfork n
 if(! test -f /dev/battery)
-	aux/acpi || exit
-if(! test -f /dev/battery)
 	exit no battery to hand
 # safer to assume that if one battery has dipped very low and we're not charging,
 # either it has to be removed or replaced, or we're in a danger zone
 # total capacity is taken from design capacity and ratio will be lower, as a
 # precaution
-awk -v 'sys='^$sysname -v 'bat='-1 '
+awk -v 'user=$user' -v 'sys='^$sysname -v 'bat='-1 '
 function alert(){
 	wcmd = "\''label alert; " \
 		"echo FAILURE IS IMMINENT; " \
 		"while() play /lib/m/mamb/pripyat.evacuation.audio.opus\''"
-	print "master 100" >"#A/volume"
-	if("ls \''#s\''/riowctl.*" | getline x > 0)
-		system("wctl=" x " window -dx 120 -dy 200 -minx 0 -miny 0 " wcmd)
+	print "master 85" >"#A/volume"
+	if("ls \''#s\''/rio." user ".* | sort -t. -k3,3n" | getline x > 0){
+		for(i=1; i<=30; i++)
+			if(system("mount " x " /n/c " i) == 0)	# how else???
+				break;
+		if(i > 30)
+			exit "noperio"
+		system("window -dx 120 -dy 200 -minx 0 -miny 0 " wcmd)
+	}
 }
 NR == 1{ bat = $1; left = $3; cap = $4; chg = $12 == "charging" }
 NR > 1{ bat = $1 > bat ? $1 : bat; left += $3; cap += $4; chg = chg || $12 == "charging" }
@@ -25,7 +29,7 @@ END{
 	rem = left / cap
 	if(NR > 1 && rem < 0.10 || NR == 1 && bat < 5)
 		system("fshalt")
-	else if(NR > 1 && rem < 0.16 || NR == 1 && bat < 10)
+	else if(NR > 1 && rem < 0.16 || NR == 1 && bat < 17)
 		alert()
 }
 ' /dev/battery
