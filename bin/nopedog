@@ -1,7 +1,9 @@
 #!/bin/rc
 rfork n
-if(! test -f /dev/battery)
-	exit no battery to hand
+if(! test -r /dev/battery){
+	if(! mount -a '#s'/acpi /dev || ! test -r /dev/battery)
+		exit 'no battery to hand'
+}
 # safer to assume that if one battery has dipped very low and we're not charging,
 # either it has to be removed or replaced, or we're in a danger zone
 # total capacity is taken from design capacity and ratio will be lower, as a
