@@ -2,9 +2,9 @@
 # playback samples from microphone (needs setup)
 fn admp{ dd -bs 4x441 </dev/audio >/dev/audio }
 # decode audio files(s) and visualize with pplay(1)
-fn pcm{ @{o=(); while(~ $1 -?) o=($o $1) && shift; play -o /fd/1 $* >[2]/dev/null | pplay $o}}
-# same, without temporary viariables (???)
-fn ppcm{ *=($*($#*) $* $#*) play -o /fd/1 $1 >[2]/dev/null | pplay $*(2-$*($#*)) }
+fn pcm{ @{o=(); while(~ $1 -?) o=($o $1) && shift; play -o /fd/1 $* >[2]/dev/null | audio/pplay $o}}
+# same, without temporary variables (???)
+fn ppcm{ *=($*($#*) $* $#*) play -o /fd/1 $1 >[2]/dev/null | audio/pplay $*(2-$*($#*)) }
 # convert a wolf3d digital audio lump
 fn wpcm{ audio/pcmconv -i u8c1r7000 -o s16c2r44100 <$1 >/dev/audio }
 

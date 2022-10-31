@@ -6,5 +6,5 @@ fn sigexit{ clean }
 fn sigint{ clean }
 ramfs
 play -o /tmp/pplay.$pid $* >[2]/dev/null
-pplay -f /tmp/pplay.$pid
+audio/pplay -f /tmp/pplay.$pid
 rm -f /tmp/pplay.$pid

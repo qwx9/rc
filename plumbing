@@ -24,13 +24,13 @@ type	is	text
 data	matches	'[a-zA-Z¡-￿0-9_\-.,/ ]+'
 data	matches	'([a-zA-Z¡-￿0-9_\-.,/ ]+)\.(mp3|MP3|ogg|OGG|flac|FLAC|wav|WAV|au|AU|mid|MID|mus|MUS|m3u|M3U|pls|PLS|opus|OPUS|aac|AAC|m4a|M4A|mod|MOD)'
 arg	isfile	$0
-plumb start window play -o /fd/1 $file >[2]/dev/null | pplay
+plumb start window play -o /fd/1 $file >[2]/dev/null | audio/pplay
 
 type is text
 data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
 data matches '([a-zA-Z¡-￿0-9_\-.,/]+)\.(pcm|PCM)'
 arg isfile	$0
-plumb start window pplay $file
+plumb start window audio/pplay $file
 
 type is text
 data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
