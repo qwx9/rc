@@ -22,5 +22,5 @@ if(! ~ $#print 0){
 	echo acid -lthread -lpool $* $p
 }
 if not{
-	{echo lstk'()'; cat} | acid -lthread -lpool $* $p
+	{echo lstk'()'; cat} | acid -q -lthread -lpool $* $p
 }
