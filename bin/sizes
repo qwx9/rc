@@ -12,7 +12,7 @@ barrect=( \
 )
 
 briorect=(0 0 $screensize(1) `{echo $screensize(2) - 16 | pc})
-bsamrect=(0 32 $briorect(3) $briorect(4))
+bsamrect=(0 0 $briorect(3) `{echo $screensize(2) - 56 | pc})
 bcmdrect=( \
 	0 \
 	`{echo $bsamrect(4) - $bsamrect(4) / 3 | pc} \
