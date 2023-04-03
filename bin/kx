@@ -1,4 +1,4 @@
-#!/bin/rc
+#!/bin/rc -b
 rfork ne
 wdir=/n/ssh
 fn usage{
@@ -21,10 +21,15 @@ if(! ~ $1 tcp!*)
 	m=tcp!$1!17060
 . /tmp/sizes.$sysname
 
+f=()
+if(test -f $home/lib/kx){
+	f=`{cat $home/lib/kx}
+	eval 'f=('^$"f^')'
+}
 cat <<! >/tmp/work.$pid
 #!/bin/rc
 label kx.$pid
-window -r $bsamrect 'echo 4 >/env/tabstop; echo -n /lib/font/bit/fixed/unicode.6x10.font >/env/font; jam'
+window -r $bsamrect 'echo 4 >/env/tabstop; echo -n /lib/font/bit/terminus/unicode.12m.font >/env/font; jam $f'
 !
 
 cat <<! >/tmp/kx.$pid
