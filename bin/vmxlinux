@@ -20,14 +20,15 @@ fn sigint{
 	clean
 }
 
-ver=5.19.16_1
+ver=6.1.21_1
 mac=2ec3bc946389
 n=ether0
-M=2G
+M=3G
 k=/tmp/vmx/vmlinuz-$ver
 m=/tmp/vmx/initramfs-^$ver^.img
 d=/dev/sdE0/data
-v=vesa:1920x1050
+#v=vesa:1920x1050
+v=1024x768
 c=('root=/dev/vda1')
 if(test -d '#l1'){
 	bind -aq '#l1' /net
