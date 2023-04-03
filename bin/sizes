@@ -3,6 +3,8 @@ screensize=`{echo $vgasize | sed 's/x/ /g'}
 #screensize=`{file /dev/screen | sed 's/.*size ([^x]+)x([^x]+)/\1 \2/'}
 # general placements
 
+briorect=(0 0 $screensize(1) `{echo $screensize(2) - 16 | pc})
+bsamrect=(0 0 $briorect(3) `{echo $briorect(4) - 16 | pc})
 # tentative bar(1) placement, which is determined by riostart policy
 barrect=( \
 	`{echo $bsamrect(1) - 430 | pc} \
@@ -11,8 +13,6 @@ barrect=( \
 	$screensize(4) \
 )
 
-briorect=(0 0 $screensize(1) `{echo $screensize(2) - 16 | pc})
-bsamrect=(0 0 $briorect(3) `{echo $screensize(2) - 56 | pc})
 bcmdrect=( \
 	0 \
 	`{echo $bsamrect(4) - $bsamrect(4) / 3 | pc} \
