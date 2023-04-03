@@ -21,10 +21,10 @@ plumb	start svg -9 $0 | plumb -id image
 plumb	to	audio
 
 type	is	text
-data	matches	'[a-zA-Z¡-￿0-9_\-.,/ ]+'
-data	matches	'([a-zA-Z¡-￿0-9_\-.,/ ]+)\.(mp3|MP3|ogg|OGG|flac|FLAC|wav|WAV|au|AU|mid|MID|mus|MUS|m3u|M3U|pls|PLS|opus|OPUS|aac|AAC|m4a|M4A|mod|MOD)'
+data	matches	'.+'
+data	matches	'.+\.(mp3|MP3|ogg|OGG|flac|FLAC|wav|WAV|au|AU|mid|MID|mus|MUS|m3u|M3U|pls|PLS|opus|OPUS|aac|AAC|m4a|M4A|mod|MOD)'
 arg	isfile	$0
-plumb start window play -o /fd/1 $file >[2]/dev/null | audio/pplay
+plumb start window play -o /fd/1 ''''$file'''' >[2]/dev/null | audio/pplay
 
 type is text
 data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
