@@ -1,4 +1,4 @@
-#!/bin/rc -e
+#!/bin/rc
 for(i in $*){
 	if(! test -f $i){
 		echo usage: $0 patch..
@@ -8,5 +8,5 @@ for(i in $*){
 	p=1
 	if(~ git $h)
 		p=0
-	ape/patch --no-backup-if-mismatch -p$p <$i
+	patch -p$p <$i
 }
