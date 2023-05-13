@@ -1,4 +1,4 @@
-#!/bin/rc
+#!/bin/rc -b
 rfork ne
 
 . /tmp/sizes.$sysname
@@ -9,8 +9,8 @@ cat <<! >/tmp/work.$pid
 #!/bin/rc
 label social
 #window -r $mailrect mw
-window -r $ffvncrect v aib
-window -r $vncrect v t60p
+window -r $ffvncrect v taib
+window -r $vncrect v tx240
 !
 chmod +x /tmp/work.$pid
 bof -i /tmp/work.$pid

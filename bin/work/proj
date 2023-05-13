@@ -1,4 +1,4 @@
-#!/bin/rc
+#!/bin/rc -b
 rfork ne
 
 . /tmp/sizes.$sysname
@@ -13,6 +13,8 @@ plumber -s plumb.$pid
 cat <<! >/tmp/work.$pid
 #!/bin/rc
 label proj
+echo -n /lib/font/bit/terminus/unicode.12m.font >/env/font
+echo 4 >/env/tabstop
 window -r $bcmdrect -scroll
 #window -r 530 270 1401 1175 mothra #https://ocaml.org/learn/tutorials/
 #plumb /lib/books/doomrpg/decoding.doomrpg.pdf!8
@@ -22,7 +24,7 @@ window -r $bcmdrect -scroll
 #plumb /lib/books/specs/igfx/hsw/intel-gfx-prm-osrc-hsw-display.pdf!171
 #plumb /lib/books/gameai/millington.artificial.intelligence.for.games.pdf
 #plumb /lib/books/maths/lengyel.mathematics.for.3d.game.programming.and.computer.graphics.pdf
-window -r $bsamrect jam $f
+window -m -r $bsamrect jam $f
 !
 chmod +x /tmp/work.$pid
 bof -i /tmp/work.$pid

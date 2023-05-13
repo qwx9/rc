@@ -1,4 +1,4 @@
-#!/bin/rc
+#!/bin/rc -b
 rfork ne
 
 . /tmp/sizes.$sysname
