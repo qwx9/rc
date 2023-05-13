@@ -1,5 +1,6 @@
 #!/bin/rc -e
 ip/ipconfig ether /net/ether0 unbind || status=''
+echo flush >/net/iproute
 if(! test -d /net/ether1)
 	bind -a '#l1' /net
 aux/wpa -ps $1 /net/ether1
