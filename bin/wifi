@@ -1,0 +1,4 @@
+#!/bin/rc
+ip/ipconfig ether /net/ether0 unbind || status=''
+echo essid $"1 > /net/ether1/clone
+ip/ipconfig ether /net/ether1
