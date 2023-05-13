@@ -121,7 +121,7 @@ fn dial {
 	if not{
 		aux/trampoline $1 <>$c/data1 >[1=0] &
 	}
-	<>/$c/data >[1=0]{
+	<>$c/data >[1=0]{
 		$*(3-) $c $apid
 		exit
 	}
@@ -217,7 +217,8 @@ dial tcp!$server!$port $tls irc $server &
 			wd$id=$a(3)
 			wp$id=$a(4)
 			wins=($id $wins)
-			#wio $id '---' $id '---'
+			x=wip$id
+			$x=()
 		case wclose
 			d=wd$id
 			p=wp$id
@@ -249,13 +250,15 @@ dial tcp!$server!$port $tls irc $server &
 				}
 			}
 		case cmsg
+			x=wip$id
 			if(~ $id $wins)
 				wio $id $a(3) '⇒' $a(4-)
-			if not if(~ $id $wins2)
-				echo $a >/n/wircrc/data1
+			if not if(! ~ $#$x 0){
+				{ sleep 1; echo $a >/n/wircrc/data1 } &
+			}
 			if not if(! ~ $id *!'#'*){
+				$x=1
 				wmk $id $a(3-) &
-				wins2=($id $wins2)
 			}
 		case wtype
 			switch($a(3)){
