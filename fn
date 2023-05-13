@@ -2,9 +2,9 @@
 # playback samples from microphone (needs setup)
 fn admp{ dd -bs 4x441 </dev/audio >/dev/audio }
 # decode audio files(s) and visualize with pplay(1)
-fn pcm{ @{o=(); while(~ $1 -?) o=($o $1) && shift; play -o /fd/1 $* >[2]/dev/null | audio/pplay $o}}
+fn pcm{ @{o=(); while(~ $1 -?) o=($o $1) && shift; play -o /fd/1 $* >[2]/dev/null | audio/pplay -b $o}}
 # same, without temporary variables (???)
-fn ppcm{ *=($*($#*) $* $#*) play -o /fd/1 $1 >[2]/dev/null | audio/pplay $*(2-$*($#*)) }
+fn ppcm{ *=($*($#*) $* $#*) play -o /fd/1 $1 >[2]/dev/null | audio/pplay -b $*(2-$*($#*)) }
 # convert a wolf3d digital audio lump
 fn wpcm{ audio/pcmconv -i u8c1r7000 -o s16c2r44100 <$1 >/dev/audio }
 # indispensible
@@ -103,7 +103,7 @@ fn netopn{ netstat -n | grep 'Established|Listen' }
 # get list of /proc dirs for matched process names
 fn pn{ ps -n | sed -n '/.* '$1'$/s,[^ ]+ +([0-9]+).*,/proc/\1/,p' }
 # grep process table
-fn psd{ *=`{echo $"* | sed 's/ /|/g'}; ps -n | grep $* }
+fn psd{ *=`{echo $"* | sed 's/ /|/g'}; ps -an | grep $* }
 # reset vga(8) state with vesa
 fn vr{ @{rfork n; aux/realemu; aux/vga -lm vesa $vgasize} }
 
