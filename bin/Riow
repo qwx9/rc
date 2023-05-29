@@ -21,4 +21,4 @@ fn bar{
 		/⏷/{system("v-")}
 	' >[2]/dev/null
 }
-riow </dev/kbdtap >/dev/kbdtap |[3] bar
+𝕊 </dev/kbdtap | riow >/dev/kbdtap |[3] bar
