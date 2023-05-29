@@ -1,0 +1,44 @@
+#!/bin/rc -b
+rfork ne
+bind '#|' /n/ass
+
+</n/ass/data1 {
+	tr \x0 \xa |\
+	awk \
+'
+function io(c, f){
+	print c >f
+	close(f)
+}
+/^k/{
+	split($0, s, "")
+	for(i=2; i<=length(s); i++){
+		k = s[i]
+		if(!(k in h)){
+			if(k == "")
+				system("plumb -d audio ''key <''")
+			else if(k == ""){
+				system("plumb -d audio ''key p''")
+				system("Sta")
+			}else if(k == ""){
+				system("plumb -d audio ''key >''")
+				system("Fw")
+			}else if(k == "")
+				io("master toggle", "/dev/volume")
+			else if(k == "")
+				system("v-")
+			else if(k == "")
+				system("v+")
+		}
+	}
+}                                                                                         
+/^K/{
+	delete h
+	split($0, s, "")
+	for(i=2; i<=length(s); i++)
+		h[s[i]] = 1
+}
+'
+} &
+
+tee /n/ass/data
