@@ -2,6 +2,7 @@
 hget http://felloff.net/usr/cinap_lenrek/music \
 	| awk '
 BEGIN{
+	excl["quality60"] = 1
 	excl["quality83"] = 1
 }
 /mp3/{
