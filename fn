@@ -13,8 +13,9 @@ fn all2mp3{ for(i in `{walk -f | grep '\.wav$'}) 2mp3 <$i > `{echo $i | sed s/wa
 fn 2pcm{ play -o /fd/1 $* >[2]/dev/null }
 fn TD2{ audio/stretch -r 0.8909 -s }
 fn TD4{ audio/stretch -r 0.7937 -s }
-fn SU{ audio/stretch -r 1.1 }
-fn SD{ audio/stretch -r 0.9 }
+fn SD{ audio/stretch -r 1.1 }
+fn SU{ audio/stretch -r 0.9 }
+fn td2{ play -o /fd/1 $*(2-) | audio/stretch -r 0.8909 -s | audio/stretch -r $1 | audio/pplay }
 
 # play(1) auxiliaries
 # skip to next track
