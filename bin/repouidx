@@ -1,0 +1,33 @@
+#!/bin/rc
+# snarf unknown repos from sources
+notme=qwx
+cd /sys/lib/extra/usr || exit 'no extras included'
+
+hget http://shithub.us |\
+	htmlfmt |\
+	awk '
+!/^$/ && k != ""{
+	d[k] = $0
+	k = ""
+}
+/^[^\/]+\/[^\/]+$/{
+	k = $0
+}
+END{
+	for(i in d)
+		print i "	" d[i]
+}' >/tmp/shit.idx
+
+for(i in `{hget http://shithub.us/ | sed -n /\/^$notme^\//d^';s,<dt><a href="/([^"]+)/HEAD/info.html.*,\1,p'})
+	! test -d $i && echo gits://shithub.us/$i'	'$i'	'/sys/lib/extra/usr/$i'	' |\
+	awk -F'	' '
+NR == FNR{
+	d[$2] = $0
+}
+NR != FNR{
+	if($1 in d)
+		print d[$1] "	" $2 | "sort -d"
+}
+' - /tmp/shit.idx
+
+rm /tmp/shit.idx
