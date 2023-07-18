@@ -42,8 +42,9 @@ BEGIN{
 	did["8086/1616","r"] = "0xc8254";  did["8086/1616","w"] = "0xc8254"
 	# skylake
 	did["8086/1916","r"] = "0xc8254";  did["8086/1916","w"] = "0xc8254"
-	# kaby lake (not working)
+	# kaby lake
 	did["8086/3ea0","r"] = "0xc8254";  did["8086/3ea0","w"] = "0xc8254"
+	did["8086/5916","r"] = "0xc8254";  did["8086/5916","w"] = "0xc8254"
 	# gemini lake (not working)
 	did["8086/3185","r"] = "0xc8254";  did["8086/3185","w"] = "0xc8254"
 }
