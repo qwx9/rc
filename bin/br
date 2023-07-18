@@ -24,6 +24,7 @@ BEGIN{
 	did["8086/2a42","r"] = "0x61254";  did["8086/2a42","w"] = "0x61254"
 	did["8086/a011","r"] = "0x61254";  did["8086/a011","w"] = "0x61254"
 	# sandy bridge
+	# for reference: BLC_PWM_CTL2, SBLC_PWM_CTL2
 	did["8086/0046","r"] = "0xc8254";  did["8086/0046","w"] = "0x48254"
 	did["8086/0102","r"] = "0xc8254";  did["8086/0102","w"] = "0xc8254"
 	# works on x220, not on w520
@@ -42,7 +43,7 @@ BEGIN{
 	# skylake
 	did["8086/1916","r"] = "0xc8254";  did["8086/1916","w"] = "0xc8254"
 	# kaby lake (not working)
-	did["8086/3ea0","r"] = "0xc8254";  did["8086/1916","w"] = "0xc8254"
+	did["8086/3ea0","r"] = "0xc8254";  did["8086/3ea0","w"] = "0xc8254"
 	# gemini lake (not working)
 	did["8086/3185","r"] = "0xc8254";  did["8086/3185","w"] = "0xc8254"
 }
