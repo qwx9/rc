@@ -17,6 +17,7 @@ if(~ $#p 0){
 	echo no proc $p >[1=2]
 	exit noproctohand
 }
+echo scroll >/mnt/wsys/wctl
 if(! ~ $#print 0){
 	echo lstk'()' | acid -lthread $p
 	echo acid -lthread -lpool $* $p
