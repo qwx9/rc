@@ -16,6 +16,9 @@ fn TD4{ audio/stretch -r 0.7937 -s }
 fn SD{ audio/stretch -r 1.1 }
 fn SU{ audio/stretch -r 0.9 }
 fn td2{ play -o /fd/1 $*(2-) | audio/stretch -r 0.8909 -s | audio/stretch -r $1 | audio/pplay }
+fn usbrec{ dd -if /dev/audioin -bs 1764x2 | audio/flacenc }
+# freqgraph.c from umbraticus
+fn usbgraph{ dd -if /dev/audioin -bs 1764x2 | freqgraph >/dev/null }
 
 # play(1) auxiliaries
 # skip to next track
