@@ -1,94 +1,96 @@
 #!/bin/rc
+rfork e
 # this overrides music in final doom and any custom music in pwads, since the
 # labels are hardcoded in the source.
+m=/lib/m/mgam
 switch($2){
 case adrian
-	f=$home/mgam/doom2.adrians.asleep.opus
+	f=$m/doom2.adrians.asleep.opus
 case ampie
-	f=$home/mgam/doom2.bye.bye.american.pie.opus
+	f=$m/doom2.bye.bye.american.pie.opus
 case betwee
-	f=$home/mgam/doom2.between.levels.opus
+	f=$m/doom2.between.levels.opus
 case bunny
-	f=$home/mgam/doom.bunny.opus
+	f=$m/doom.bunny.opus
 case countd count2
-	f=$home/mgam/doom2.countdown.to.death.opus
+	f=$m/doom2.countdown.to.death.opus
 case dead dead2
-	f=$home/mgam/doom2.the.demons.dead.opus
+	f=$m/doom2.the.demons.dead.opus
 case dm2ttl
-	f=$home/mgam/doom2.title.mp3
+	f=$m/doom2.title.mp3
 case dm2int
-	f=$home/mgam/doom2.intermission.mp3
+	f=$m/doom2.intermission.mp3
 case doom doom2
-	f=$home/mgam/doom2.doom.opus
+	f=$m/doom2.doom.opus
 case ddtblu ddtbl2 ddtbl3
-	f=$home/mgam/doom2.the.dave.d.taylor.blues.opus
+	f=$m/doom2.the.dave.d.taylor.blues.opus
 case e1m1
-	f=$home/mgam/doom.at.dooms.gate.opus
+	f=$m/doom.at.dooms.gate.opus
 case e1m2
-	f=$home/mgam/doom.the.imps.song.opus
+	f=$m/doom.the.imps.song.opus
 case e1m3
-	f=$home/mgam/doom.dark.halls.opus
+	f=$m/doom.dark.halls.opus
 case e1m4
-	f=$home/mgam/doom.kitchen.ace.and.taking.names.opus
+	f=$m/doom.kitchen.ace.and.taking.names.opus
 case e1m5
-	f=$home/mgam/doom.suspense.opus
+	f=$m/doom.suspense.opus
 case e1m6 e3m6
-	f=$home/mgam/doom.on.the.hunt.opus
+	f=$m/doom.on.the.hunt.opus
 case e1m7 e2m5 e3m5
-	f=$home/mgam/doom.demons.on.the.prey.opus
+	f=$m/doom.demons.on.the.prey.opus
 case e1m8 e3m4
-	f=$home/mgam/doom.sign.of.evil.opus
+	f=$m/doom.sign.of.evil.opus
 case e1m9 e3m9
-	f=$home/mgam/doom.hiding.the.secrets.opus
+	f=$m/doom.hiding.the.secrets.opus
 case e2m1
-	f=$home/mgam/doom.i.sawed.the.demons.opus
+	f=$m/doom.i.sawed.the.demons.opus
 case e2m2
-	f=$home/mgam/doom.the.demons.from.adrians.pen.opus
+	f=$m/doom.the.demons.from.adrians.pen.opus
 case e2m3 inter
-	f=$home/mgam/doom.intermission.from.doom.opus
+	f=$m/doom.intermission.from.doom.opus
 case e2m4
-	f=$home/mgam/doom.theyre.going.to.get.you.opus
+	f=$m/doom.theyre.going.to.get.you.opus
 case e2m6
-	f=$home/mgam/doom.sinister.opus
+	f=$m/doom.sinister.opus
 case e2m7 e3m7
-	f=$home/mgam/doom.waltz.of.the.demons.opus
+	f=$m/doom.waltz.of.the.demons.opus
 case e2m8
-	f=$home/mgam/doom.nobody.told.me.about.id.opus
+	f=$m/doom.nobody.told.me.about.id.opus
 case e2m9 e3m1
-	f=$home/mgam/doom.untitled.opus
+	f=$m/doom.untitled.opus
 case e3m2
-	f=$home/mgam/doom.donna.to.the.rescue.opus
+	f=$m/doom.donna.to.the.rescue.opus
 case e3m3
-	f=$home/mgam/doom.deep.into.the.code.opus
+	f=$m/doom.deep.into.the.code.opus
 case e3m8
-	f=$home/mgam/doom.facing.the.spider.opus
+	f=$m/doom.facing.the.spider.opus
 case evil
-	f=$home/mgam/doom2.evil.incarnate.mp3
+	f=$m/doom2.evil.incarnate.mp3
 case in_cit
-	f=$home/mgam/doom2.into.sandys.city.opus
+	f=$m/doom2.into.sandys.city.opus
 case intro
-	f=$home/mgam/doom.title.mp3
+	f=$m/doom.title.mp3
 case messag messg2
-	f=$home/mgam/doom2.message.from.the.archvile.opus
+	f=$m/doom2.message.from.the.archvile.opus
 case openin
-	f=$home/mgam/doom2.opening.to.hell.opus
+	f=$m/doom2.opening.to.hell.opus
 case read_m
-	f=$home/mgam/doom2.end.opus
+	f=$m/doom2.end.opus
 case romero romer2
-	f=$home/mgam/doom2.waiting.for.romero.to.play.opus
+	f=$m/doom2.waiting.for.romero.to.play.opus
 case runnin runni2
-	f=$home/mgam/doom2.running.from.evil.opus
+	f=$m/doom2.running.from.evil.opus
 case shawn shawn2 shawn3
-	f=$home/mgam/doom2.shawns.got.the.shotgun.opus
+	f=$m/doom2.shawns.got.the.shotgun.opus
 case stalks stlks2 stlks3
-	f=$home/mgam/doom2.the.healer.stalks.opus
+	f=$m/doom2.the.healer.stalks.opus
 case tense
-	f=$home/mgam/doom2.getting.too.tense.opus
+	f=$m/doom2.getting.too.tense.opus
 case the_da theda2 theda3
-	f=$home/mgam/doom2.in.the.dark.opus
+	f=$m/doom2.in.the.dark.opus
 case ultima
-	f=$home/mgam/doom2.the.ultimate.challenge.mp3
+	f=$m/doom2.the.ultimate.challenge.mp3
 case victor
-	f=$home/mgam/doom.victor.opus
+	f=$m/doom.victor.opus
 }
 play -o /fd/1 $f >[2]/dev/null
