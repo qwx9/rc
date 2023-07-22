@@ -1,0 +1,55 @@
+#!/bin/rc
+fn usage{
+	echo usage: $0 '[-p NSEMITONE]' '[-t PERCENT]'
+	exit usage
+}
+
+p=0
+t=100
+while(~ $1 -?){
+	switch($1){
+	case -p
+		p=$2
+		shift
+	case -t
+		t=$2
+		shift
+	case *
+		usage
+	}
+	shift
+}
+if(~ $#p 0 && ~ $#t 0)
+	usage
+eval `{awk -v p'='^$p -v t'='^$t '
+BEGIN{
+	c = ""
+	if(p != 0){
+		if(p < 0)
+			p = 1.0 / (1.0594631 ^ -p)
+		else if(p > 0){
+			p = 1.0594631 ^ p
+			if(p > 4.0)
+				p = 4.0
+		}
+		c = "audio/stretch -s -r " p
+		if(t != 100)
+			c = c " | "
+	}
+	if(t != 100){
+		if(t < 0)
+			t = 1
+		else if(t <= 100){
+			t = 1.0 + (1 - t / 100)
+			if(t > 4.0)
+				t = 4.0
+		}else{
+			t = 1 - t / 100
+			if(t < 0.25)
+				t = 0.25
+		}
+		c = c "audio/stretch -r " t
+	}
+	print c
+}
+'}
