@@ -22,14 +22,15 @@ if(! ~ $1 tcp!*)
 . /tmp/sizes.$sysname
 
 f=()
+cat <<'!' >/tmp/work.$pid
+#!/bin/rc
+label kx.$pid
 if(test -f $home/lib/kx){
 	f=`{cat $home/lib/kx}
 	eval 'f=('^$"f^')'
 }
-cat <<! >/tmp/work.$pid
-#!/bin/rc
-label kx.$pid
-window -r $bsamrect 'echo 4 >/env/tabstop; echo -n /lib/font/bit/terminus/unicode.12m.font >/env/font; jam $f'
+. /tmp/sizes.$sysname
+window -r $bsamrect 'echo 4 >/env/tabstop; echo -n /lib/font/bit/terminus/unicode.12m.font >/env/font; jam '^$"f
 !
 
 cat <<! >/tmp/kx.$pid
