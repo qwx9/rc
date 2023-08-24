@@ -1,6 +1,6 @@
 #!/bin/rc
 rfork ne
-v=rms
+v=awb
 if(~ $1 -v){
 	v=$2
 	shift 2
@@ -9,4 +9,7 @@ if(! ~ $#* 1 || ~ $#v 0){
 	echo usage: $0 '[-v voice]' file >[1=2]
 	exit usage
 }
-tail -f $1 | audio/flite -v $v | norm 3 >/dev/audio
+tail -f $1 | \
+	sed -u 's/^[0-9]+:[0-9]+ //' | \
+	audio/flite -v $v \
+	>/dev/audio
