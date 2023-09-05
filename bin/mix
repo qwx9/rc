@@ -1,0 +1,2 @@
+#!/bin/rc
+audio/pcmmix -t <{play -o /fd/1 $* >[2]/dev/null} >[2]/tmp/a
