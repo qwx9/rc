@@ -1,0 +1,19 @@
+#!/bin/rc
+fn cleanup{
+	rm -f /srv/midi
+}
+fn sigint{
+	cleanup
+	exit
+}
+fn sigexit{
+	cleanup
+}
+
+rfork n
+rm -f /srv/midi
+bind -a '#|' /mnt/midi
+<>[3]/mnt/midi/data1 {
+	echo 3 >/srv/midi
+	cat $* >/mnt/midi/data
+}
