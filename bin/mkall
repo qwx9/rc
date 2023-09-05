@@ -1,11 +1,22 @@
 #!/bin/rc -e
-for(i in amd64 386 arm){
-	if(! ~ $#* 0)
-		objtype=$i mk $*^.install
-	if not
-		objtype=$i mk install
+clean=1
+if(~ $1 -n){
+	clean=()
+	shift
 }
-if(! ~ $#* 0)
-	mk cleancmds || mk $*^.clean
-if not
-	mk clean
+for(i in amd64 386 arm){
+	objtype=$i {
+		if(! ~ $#* 0)
+			mk $*^.install
+		if not{
+			mk nuke
+			mk install
+		}
+		if(! ~ $#clean 0){
+			if(! ~ $#* 0)
+				mk cleancmds >[2]/dev/null || mk $*^.clean
+			if not
+				mk clean
+		}
+	}
+}
