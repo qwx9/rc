@@ -4,6 +4,7 @@ hget http://felloff.net/usr/cinap_lenrek/music \
 BEGIN{
 	excl["quality60"] = 1
 	excl["quality83"] = 1
+	excl["r32"] = 1
 }
 /mp3/{
 	sub(".*<a href=\"","")
