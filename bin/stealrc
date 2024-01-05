@@ -10,6 +10,7 @@ cp -x \
 	$repo/sigrid/pdffs/pdf2txt \
 	$repo/aiju/rc/fun \
 	$repo/qrstuv/9paste \
+	$repo/umbraticus/^(getwsys explorer bandcamp) \
 	$sources/extra/ps2txt \
 	$repo/henesy/getlinks.rc \
 	$sources/contrib/fgb/rc/fdict \
