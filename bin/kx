@@ -43,7 +43,7 @@ plumber -s plumb.$pid
 bof -i /tmp/work.$pid
 unmount /n/ssh
 unmount /mnt/plumb
-rm /srv/plumb.$pid #/tmp/kx.$pid /tmp/work.$pid
+rm -f /srv/plumb.$pid /tmp/kx.$pid /tmp/work.$pid
 !
 
 chmod +x /tmp/work.$pid
