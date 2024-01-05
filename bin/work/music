@@ -3,19 +3,19 @@ rfork ne
 
 . /tmp/sizes.$sysname
 cd /lib/m
-#unmount /mnt/plumb
-#plumber -s plumb.$pid
+unmount /mnt/plumb
+plumber -s plumb.$pid
 
 cat <<! >/tmp/work.$pid
 #!/bin/rc
 label music
-window -r $volrect volume
+window -r $volrect volctl
 window -r $bcmdrect -scroll
 window -scroll -r $zukerect 'label zuke; rc'
 !
 chmod +x /tmp/work.$pid
 bof -i /tmp/work.$pid
 rm /tmp/work.$pid
-#unmount /mnt/plumb
-#rm /srv/plumb.$pid
+unmount /mnt/plumb
+rm /srv/plumb.$pid
 exit
