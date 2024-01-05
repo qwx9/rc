@@ -1,0 +1,21 @@
+#!/bin/rc
+rfork e
+root=/sys/lib/extra/web
+if(~ $1 ''){
+	echo usage: $0 URL '[DESC]' >[1=2]
+	exit usage
+}
+mkdir -p $root
+
+d=`{echo $1 | sed 's,^.*://,,;s,/+$,,'}
+r=`{echo $d | sed 's,/.*,,'}
+f=`{basename $d}
+d=$root/`{basename -d $d}
+if(test -f $root/$d){
+	echo 'cannot mkdir over existing file '^$d >[2=1]
+	exit 'not a directory'
+}
+mkdir -p $d
+hget $1 | htmlfmt > $d/$f
+echo $r '	' $d/$f '	' $1 '	' $*(2-) >> $root/index
+sort -du $root/index > /tmp/scrape.$pid && mv /tmp/scrape.$pid $root/index
