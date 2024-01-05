@@ -5,7 +5,7 @@ awk '
 BEGIN{
 	FS="\t"
 }$1 !~ /^(#|$)/{
-	print $2
+	print $2 "\t# window -scroll -cd " $3 " \''mkall; rc\''"
 	basedir = $3
 	sub("/[^/]+$", "", basedir)
 	# yikes
