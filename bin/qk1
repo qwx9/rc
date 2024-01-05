@@ -1,12 +1,10 @@
 #!/bin/rc
 rfork ne
 switch($sysname){
-case x220 w520 t61p2 t61p
-	res=(-dx 1032 -dy 776)
-case hsw
+case hsw w701
 	res=(-dx 1608 -dy 1208)
 case *
-	res=(-dx 808 -dy 608)
+	res=(-dx 1032 -dy 776)
 }
 echo resize $res >/dev/wctl
 bind -q /sys/games/lib/quake/cd /mnt/cd	# cdfs(4)
