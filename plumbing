@@ -24,13 +24,13 @@ type	is	text
 data	matches	'.+'
 data	matches	'.+\.(mp3|MP3|ogg|OGG|flac|FLAC|wav|WAV|au|AU|mid|MID|mus|MUS|m3u|M3U|pls|PLS|opus|OPUS|aac|AAC|m4a|M4A|mod|MOD)'
 arg	isfile	$0
-plumb start window play -o /fd/1 ''''$file'''' >[2]/dev/null | audio/pplay
+plumb start window play -o /fd/1 ''''$file'''' >[2]/dev/null | audio/pplay -b
 
 type is text
 data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
 data matches '([a-zA-Z¡-￿0-9_\-.,/]+)\.(pcm|PCM)'
 arg isfile	$0
-plumb start window audio/pplay $file
+plumb start window audio/pplay -b $file
 
 type is text
 data matches '[a-zA-Z¡-￿0-9_\-.,/]+'
@@ -88,10 +88,6 @@ plumb	start	note/add $1
 
 # web
 
-#data matches 'https?://.+|/tmp/webshit.*|[₀-₉]+|hpost.*'
-#plumb to webshit
-#plumb client window webshit
-
 type	is	text
 data	matches	'file:/[^ ]+'
 plumb	to	web
@@ -102,6 +98,10 @@ data	matches	'\[[^\]]*\]\((https?://[^\)]*)\)'
 data	set	$1
 plumb	to	web
 plumb	client	window $browser
+
+#data matches 'https?://.+|/tmp/webshit.*|[₀-₉]+|hpost.*'
+#plumb to webshit
+#plumb client window webshit
 
 # thanks cinap
 type is text
@@ -172,5 +172,18 @@ src is vdirw
 type is text
 arg isdir $data
 plumb start window -cd $data rc
+
+# umbraticus' explorer(1)
+wdir is /mnt/explorer
+plumb to explorer
+
+data matches [a-zA-Z¡-￿0-9_\-+.,!/]+
+arg isdir $data
+plumb to explorer
+plumb client window explorer
+
+# umbraticus' bandcamp
+data matches 'https?://.*\.bandcamp.com/(track|album)/[^ /]+'
+plumb start window -scroll -r 0 416 9000 756 bandcamp $data
 
 include basic
