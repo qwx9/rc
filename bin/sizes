@@ -27,10 +27,10 @@ catrect=( \
 	296 \
 )
 volrect=( \
-	`{echo $catrect(3) - 4 | pc} \
 	0 \
-	768 \
-	28 \
+	0 \
+	328 \
+	144 \
 )
 kprintrect=( \
 	$volrect(1) \
