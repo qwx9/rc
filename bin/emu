@@ -18,6 +18,6 @@ if(test -d /sys/games/lib/rom/$emu){
 	cd /sys/games/lib/rom/$emu
 }
 if(~ $#joy 1)
-	nusb/joy /dev/usb/ep^$joy^.0 | joy | {eval games/$emu -a $* || eval games/$emu $*}
+	nusb/joy /dev/usb/ep^$joy^.0 | joy | {eval games/$emu -a '$*' || eval games/$emu '$*'}
 if not
-	eval games/$emu -a $* || eval games/$emu $*
+	eval games/$emu -a '$*' || eval games/$emu '$*'
