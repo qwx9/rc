@@ -1,16 +1,33 @@
 #!/bin/rc -e
 clean=1
-if(~ $1 -n){
-	clean=()
-	shift
+install=1
+while(~ $1 -?){
+	switch($1){
+	case -u
+		clean=()
+		shift
+	case -n
+		install=()
+		clean=()
+		shift
+	case *
+		usage
+	}
 }
 for(i in amd64 386 arm){
 	objtype=$i {
-		if(! ~ $#* 0)
-			mk $*^.install
+		if(! ~ $#* 0){
+			if(! ~ $#install 0)
+				mk $*^.install
+			if not
+				mk $*
+		}
 		if not{
 			mk nuke
-			mk install
+			if(! ~ $#install 0)
+				mk install
+			if not
+				mk
 		}
 		if(! ~ $#clean 0){
 			if(! ~ $#* 0)
