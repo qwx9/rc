@@ -1,0 +1,9 @@
+#!/bin/rc -e
+rfork ne
+r=/sys/lib/extra
+d=usr
+
+repo=(`{echo $1 | sed 's,.*/([^/]+)/([^/]+)/?$,\1 \2,'})
+dir=$r/$d/$repo(1)
+git/clone $1 $dir/$repo(2)
+echo $1'	'$repo(1)/$repo(2)'	'$dir/$repo(2)'	'$*(2-)
