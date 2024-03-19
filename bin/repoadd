@@ -1,9 +1,31 @@
 #!/bin/rc -e
 rfork ne
-r=/sys/lib/extra
-d=usr
+fn usage{
+	echo usage: $0 '[-u user] REPO [DESC..]' >[1=2]
+	exit usage
+}
 
+root=/sys/lib/extra
+repodir=usr
+user=()
+while(~ $1 -?){
+	switch($1){
+	case -u
+		user=$2
+		shift 2
+	case *
+		usage
+	}
+}
+if(~ $#* 0)
+	usage
 repo=(`{echo $1 | sed 's,.*/([^/]+)/([^/]+)/?$,\1 \2,'})
-dir=$r/$d/$repo(1)
-git/clone $1 $dir/$repo(2)
-echo $1'	'$repo(1)/$repo(2)'	'$dir/$repo(2)'	'$*(2-)
+url=$1
+shift
+if(~ $#user 0)
+	user=$repo(1)
+repo=$repo(2)
+dir=$root/$repodir/$user
+
+git/clone $url $dir/$repo
+echo $url^'	'^$user/^$repo^'	'^$dir/$repo^'	'^$"*
