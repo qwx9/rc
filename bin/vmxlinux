@@ -1,4 +1,4 @@
-#!/bin/rc -e
+#!/bin/rc -be
 rfork ne
 
 vmid=`{awk '
@@ -29,7 +29,6 @@ m=/tmp/vmx/initramfs-^$ver^.img
 d=/dev/sdE0/data
 #v=vesa:1920x1050
 v=1024x768
-c=('root=/dev/vda1')
 if(test -d '#l1'){
 	bind -aq '#l1' /net
 	n=ether1
@@ -51,6 +50,8 @@ while(~ $1 -?){
 	}
 	shift
 }
+if(~ $#* 0)
+	*=('root=/dev/vda1')
 echo $v | awk -Fx '
 {
 	gsub(".*:", "")
@@ -64,4 +65,4 @@ vmx \
 	-n ea:$mac!$n \
 	-v $v \
 	$k \
-	$c $*
+	$*
