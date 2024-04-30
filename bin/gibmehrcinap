@@ -5,6 +5,7 @@ BEGIN{
 	excl["quality60"] = 1
 	excl["quality83"] = 1
 	excl["r32"] = 1
+	excl["bat2"] = 1
 }
 /mp3/{
 	sub(".*<a href=\"","")
