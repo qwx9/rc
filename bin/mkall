@@ -1,4 +1,5 @@
 #!/bin/rc -e
+rfork n
 clean=1
 install=1
 while(~ $1 -?){
