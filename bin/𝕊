@@ -15,9 +15,12 @@ function io(c, f){
 	for(i=2; i<=length(s); i++){
 		k = s[i]
 		if(!(k in h)){
-			if(k == "")
+			if(k == ""){
 				system("plumb -d audio ''key <''")
-			else if(k == ""){
+				# instead of trying to detect stopped state, just
+				# use prev as stop and toggle play as start for shp
+				system("Sto")
+			}else if(k == ""){
 				system("plumb -d audio ''key p''")
 				system("Sta")
 			}else if(k == ""){
