@@ -10,11 +10,12 @@ data matches '([a-zA-Z¡-￿0-9_\-./]+)\(([0-9])\)'
 plumb	start	window -dy 800 man $2 $1 '; read'
 
 # images
-type	is text
-data	matches '[a-zA-Z¡-￿0-9_\-.,/]+'
-data	matches '([a-zA-Z¡-￿0-9_\-.,/]+)\.(svg|SVG)'
-arg	isfile $0
-plumb	start svg -9 $0 | plumb -id image
+type	is	text
+data	matches	'[a-zA-Z¡-￿0-9_\-.,/]+'
+data	matches	'([a-zA-Z¡-￿0-9_\-.,/]+)\.(jpe?g|JPE?G|gif|GIF|tiff?|TIFF?|ppm|PPM|bit|BIT|png|PNG|pgm|PGM|bmp|BMP|yuv|YUV|tga|TGA|svg|SVG)'
+arg	isfile	$0
+plumb	to	image
+plumb	client	page -wi
 
 # audio
 
@@ -110,10 +111,11 @@ data set https://nitter.eu/$1
 plumb to web
 plumb client window $browser
 
-# thanks khm/umbraticus
 type is text
-data matches https?://imgur.com/a/[a-zA-Z0-9]+
-plumb start rc -c 'hget '$data' | sed -n ''s/.*<meta property="og:image"[^>]+content="([^"?]+).*/\1/p'' | xargs -n 1 plumb'
+data matches https?://imgur.com/a/([a-zA-Z0-9]+)
+data set https://imgin.voidnet.tech/a/$1
+plumb to web
+plumb client window $browser
 
 # gemnine
 type	is	text
