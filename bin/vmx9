@@ -1,22 +1,17 @@
 #!/bin/rc
 rfork n
-switch($sysname){
-case w520
-	if(test -d /net/ether1)
-		n=ether1
-	if not
-		n=ether0
-	m=3G
-	echo scroll >/dev/wctl
-	vmx \
-		-M $m \
-		-n $n \
-		-d /tmp/iso/9front-6977.c7e7268b0786.iso \
-		-d /dev/sdE3/data \
-		-v 1024x768 \
-		$bootfile \
-		'user=glenda mouseport=ps2'
-	echo quit >'#X'/0/ctl
-case *
-	echo nope.
+r=10370
+d=/tmp/9front-$r.amd64.qcow2
+if(! test -f $d){
+	echo $d not found >[1=2]
+	exit nope
 }
+disk/qcowfs $d || exit
+vmx \
+	-M 1g \
+	-n ether0 \
+	-d /mnt/qcow/data \
+	-v 800x600 \
+	/amd64/9pc64 \
+	'user=glenda mouseport=ps2'
+echo quit >'#X'/0/ctl
