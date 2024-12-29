@@ -7,7 +7,7 @@ if(! ~ $#* 2){
 unmount /mnt/plumb
 plumbsrv=()
 plumber -s plumb.$pid
-upas/fs -Cf $1 >>[2]/tmp/mailrio.log || exit
+upas/fs -f $1 >>[2]/tmp/mailrio.log || exit
 upasname=$2
 wsz=`{read -c 48 /mnt/wsys/wctl}
 facerect=( \
