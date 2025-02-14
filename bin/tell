@@ -10,6 +10,6 @@ if(! ~ $#* 1 || ~ $#v 0){
 	exit usage
 }
 tail -f $1 | \
-	sed -u 's/^[0-9]+:[0-9]+ //' | \
+	sed -u 's/^[0-9]+:[0-9]+ //;s/ ⇒ / says /' | \
 	audio/flite -v $v \
 	>/dev/audio
