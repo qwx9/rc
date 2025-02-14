@@ -3,7 +3,12 @@ rfork n
 
 bind -b . /sys/games/lib/wl3d
 cd $home/lib/wl3d
-if(~ $1 -R){
+
+r=()
+if(~ $1 -z){
+	shift
+}
+if not if(~ $1 -R){
 	r=(-dx $2 -dy $3)
 	shift 2
 }
@@ -21,5 +26,6 @@ if not
 		}'
 	}
 
-echo resize $r >/dev/wctl
+if(! ~ $#r 0)
+	echo resize $r >/dev/wctl
 games/wl3d $*
