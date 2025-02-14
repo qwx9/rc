@@ -1,4 +1,6 @@
 #!/bin/rc
+rfork en
+
 fn cleanup{
 	rm -f /srv/midi
 }
@@ -10,10 +12,17 @@ fn sigexit{
 	cleanup
 }
 
-rfork n
+r=()
+if(~ $1 -r){
+	r=1
+	shift
+}
 rm -f /srv/midi
 bind -a '#|' /mnt/midi
 <>[3]/mnt/midi/data1 {
 	echo 3 >/srv/midi
-	cat $* >/mnt/midi/data
+	if(! ~ $#r 0)
+		cat /mnt/midi/data
+	if not
+		cat $* >/mnt/midi/data
 }
