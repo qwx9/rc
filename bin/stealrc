@@ -14,5 +14,6 @@ cp -x \
 	$sources/extra/ps2txt \
 	$repo/henesy/getlinks.rc \
 	$sources/contrib/fgb/rc/fdict \
+	$repo/pixelherodev/pdffs/pdf2txt \
 	$dest
 chmod +x $dest/*
