@@ -1,5 +1,6 @@
 #!/bin/rc
-if(~ $#* 1)
-	*=(ssh tcp!$1!x)
-#vt -xf /lib/font/bit/fixed/unicode.6x10.font $*
-vt -xf /lib/font/bit/terminus/unicode.12m.font $*
+if(~ $#* 1){
+	if(! ~ $1 *@* && ! ~ $1 tcp!*)
+		*=(tcp!$1!x $*(2-))
+}
+vt -xf /lib/font/bit/terminus/unicode.12m.font ssh $*
