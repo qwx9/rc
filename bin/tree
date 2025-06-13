@@ -1,0 +1,34 @@
+#!/bin/rc
+walk -f $* | sort | awk '
+{
+	n = split($1, dir, "/")
+	if(n == 0)
+		p = "/"
+	else
+		p = "."
+	for(i=1; i<=n; i++){
+		c = dir[i]
+		if(!(c in par)){
+			par[c] = p
+			child[p,++nc[p]] = c
+		}
+		p = c
+	}
+}
+function printbranch(p, link, ind,	i, n){
+	n = nc[p]
+	print ind link p
+	if(ind != "" || link != "")
+		ind = ind (link == "└" ? " " : "│")
+	for(i=1; i<n; i++)
+		printbranch(child[p,i], "├", ind)
+	if(n >= 1)
+		printbranch(child[p,i], "└", ind)
+}
+END{
+	if("/" in nc)
+		printbranch("/", "", "")
+	if("." in nc)
+		printbranch(".", "", "")
+}
+'
