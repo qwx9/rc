@@ -1,0 +1,13 @@
+#!/bin/rc
+# ffmpeg -i rec.264 -i rec.flac -c:v copy vid.mp4
+# http://runjimmyrunrunyoufuckerrun.com/src/freqgraph.c
+# http://shithub.us/sigrid/hj264/HEAD/info.html
+rfork e
+
+if(test -f /dev/audioinU*)
+	u=/dev/audioinU*
+if not
+	u=/dev/audio
+t=`{date -t}
+window -m rc -c 'dd -if $u -bs 1764x2 | freqgraph | audio/flacenc > rec.^$t^.flac'
+video/hj264 -f 30 -k 1500 -Q 50 /dev/screen > rec.^$t^.264
