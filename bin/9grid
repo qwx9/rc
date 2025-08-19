@@ -1,7 +1,7 @@
 #!/bin/rc -e
 #echo no. >[1=2]; exit no.
-9fs tcp!chat.9p.zone!9990 /n/chat
-rm /srv/tcp!chat.9p.zone!9990
+9fs tcp!gridchat!chat /n/chat
+rm /srv/tcp!gridchat!chat
 # fukken quoting
 cat <<'!' >/tmp/grid.$pid
 #!/bin/rc
