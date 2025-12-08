@@ -1,6 +1,6 @@
 #!/bin/rc -e
 rfork en
-bind -ac /dist/plan9front /
+bind -ac /dist/9front /
 old=`{git/query HEAD}
 #auth/as sys sysupdate
 sysupdate
