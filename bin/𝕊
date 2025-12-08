@@ -15,7 +15,7 @@ function io(c, f){
 	for(i=2; i<=length(s); i++){
 		k = s[i]
 		if(!(k in h)){
-			if(k == ""){
+			if(k == ""){
 				system("plumb -d audio ''key <''")
 				# instead of trying to detect stopped state, just
 				# use prev as stop and toggle play as start for shp
