@@ -27,5 +27,8 @@ if(~ $#user 0)
 repo=$repo(2)
 dir=$root/$repodir/$user
 
-git/clone $url $dir/$repo
+if(! test -d $dir/$repo)
+	git/clone $url $dir/$repo
+if not
+	echo $dir/$repo already exists >[1=2]
 echo $url^'	'^$user/^$repo^'	'^$dir/$repo^'	'^$"*
