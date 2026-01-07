@@ -1,5 +1,5 @@
 f=()
-for(i in $home/p/^(rc/bin rc2/bin pico sm2/bin notes/bin) $home/bin/^($objtype rc) /sys/lib/go/amd64-1.15.2/bin /usr/ocaml/bin)
+for(i in $home/p/^(rc/bin rc2/bin pico sm2/bin notes/bin fork/rc/bin) $home/bin/^($objtype rc) /sys/lib/go/amd64-1.15.2/bin /usr/ocaml/bin)
 	if(test -e $i)
 		f=($f $i)
 unionfs -bm /bin $f /rc/bin /$objtype/bin
