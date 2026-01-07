@@ -10,10 +10,11 @@ if(test -f $home/lib/rsam){
 unmount /mnt/plumb
 plumber -s plumb.$pid
 
+w=$screensize(1)
 cat <<! >/tmp/work.$pid
 #!/bin/rc
 label proj
-echo -n /lib/font/bit/terminus/unicode.12m.font >/env/font
+test $w -le 1920 && echo -n /lib/font/bit/terminus/unicode.12m.font >/env/font
 echo 4 >/env/tabstop
 window -r $bcmdrect -scroll
 #window -r 530 270 1401 1175 mothra #https://ocaml.org/learn/tutorials/
