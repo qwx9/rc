@@ -4,4 +4,4 @@ if(~ $#* 0)
 if(~ $1 -s)
 	walk -fesp $*(2-) | sort -rn | sed '512q;s/^[^ ]+ //' | xargs -n 512 page -m 32
 if not
-	walk $* | shl | sed 512q | xargs -n 512 page -m 32
+	walk -f $* | shl | sed 1024q | xargs -n 1024 page -m 32
