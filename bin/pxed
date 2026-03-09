@@ -1,0 +1,7 @@
+#!/bin/rc
+rfork e
+x=`{ndb/query sys $1 ether}
+if(! ~ $#x 0)
+	B /cfg/pxe/^$x
+if not
+	echo nope >[1=2]
