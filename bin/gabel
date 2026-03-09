@@ -4,7 +4,7 @@ flag x +
 cd /usr/qwx/p/fork
 unionfs /usr/qwx/p/fork/sys /sys
 ramfs -u -m /mnt/build
-clone -xTp 8:8 /mnt/union/^(include src) /mnt/build/
+clone -T /mnt/union/^(include src) /mnt/build/
 unmount /mnt/union
 bind -c /mnt/build/include /sys/include
 bind -c /mnt/build/src /sys/src
