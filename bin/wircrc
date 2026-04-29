@@ -1,4 +1,4 @@
-#!/bin/rc
+#!/bin/rc -b
 wins=()
 cons=()
 server=irc.oftc.net
@@ -69,7 +69,10 @@ fn wio {
 	if(~ $1 $wins){
 		d=wd$1
 		d=$$d
-		@{echo `{etime} $*(2-) | tee -a /tmp/irc.^$1 >$d/cons}
+		if(! ~ $2 $muted)
+			@{echo `{etime} $*(2-) | tee -a /tmp/irc.^$1 >$d/cons}
+		if not
+			@{echo `{etime} $*(2-) | tee -a /tmp/irc.^$1 | sed 's/⇒ .*/⇒/'  >$d/cons}
 	}
 }
 
@@ -262,6 +265,18 @@ dial tcp!$server!$port $tls irc $server &
 			}
 		case wtype
 			switch($a(3)){
+			case /Q
+				if(~ $a(4) $muted){
+					om=$muted
+					muted=()
+					for(i in $om){
+						if(! ~ $i $a(4))
+							muted=($muted $i)
+					}
+					om=()
+				}
+				if not
+					muted=($muted $a(4))
 			case /x
 				shutdown
 			case /s
