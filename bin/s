@@ -164,7 +164,7 @@ fn i{
 fn m{
 	sed '1s/.*/!plumb &''(0)''/;q'
 }
-# ^rn from to  # rename C identifier
+# ^rn from to  # rename C identifier (excl. compound members)
 fn rn{
 	rfork e
 	if(! ~ $#* 2){
@@ -174,12 +174,31 @@ fn rn{
 	if(~ $%dot(2) $%dot(3)) echo ,
 	charconst='''[^'']*'''
 	strconst='"([^"]|\\")*"'
+	memb='(\\.|->)'
 	name='[a-zA-Z_¡-￿][a-zA-Z_0-9¡-￿]*'
 	partial=`{
 		echo -n $1 |
 		awk '{for(i = 0; i < length($1) + 1; i++) printf "."}'
 	}
-	echo 'y/'$charconst'/ y/'$strconst'/ x/'$name'/ g/'$1'/ v/'$partial'/ c/'$2
+	echo 'y/'$charconst'/ y/'$strconst'/ y/'$memb$name'/ x/'$name'/ g/'$1'/ v/'$partial'/ c/'$2
+}
+# ^rnm from to  # rename C compound member identifier
+fn rnm{
+	rfork e
+	if(! ~ $#* 2){
+		echo 'usage: ^rn from to'
+		exit
+	}
+	if(~ $%dot(2) $%dot(3)) echo ,
+	charconst='''[^'']*'''
+	strconst='"([^"]|\\")*"'
+	memb='(\\.|->)'
+	name='[a-zA-Z_¡-￿][a-zA-Z_0-9¡-￿]*'
+	partial=`{
+		echo -n $1 |
+		awk '{for(i = 0; i < length($1) + 1; i++) printf "."}'
+	}
+	echo 'y/'$charconst'/ y/'$strconst'/ x/'$memb$name'/ x/'$name'/ g/'$1'/ v/'$partial'/ c/'$2
 }
 # ^cc          # c comment
 fn cc{
