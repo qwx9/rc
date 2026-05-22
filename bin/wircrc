@@ -206,7 +206,8 @@ dial tcp!$server!$port $tls irc $server &
 			srvpass=()
 			for(i in $chans){
 				if(~ $i $id!'#'*){
-					wmk $i &
+					if(! ~ $i $wins)
+						wmk $i &
 					sio $id JOIN `{echo $i | awk -F'!' '{print $2}'}
 				}
 			}
