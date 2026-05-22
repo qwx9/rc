@@ -40,6 +40,7 @@ if(~ $#* 1)
 	server=$1
 
 bind '#|' /n/wircrc
+bind '#|' /n/wircrc.w
 rfork en
 
 fn wmk {
@@ -139,8 +140,10 @@ fn irc {
 		echo cnew $* >[1=3]
 		tr -d '\x2\x8\xd\x1f' | @{
 			while(line=`{read}){
-				if(~ $line(1) PING)
+				if(~ $line(1) PING){
 					echo PONG $line(2-)
+					echo cpong $1 >[1=3]
+				}
 				if not if(! ~ $line(2) JOIN || ! ~ $line(1) :$nick!*){
 					line=`{echo $line | sed '
 s/^:([^!]+)[^ ]+ PRIVMSG (#[^ ]+)[^:]+:(.*)/cmsg '$1'!\2 \1 \3/g;
@@ -174,6 +177,7 @@ fn shutdown {
 		@{echo hangup >/proc/$d/notepg} &
 	}
 	{}>/n/wircrc/data
+	echo shutdown 1 >/n/wircrc.w/data1
 }
 
 fn sighup {
@@ -184,11 +188,64 @@ fn sigint {
 	shutdown
 }
 
+fn checkconn {
+	for(i in $srvs){
+		ti=last$i
+		d=`{echo $1 - $$ti | pc}
+		if(test $d -ge 400){
+			echo wtype $i /r $i
+			last$i=$1
+		}
+		if not if(test $d -ge 180)
+			echo wtype $i /p
+	}
+}
+
+fn watch {
+	srvs=()
+	ot=`{date -n}
+	</n/wircrc.w/data >/n/wircrc/data1 {
+		while(){
+			a=`{alarm 90 read >[2]/dev/null}
+			s=$status
+			t=`{date -n}
+			if(~ $s alarm* '' && ~ $#a 2){
+				id=`{echo $a(2) | awk -F'!' '{print $1}'}
+				switch($a(1)){
+				case w* cclose
+				case shutdown
+					exit
+				case hangup
+					osrvs=srvs
+					srvs=()
+					for(i in $osrvs){
+						if(! ~ $i $id)
+							srvs=($srvs $i)
+					}
+				case *
+					if(! ~ $id $srvs)
+						srvs=($srvs $id)
+					last$id=$t
+				}
+			}
+			if not if(! ~ $s alarm* '')
+				exit
+			d=`{echo $t - $ot | pc}
+			if(test $d -ge 30){
+				checkconn $t
+				ot=$t
+			}
+		}
+	}
+}
+
 wmk $server &
 dial tcp!$server!$port $tls irc $server &
+watch &
 
-</n/wircrc/data {
+</n/wircrc/data >[3]/n/wircrc.w/data1 {
 	while(a=`{read}){
+		echo $a(1-2) >[1=3]
 		id=$a(2)
 		switch($a(1)){
 		case cnew
@@ -318,7 +375,27 @@ dial tcp!$server!$port $tls irc $server &
 			case /h
 				if(~ $a(4) $cons)
 					id=$a(4)
+				echo hangup $id >[1=3]
 				hangup `{echo $id | awk -F'!' '{print $1}'}
+			case /r
+				id=$a(4)
+				if(! ~ $id ''){
+					server=`{echo $id | awk -F'!' '{print $1}'}
+					if(~ $id $cons){
+						hangup $server
+						oids=$cons
+						cons=()
+						for(i in $oids){
+							if(! ~ $i $id)
+								cons=($i $cons)
+						}
+					}
+					if(! ~ $server $wins)
+						wmk $server &
+					if(! ~ $a(5) '')
+						port=$a(5)
+					dial tcp!$server!$port $tls irc $server &
+				}
 			case /n
 				nick = $a(4)
 				server=`{echo $id | awk -F'!' '{print $1}'}
