@@ -13,6 +13,10 @@ while(~ $1 -?){
 		pref=/mnt/term/home/$user
 		wdir=$pref/strpg
 		shift
+	case -l
+		pref=/usr/$user
+		wdir=$pref/p/strpg
+		shift
 	case -r
 		wdir=/n/ssh/$2
 		shift
@@ -24,13 +28,12 @@ while(~ $1 -?){
 	}
 	shift
 }
+m=()
 if(~ $#* 1){
 	m=$1
 	if(! ~ $1 tcp!*)
 		m=tcp!$1!x
 }
-if not if(! ~ $pref /mnt/term/*)
-	usage
 . /tmp/sizes.$sysname
 
 f=()
