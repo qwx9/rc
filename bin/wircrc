@@ -71,13 +71,14 @@ fn etime {
 }
 
 fn wio {
+	t=`{etime}
 	if(~ $1 $wins){
 		d=wd$1
 		d=$$d
 		if(! ~ $2 $muted)
-			@{echo `{etime} $*(2-) | tee -a /tmp/irc.^$1 >$d/cons}
+			@{echo $t $*(2-) | tee -a /tmp/irc.^$1 >$d/cons}
 		if not
-			@{echo `{etime} $*(2-) | tee -a /tmp/irc.^$1 | sed 's/⇒ .*/⇒/'  >$d/cons}
+			@{echo $t $*(2-) | tee -a /tmp/irc.^$1 | sed 's/⇒ .*/⇒/'  >$d/cons}
 	}
 }
 
@@ -125,6 +126,8 @@ fn dial {
 	bind '#|' $c
 	if(~ $2 1){
 		tlsclient $1 <>$c/data1 >[1=0] &
+		awk '/Chan/{ sub("data", "ctl", $2); print "keepalive 480000" >$2 }' \
+			`{sed -n 's,.*(/net/tls/[0-9]+/)data,\1status,p' /proc/$apid/fd}
 	}
 	if not{
 		aux/trampoline $1 <>$c/data1 >[1=0] &
@@ -192,12 +195,18 @@ fn checkconn {
 	for(i in $srvs){
 		ti=last$i
 		d=`{echo $1 - $$ti | pc}
-		if(test $d -ge 400){
+		if(test $d -ge 480){
 			echo wtype $i /r $i
 			last$i=$1
 		}
-		if not if(test $d -ge 180)
+		if not if(test $d -ge 360){
+			for(j in $wins){
+				d=wd$i
+				d=$$d
+				@{echo scroll >$d/wctl}
+			}
 			echo wtype $i /p
+		}
 	}
 }
 
