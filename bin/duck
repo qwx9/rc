@@ -1,2 +1,2 @@
 #!/bin/rc
-mothra 'http://duckduckgo.com/lite?q='^`"{echo $* | sed 's/ /+/g'}
+mothra 'https://search.brave.com/search?q='^`"{echo $* | sed 's/ /%20/g'}
