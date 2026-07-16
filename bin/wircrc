@@ -40,7 +40,6 @@ if(~ $#* 1)
 	server=$1
 
 bind '#|' /n/wircrc
-bind '#|' /n/wircrc.w
 rfork en
 
 fn wmk {
@@ -109,6 +108,12 @@ fn hangup {
 		d=$$d
 		@{echo kill >/proc/$d/notepg}
 	}
+	osrv=srv
+	srv=()
+	for(i in $osrv){
+		if(! ~ $i $1)
+			srv=($srv $i)
+	}
 }
 
 fn getkey {
@@ -158,7 +163,7 @@ s/^:([^!]+)[^ ]+ ([0-9]+)[^:]+:?(.*)/xmsg '$1' \2 \3/g;
 s/^:([^!]+)[^ ]+ (MODE|TOPIC) (#[^ ]+) :?(.*)/xmsg '$1'!\3 \2 \4/g;
 s/^:([^!]+)[^ ]+ (QUIT|NICK) :(.*)/xmsg '$1' \2 \1 \3/g;
 s/^:([^!]+)[^ ]+ (PART) (#[^\ ]+).*/xmsg '$1'!\3 \2 \1/g;
-s/^:([^!]+)[^ ]+ (JOIN) :?(#[^\ ]+).*/xmsg '$1' \2 \3 \1/g;
+s/^:([^!]+)([^ ]+) (JOIN) :?(#[^\ ]+).*/xmsg '$1' \3 \4 \1\2/g;
 s/^:(.*) (PONG) [^ ]+[^:]+:(.*)/xmsg '$1' \2 \1 \3/g;
 s/^:([^!]+)[^ ]+ ([A-Z]+) ?:?(.*)/xmsg '$1' \2 \1 \3/g;
 s/^:([^!]+)[^ ]+ (.*)/xmsg '$1' \2/g;
@@ -180,7 +185,6 @@ fn shutdown {
 		@{echo hangup >/proc/$d/notepg} &
 	}
 	{}>/n/wircrc/data
-	echo shutdown 1 >/n/wircrc.w/data1
 }
 
 fn sighup {
@@ -192,236 +196,214 @@ fn sigint {
 }
 
 fn checkconn {
-	for(i in $srvs){
+	for(i in $srv){
 		ti=last$i
 		d=`{echo $1 - $$ti | pc}
 		if(test $d -ge 480){
-			echo wtype $i /r $i
+			echo wtype $i /r $i >/n/wircrc/data1
 			last$i=$1
 		}
 		if not if(test $d -ge 360){
 			for(j in $wins){
-				d=wd$i
+				d=wd$j
 				d=$$d
 				@{echo scroll >$d/wctl}
 			}
-			echo wtype $i /p
-		}
-	}
-}
-
-fn watch {
-	srvs=()
-	ot=`{date -n}
-	</n/wircrc.w/data >/n/wircrc/data1 {
-		while(){
-			a=`{alarm 90 read >[2]/dev/null}
-			s=$status
-			t=`{date -n}
-			if(~ $s alarm* '' && ~ $#a 2){
-				id=`{echo $a(2) | awk -F'!' '{print $1}'}
-				switch($a(1)){
-				case w* cclose
-				case shutdown
-					exit
-				case hangup
-					osrvs=srvs
-					srvs=()
-					for(i in $osrvs){
-						if(! ~ $i $id)
-							srvs=($srvs $i)
-					}
-				case *
-					if(! ~ $id $srvs)
-						srvs=($srvs $id)
-					last$id=$t
-				}
-			}
-			if not if(! ~ $s alarm* '')
-				exit
-			d=`{echo $t - $ot | pc}
-			if(test $d -ge 30){
-				checkconn $t
-				ot=$t
-			}
+			echo wtype $i /p >/n/wircrc/data1
 		}
 	}
 }
 
 wmk $server &
 dial tcp!$server!$port $tls irc $server &
-watch &
 
-</n/wircrc/data >[3]/n/wircrc.w/data1 {
-	while(a=`{read}){
-		echo $a(1-2) >[1=3]
-		id=$a(2)
-		switch($a(1)){
-		case cnew
-			cd$id=$a(3)
-			cpid$id=$a(4)
-			cons=($id $cons)
-			getkey $id
-			if(! ~ $#srvpass 0)
-				sio $id PASS $srvpass
-			sio $id USER $username foo bar :$realname
-			sio $id NICK $nick
-			if(! ~ $#pass 0)
-				sio $id nickserv identify $pass
-			pass=()
-			srvpass=()
-			for(i in $chans){
-				if(~ $i $id!'#'*){
-					if(! ~ $i $wins)
-						wmk $i &
-					sio $id JOIN `{echo $i | awk -F'!' '{print $2}'}
+</n/wircrc/data {
+	ot=`{date -n}
+	while(){
+		a=`{alarm 90 read >[2]/dev/null}
+		s=$status
+		t0=`{date -n}
+		if(~ $s alarm* '' && ! ~ $#a 0 1){
+			id=$a(2)
+			server=`{echo $id | awk -F'!' '{print $1}'}
+			switch($a(1)){
+			case cnew
+				cd$id=$a(3)
+				cpid$id=$a(4)
+				cons=($id $cons)
+				getkey $id
+				if(! ~ $#srvpass 0)
+					sio $id PASS $srvpass
+				sio $id USER $username foo bar :$realname
+				sio $id NICK $nick
+				if(! ~ $#pass 0)
+					sio $id nickserv identify $pass
+				pass=()
+				srvpass=()
+				for(i in $chans){
+					if(~ $i $id!'#'*){
+						if(! ~ $i $wins)
+							wmk $i &
+						sio $id JOIN `{echo $i | awk -F'!' '{print $2}'}
+					}
 				}
-			}
-		case cclose
-			d=cd$id
-			$d=()
-			oids=$cons
-			cons=()
-			for(i in $oids){
-				if(! ~ $i $id)
-					cons=($i $cons)
-			}
-			for(i in $wins){
-				if(~ $i $id || ~ $i $id!*)
-					wio $i HUNGUP $id
-			}
-		case wnew
-			wd$id=$a(3)
-			wp$id=$a(4)
-			wins=($id $wins)
-			x=wip$id
-			$x=()
-		case wclose
-			d=wd$id
-			p=wp$id
-			unmount $$d
-			$d=()
-			$p=()
-			oids=$wins
-			wins=()
-			for(i in $oids){
-				if(! ~ $i $id)
-					wins=($i $wins)
-			}
-			if(~ $id $chans){
-				oids=$chans
-				chans=()
+				if(! ~ $server $srv)
+					srv=($srv $server)
+			case cclose
+				d=cd$id
+				$d=()
+				oids=$cons
+				cons=()
 				for(i in $oids){
 					if(! ~ $i $id)
-						chans=($i $chans)
+						cons=($i $cons)
 				}
-				sio $id PART `{echo $id | awk -F'!' '{print $2}'}
-			}
-		case xmsg
-			if(~ $id $wins)
-				wio $id $a(3-)
-			if not {
 				for(i in $wins){
-					if(~ $i $id!*)
-						wio $i $a(3-)
+					if(~ $i $id || ~ $i $id!*)
+						wio $i HUNGUP $id
 				}
-			}
-		case cmsg
-			x=wip$id
-			if(~ $id $wins)
-				wio $id $a(3) '⇒' $a(4-)
-			if not if(! ~ $#$x 0){
-				{ sleep 1; echo $a >/n/wircrc/data1 } &
-			}
-			if not if(! ~ $id *!'#'*){
-				$x=1
-				wmk $id $a(3-) &
-			}
-		case wtype
-			switch($a(3)){
-			case /Q
-				if(~ $a(4) $muted){
-					om=$muted
-					muted=()
-					for(i in $om){
-						if(! ~ $i $a(4))
-							muted=($muted $i)
-					}
-					om=()
+			case wnew
+				wd$id=$a(3)
+				wp$id=$a(4)
+				wins=($id $wins)
+				x=wip$id
+				$x=()
+			case wclose
+				d=wd$id
+				p=wp$id
+				unmount $$d
+				$d=()
+				$p=()
+				oids=$wins
+				wins=()
+				for(i in $oids){
+					if(! ~ $i $id)
+						wins=($i $wins)
 				}
-				if not
-					muted=($muted $a(4))
-			case /x
-				shutdown
-			case /s
-				server=$a(4)
-				if(! ~ $server '' && ! ~ $server $cons){
-					if(! ~ $server $wins)
-						wmk $server &
-					if(~ $a(5) port)
-						port=$a(6)
-					dial tcp!$server!$port $tls irc $server &
+				if(~ $id $chans){
+					oids=$chans
+					chans=()
+					for(i in $oids){
+						if(! ~ $i $id)
+							chans=($i $chans)
+					}
+					sio $id PART `{echo $id | awk -F'!' '{print $2}'}
 				}
-			case /j /t
-				target=$a(4)
-				server=`{echo $id | awk -F'!' '{print $1}'}
-				if(! ~ $target '' && ~ $server $cons){
-					id=$server!$target
-					if(~ $id $wins){
-						wctl $id unhide
-						wctl $id current
-					}
-					if not {
-						wmk $id &
-					}
-					if(~ $a(3) /j && ~ $target '#'*){
-						if(! ~ $id $chans){
-							chans=($id $chans)
-							sio $server JOIN $target
-						}
-					}
-				}
-			case /h
-				if(~ $a(4) $cons)
-					id=$a(4)
-				echo hangup $id >[1=3]
-				hangup `{echo $id | awk -F'!' '{print $1}'}
-			case /r
-				id=$a(4)
-				if(! ~ $id ''){
-					server=`{echo $id | awk -F'!' '{print $1}'}
-					if(~ $id $cons){
-						hangup $server
-						oids=$cons
-						cons=()
-						for(i in $oids){
-							if(! ~ $i $id)
-								cons=($i $cons)
-						}
-					}
-					if(! ~ $server $wins)
-						wmk $server &
-					if(! ~ $a(5) '')
-						port=$a(5)
-					dial tcp!$server!$port $tls irc $server &
-				}
-			case /n
-				nick = $a(4)
-				server=`{echo $id | awk -F'!' '{print $1}'}
-				sio $server NICK $a(4)
-			case /p
-				server=`{echo $id | awk -F'!' '{print $1}'}
-				sio $server PING $server
-			case *
-				target=`{echo $id | awk -F'!' '{print $2}'}
-				if(~ $target '')
-					sio $id $a(3-)
+			case xmsg
+				if(~ $id $wins)
+					wio $id $a(3-)
 				if not {
-					a=$a(3-)
-					sio $id PRIVMSG $target ':'^$"a
+					for(i in $wins){
+						if(~ $i $id!*)
+							wio $i $a(3-)
+					}
+				}
+				last$server=$t0
+			case cmsg
+				x=wip$id
+				if(~ $id $wins)
+					wio $id $a(3) '⇒' $a(4-)
+				if not if(! ~ $#$x 0){
+					{ sleep 1; echo $a >/n/wircrc/data1 } &
+				}
+				if not if(! ~ $id *!'#'*){
+					$x=1
+					wmk $id $a(3-) &
+				}
+				last$server=$t0
+			case cpong
+				wio $server PING
+				last$server=$t0
+			case wtype
+				switch($a(3)){
+				case /Q
+					if(~ $a(4) $muted){
+						om=$muted
+						muted=()
+						for(i in $om){
+							if(! ~ $i $a(4))
+								muted=($muted $i)
+						}
+						om=()
+					}
+					if not
+						muted=($muted $a(4))
+				case /x
+					shutdown
+					exit
+				case /s
+					server=$a(4)
+					if(! ~ $server '' && ! ~ $server $cons){
+						if(! ~ $server $wins)
+							wmk $server &
+						if(~ $a(5) port)
+							port=$a(6)
+						dial tcp!$server!$port $tls irc $server &
+					}
+				case /j /t
+					target=$a(4)
+					if(! ~ $target '' && ~ $server $cons){
+						id=$server!$target
+						if(~ $id $wins){
+							wctl $id unhide
+							wctl $id current
+						}
+						if not {
+							wmk $id &
+						}
+						if(~ $a(3) /j && ~ $target '#'*){
+							if(! ~ $id $chans){
+								chans=($id $chans)
+								sio $server JOIN $target
+							}
+						}
+					}
+				case /h
+					if(~ $a(4) $cons)
+						id=$a(4)
+					hangup `{echo $id | awk -F'!' '{print $1}'}
+				case /r
+					id=$a(4)
+					if(! ~ $id ''){
+						if(~ $id $cons){
+							hangup $server
+							oids=$cons
+							cons=()
+							for(i in $oids){
+								if(! ~ $i $id)
+									cons=($i $cons)
+							}
+						}
+						if(! ~ $server $wins)
+							wmk $server &
+						if(! ~ $a(5) '')
+							port=$a(5)
+						dial tcp!$server!$port $tls irc $server &
+					}
+				case /n
+					nick = $a(4)
+					sio $server NICK $a(4)
+				case /p
+					sio $server PING $server
+				case *
+					target=`{echo $id | awk -F'!' '{print $2}'}
+					if(~ $target '')
+						sio $id $a(3-)
+					if not {
+						a=$a(3-)
+						sio $id PRIVMSG $target ':'^$"a
+					}
 				}
 			}
 		}
+		if not if(! ~ $s alarm* ''){
+			shutdown
+			exit
+		}
+		d=`{echo $t0 - $ot | pc}
+		if(test $d -ge 30){
+			checkconn $t0 $a
+			ot=$t0
+		}
 	}
 }
-shutdown
