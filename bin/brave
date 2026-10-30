@@ -1,0 +1,2 @@
+#!/bin/rc
+plumb -d web 'https://search.brave.com/search?q='^`"{echo -n $* | urlencode}

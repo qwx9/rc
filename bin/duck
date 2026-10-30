@@ -1,2 +1,2 @@
 #!/bin/rc
-mothra 'https://search.brave.com/search?q='^`"{echo $* | sed 's/ /%20/g'}
+plumb -d web 'https://lite.duckduckgo.com/lite/?kd=-1&q='^`"{echo -n $* | urlencode}
