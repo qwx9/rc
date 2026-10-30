@@ -108,11 +108,13 @@ fn hangup {
 		d=$$d
 		@{echo kill >/proc/$d/notepg}
 	}
-	osrv=srv
-	srv=()
-	for(i in $osrv){
-		if(! ~ $i $1)
-			srv=($srv $i)
+	if(~ $1 $srv){
+		osrv=srv
+		srv=()
+		for(i in $osrv){
+			if(! ~ $i $1)
+				srv=($srv $i)
+		}
 	}
 }
 
@@ -247,6 +249,7 @@ dial tcp!$server!$port $tls irc $server &
 						sio $id JOIN `{echo $i | awk -F'!' '{print $2}'}
 					}
 				}
+				last$server=$t0
 				if(! ~ $server $srv)
 					srv=($srv $server)
 			case cclose
