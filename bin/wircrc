@@ -312,7 +312,6 @@ dial tcp!$server!$port $tls irc $server &
 				}
 				last$server=$t0
 			case cpong
-				wio $server PING
 				last$server=$t0
 			case wtype
 				switch($a(3)){
@@ -402,7 +401,7 @@ dial tcp!$server!$port $tls irc $server &
 		}
 		d=`{echo $t0 - $ot | pc}
 		if(test $d -ge 30){
-			checkconn $t0 $a
+			checkconn $t0
 			ot=$t0
 		}
 	}
