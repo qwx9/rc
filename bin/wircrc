@@ -362,23 +362,22 @@ dial tcp!$server!$port $tls irc $server &
 						id=$a(4)
 					hangup `{echo $id | awk -F'!' '{print $1}'}
 				case /r
-					id=$a(4)
-					if(! ~ $id ''){
-						if(~ $id $cons){
-							hangup $server
-							oids=$cons
-							cons=()
-							for(i in $oids){
-								if(! ~ $i $id)
-									cons=($i $cons)
-							}
+					if(! ~ $a(4) '')
+						server=$a(4)
+					if(! ~ $a(5) '')
+						port=$a(5)
+					if(~ $server $cons){
+						hangup $server
+						oids=$cons
+						cons=()
+						for(i in $oids){
+							if(! ~ $i $server)
+								cons=($i $cons)
 						}
-						if(! ~ $server $wins)
-							wmk $server &
-						if(! ~ $a(5) '')
-							port=$a(5)
-						dial tcp!$server!$port $tls irc $server &
 					}
+					if(! ~ $server $wins)
+						wmk $server &
+					dial tcp!$server!$port $tls irc $server &
 				case /n
 					nick = $a(4)
 					sio $server NICK $a(4)
