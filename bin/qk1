@@ -3,6 +3,8 @@ rfork ne
 switch($sysname){
 case hsw w701
 	res=(-dx 1608 -dy 1208)
+case x250
+	res=(-dx 1288 -dy 968)
 case *
 	res=(-dx 1032 -dy 776)
 }
