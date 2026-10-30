@@ -1,10 +1,5 @@
 #!/bin/rc -be
 echo scroll >/dev/wctl
 flag x +
-cd /usr/qwx/p/fork
-unionfs /usr/qwx/p/fork/sys /sys
-ramfs -u -m /mnt/build
-clone -T /mnt/union/^(include src) /mnt/build/
-unmount /mnt/union
-bind -c /mnt/build/include /sys/include
-bind -c /mnt/build/src /sys/src
+ramfs -um /mnt/build
+unionfs -m /sys -c /mnt/build /usr/qwx/p/fork/sys /sys
