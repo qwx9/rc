@@ -106,14 +106,16 @@ fn hangup {
 	if(~ $1 $cons){
 		d=cpid$1
 		d=$$d
-		@{echo kill >/proc/$d/notepg}
-	}
-	if(~ $1 $srv){
-		osrv=srv
-		srv=()
-		for(i in $osrv){
-			if(! ~ $i $1)
-				srv=($srv $i)
+		@{echo kill >/proc/$d/notepg >[2]/dev/null}
+		d=cd$id
+		$d=()
+		d=cpid$id
+		$d=()
+		oids=$cons
+		cons=()
+		for(i in $oids){
+			if(! ~ $i $id)
+				cons=($i $cons)
 		}
 	}
 }
@@ -133,8 +135,8 @@ fn dial {
 	bind '#|' $c
 	if(~ $2 1){
 		tlsclient $1 <>$c/data1 >[1=0] &
-		awk '/Chan/{ sub("data", "ctl", $2); print "keepalive 480000" >$2 }' \
-			`{sed -n 's,.*(/net/tls/[0-9]+/)data,\1status,p' /proc/$apid/fd}
+		sed -n 's,.*(/net/tls/[0-9]+/)data,\1status,p' /proc/$apid/fd >[2]/dev/null \
+		| awk '/Chan/{ sub("data", "ctl", $2); print "keepalive 480000" >$2 }'
 	}
 	if not{
 		aux/trampoline $1 <>$c/data1 >[1=0] &
@@ -198,7 +200,7 @@ fn sigint {
 }
 
 fn checkconn {
-	for(i in $srv){
+	for(i in $cons){
 		ti=last$i
 		d=`{echo $1 - $$ti | pc}
 		if(test $d -ge 480){
@@ -232,6 +234,7 @@ dial tcp!$server!$port $tls irc $server &
 			case cnew
 				cd$id=$a(3)
 				cpid$id=$a(4)
+				last$id=$t0
 				cons=($id $cons)
 				getkey $id
 				if(! ~ $#srvpass 0)
@@ -249,18 +252,7 @@ dial tcp!$server!$port $tls irc $server &
 						sio $id JOIN `{echo $i | awk -F'!' '{print $2}'}
 					}
 				}
-				last$server=$t0
-				if(! ~ $server $srv)
-					srv=($srv $server)
 			case cclose
-				d=cd$id
-				$d=()
-				oids=$cons
-				cons=()
-				for(i in $oids){
-					if(! ~ $i $id)
-						cons=($i $cons)
-				}
 				for(i in $wins){
 					if(~ $i $id || ~ $i $id!*)
 						wio $i HUNGUP $id
@@ -361,29 +353,25 @@ dial tcp!$server!$port $tls irc $server &
 						}
 					}
 				case /h
-					if(~ $a(4) $cons)
-						id=$a(4)
-					hangup `{echo $id | awk -F'!' '{print $1}'}
+					if(! ~ $a(4) '')
+						server=$a(4)
+					if(~ $server $cons)
+						hangup $server
 				case /r
 					if(! ~ $a(4) '')
 						server=$a(4)
 					if(! ~ $a(5) '')
 						port=$a(5)
-					if(~ $server $cons){
+					if(~ $server $cons)
 						hangup $server
-						oids=$cons
-						cons=()
-						for(i in $oids){
-							if(! ~ $i $server)
-								cons=($i $cons)
-						}
-					}
 					if(! ~ $server $wins)
 						wmk $server &
 					dial tcp!$server!$port $tls irc $server &
 				case /n
-					nick = $a(4)
-					sio $server NICK $a(4)
+					if(! ~ $a(4) ''){
+						nick = $a(4)
+						sio $server NICK $a(4)
+					}
 				case /p
 					sio $server PING $server
 				case *
